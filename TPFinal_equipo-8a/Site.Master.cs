@@ -9,9 +9,28 @@ namespace TPFinal_equipo_8a
 {
     public partial class SiteMaster : MasterPage
     {
+        public bool banderaadmin = true;
+        public bool sesion = false;
+
         protected void Page_Load(object sender, EventArgs e)
         {
 
         }
+
+        protected void btnSalir_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void btnAvatar_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void btnPerfil_Click(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }

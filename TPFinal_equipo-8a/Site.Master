@@ -4,7 +4,7 @@
 
 <html lang="es">
 <head runat="server">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%: Page.Title %> - Mi aplicación ASP.NET</title>
@@ -13,7 +13,7 @@
         <%: Scripts.Render("~/bundles/modernizr") %>
     </asp:PlaceHolder>
 
-    <webopt:bundlereference runat="server" path="~/Content/css" />
+    <webopt:BundleReference runat="server" Path="~/Content/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
 </head>
@@ -37,6 +37,7 @@
                 <%--Site Scripts--%>
             </Scripts>
         </asp:ScriptManager>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
             <div class="container">
@@ -52,14 +53,46 @@
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/Contact">Contacto</a></li>
                     </ul>
                 </div>
+
+                <div class="d-flex">
+
+                    <% if (sesion)
+                       { %>
+                        <div class="d-grid gap-2 d-md-block">
+                            <a href="Default.aspx" class="btn btn-primary">Login</a>
+                            <a href="Registro.aspx" class="btn btn-primary">Registrarse</a>
+                        </div>
+                    <% }
+                       else
+                       { %>
+                            <asp:Label ID="lblUser" Text="user" CssClass="text-light m-auto me-2" runat="server" />
+                            <div class="dropdown">
+                            <asp:Image ID="imgAvatar" role="button" data-bs-toggle="dropdown" aria-expanded="false" Style="height: 40px; width: 40px; border-radius: 50%;" runat="server" />
+                            <ul class="dropdown-menu dropdown-menu-end">
+                            <asp:Button Text="Mi Perfil" ID="btnPerfil" class="dropdown-item" OnClick="btnPerfil_Click" runat="server" CausesValidation="false" UseSubmitBehavior="false" />
+
+                            <% if (banderaadmin)
+                               { %>
+                                    <li><a class="dropdown-item" href="Configuracion">Configuracion</a></li>
+                                 <%
+                               } %>
+
+                            <asp:Button Text="Salir" ID="Button2" class="dropdown-item" OnClick="btnSalir_Click" runat="server" CausesValidation="false" UseSubmitBehavior="false" />
+                            </ul>
+                            </div>
+                         <%
+                       } 
+                    %>
+                </div>
             </div>
         </nav>
+
         <div class="container body-content">
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
             </asp:ContentPlaceHolder>
             <hr />
             <footer>
-                <p>&copy; <%: DateTime.Now.Year %> - Mi aplicación ASP.NET</p>
+                <p>Mi aplicación ASP.NET</p>
             </footer>
         </div>
     </form>

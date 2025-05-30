@@ -8,7 +8,7 @@
                 <ItemTemplate>
                     <div class="col-md-3">
                         <div class="card">
-                            <img src='<%# Eval("ImagenUrl") %>' class="card-img-top" alt="Imagen del producto">
+                            <img src='<%# ((List<string>)Eval("ImagenUrl"))[0] %>' class="card-img-top" alt="Imagen del producto">
                             <div class="card-body">
                                 <h5 class="card-title"><%# Eval("Nombre") %></h5>
                                 <p class="card-text">Precio: $<%# Eval("Precio") %></p>

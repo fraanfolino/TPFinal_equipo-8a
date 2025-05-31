@@ -34,6 +34,16 @@ namespace TPFinal_equipo_8a
 
 
         }
+        public void rptProductos_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                Producto producto = (Producto)e.Item.DataItem;
+                Repeater rptImagenes = (Repeater)e.Item.FindControl("rptImagenes");
+                rptImagenes.DataSource = producto.ImagenUrl;
+                rptImagenes.DataBind();
+            }
+        }
 
         public string ObtenerPrimeraImagen(object imagenesObj)
         {
@@ -42,6 +52,18 @@ namespace TPFinal_equipo_8a
                 return lista[0];
 
             return "~/img/no-disponible.png"; // Ruta relativa a una imagen por defecto
+        }
+
+        protected void btnFiltrarMarca_Click(object sender, EventArgs e)
+        {
+            string marca = ddlMarca.SelectedValue; 
+            ProductoNegocio productoNegocio = new ProductoNegocio();
+
+            
+            List<Producto> productosFiltrados = productoNegocio.FiltrarProductosPorMarca(marca);
+
+            rptProductos.DataSource = productosFiltrados;
+            rptProductos.DataBind();
         }
 
     }

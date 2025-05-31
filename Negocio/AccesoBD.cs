@@ -10,7 +10,7 @@ namespace Negocio
     internal class AccesoBD
     {
         private SqlConnection conexionbd;
-        private SqlCommand comando;
+        public SqlCommand comando;
         private SqlDataReader lector;
 
         public SqlDataReader Lectorbd
@@ -21,9 +21,9 @@ namespace Negocio
         public AccesoBD()
         {
             //FRAN
-            //conexionbd = new SqlConnection("server=.\\SQLEXPRESS; database=ECOMMERCE_P3; integrated security=true");
+            conexionbd = new SqlConnection("server=.\\SQLEXPRESS; database=ECOMMERCE_P3; integrated security=true");
             //NICO
-            conexionbd = new SqlConnection("server=127.0.0.1,1433; database=ECOMMERCE_P3; User ID=sa; Password=BaseDeDatos#2;");
+            //conexionbd = new SqlConnection("server=127.0.0.1,1433; database=ECOMMERCE_P3; User ID=sa; Password=BaseDeDatos#2;");
             comando = new SqlCommand();
         }
 

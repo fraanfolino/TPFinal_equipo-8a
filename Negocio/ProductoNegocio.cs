@@ -11,7 +11,62 @@ namespace Negocio
 {
     public class ProductoNegocio
     {
+        public Producto ObtenerProducto(int id)
+        {
+            AccesoBD datos = new AccesoBD();
+            Producto producto = null;
+            try
+            {
+               
+                datos.setearProcedimiento("dbo.sp_ObtenerProductoDetalle");
+           
+                datos.limpiarParametros();
+               
+                datos.setearParametro("@id", id);
 
+                datos.ejecutarLectura();
+
+                Producto ultCarga = null;
+                while (datos.Lectorbd.Read())
+                {
+                    int idProdBD = Convert.ToInt32(datos.Lectorbd["Id"]);
+
+                    if (ultCarga != null && ultCarga.Id == idProdBD)
+                    {
+                        if (datos.Lectorbd["UrlImagen"] != DBNull.Value)
+                        {
+                            string imagenUrl = Convert.ToString(datos.Lectorbd["UrlImagen"]);
+                            ultCarga.ImagenUrl.Add(imagenUrl);
+                        }
+                        continue;
+                    }
+
+                 
+                    producto = new Producto();
+                    producto.Id = idProdBD;
+                    producto.Nombre = datos.Lectorbd["Nombre"].ToString();
+                    producto.Descripcion = datos.Lectorbd["Descripcion"].ToString();
+                    producto.Precio = Convert.ToDecimal(datos.Lectorbd["Precio"]);
+
+                    if (datos.Lectorbd["UrlImagen"] != DBNull.Value)
+                        producto.ImagenUrl = new List<string> { Convert.ToString(datos.Lectorbd["UrlImagen"]) };
+                    else
+                        producto.ImagenUrl = new List<string>();
+
+                    ultCarga = producto;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+
+            return producto;
+        }
         public List<Producto> FiltrarProductosPorMarca(string marca)
         {
             AccesoBD datos = new AccesoBD();
@@ -19,9 +74,9 @@ namespace Negocio
             try
             {
                 datos.setearProcedimiento("sp_FiltrarProductosPorMarca");
-                datos.limpiarParametros(); // Es recomendable limpiar parámetros antes de agregar nuevos
+                datos.limpiarParametros(); 
 
-                // Agrega el parámetro usando el método público que ya definiste
+                
                 if (!string.IsNullOrEmpty(marca) && marca != "0")
                     datos.setearParametro("@marca", marca);
                 else

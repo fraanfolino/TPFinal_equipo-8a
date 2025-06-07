@@ -55,30 +55,61 @@
                 </div>
 
                 <div class="d-flex">
-
-                    <% if (sesion)
-                       { %>
-                        <div class="d-grid gap-2 d-md-block">
-                            <a href="Default.aspx" class="btn btn-primary">Login</a>
-                            <a href="Registro.aspx" class="btn btn-primary">Registrarse</a>
-                        </div>
-                    <% }
-                       else
-                       { %>
-                            <asp:Label ID="lblUser" Text="user" CssClass="text-light m-auto me-2" runat="server" />
+                    <%if (Negocio.Seguridad.sesionActiva(Session["usuario"]))
+                      {%>
                             <div class="dropdown">
-                            <asp:Image ID="imgAvatar" role="button" data-bs-toggle="dropdown" aria-expanded="false" Style="height: 40px; width: 40px; border-radius: 50%;" runat="server" />
+                            <asp:Image ID="Image1" 
+                                       role="button" 
+                                       data-bs-toggle="dropdown" 
+                                       aria-expanded="false" 
+                                       ImageUrl="~/Images/user.png" 
+                                       Style="height: 40px; width: 40px; border-radius: 50%;" runat="server" />
                             <ul class="dropdown-menu dropdown-menu-end">
-                            <asp:Button Text="Mi Perfil" ID="btnPerfil" class="dropdown-item" OnClick="btnPerfil_Click" runat="server" CausesValidation="false" UseSubmitBehavior="false" />
 
-                            <% if (banderaadmin)
-                               { %>
-                                    <li><a class="dropdown-item" href="Configuracion">Configuracion</a></li>
-                                 <%
-                               } %>
+                            <asp:Button Text="Mi Perfil" 
+                                        ID="Button1" 
+                                        class="dropdown-item" 
+                                        OnClick="btnPerfil_Click"
+                                        runat="server" 
+                                        CausesValidation="false" 
+                                        UseSubmitBehavior="false" />
 
-                            <asp:Button Text="Salir" ID="Button2" class="dropdown-item" OnClick="btnSalir_Click" runat="server" CausesValidation="false" UseSubmitBehavior="false" />
-                            </ul>
+                            <%if (banderaadmin)
+                              {%>
+                                    <li><a class="dropdown-item" href="Configuracion">Cargar Productos</a></li>
+                            <%}%>
+
+                         <asp:Button Text="Salir" ID="Button2" class="dropdown-item" OnClick="btnSalir_Click" runat="server" CausesValidation="false" UseSubmitBehavior="false" />
+                         </ul>
+                    <%}
+                      else
+                      {%>
+                            <div class="dropdown">
+                                <asp:Image ID="imgAvatar" role="button" data-bs-toggle="dropdown" aria-expanded="false" ImageUrl="/Images/user.png" 
+                                    Style="height: 40px; width: 40px; border-radius: 50%;" runat="server" />
+                                <ul class="dropdown-menu dropdown-menu-end p-3" style="min-width: 320px;">
+                                    <li class="mt-2">
+                                        <asp:Label Text="Iniciar Sesión" runat="server" /><br>
+                                    </li>
+                                    <li class="mt-2">
+                                        <asp:Label Text="E-mail" runat="server" />
+                                        <asp:TextBox runat="server" CssClass="form-control" ID="txtMail" Style="width: 100%;" />
+                                    </li>
+                                    <li class="mt-2">
+                                        <asp:Label Text="Contraseña" runat="server" />
+                                        <asp:TextBox runat="server" CssClass="form-control" ID="txtPass" TextMode="Password" Style="width: 100%;" />
+                                    </li>
+                                    <li class="mt-2">
+                                        <a href="RecuperarClave.aspx" class="text-primary text-decoration-underline">Olvidé mi contraseña</a>
+                                    </li>
+                                    <li class="mt-2">
+                                        <div class="d-flex gap-2">
+                                            <asp:Button runat="server" ID="btnIniciar" Text="Iniciar Sesión" CssClass="btn btn-primary" OnClick="btnIniciar_Click" Style="flex:1;" />
+                                            <asp:Button runat="server" ID="btnRegistro" Text="Registrarse" CssClass="btn btn-secondary" Style="flex:1;" />
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
                             </div>
                          <%
                        } 

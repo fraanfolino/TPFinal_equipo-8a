@@ -16,6 +16,8 @@ namespace Dominio
         public string Pass { get; set; }
         public bool Admin { get; set; }
 
+        public string ImagenPerfil { get; set; }
+
         public Domicilio Domicilio { get; set; }
     }
 }

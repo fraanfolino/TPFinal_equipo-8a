@@ -26,6 +26,19 @@ namespace TPFinal_equipo_8a
             }
         }
 
+        protected void btnAgregarCarro_Click(object sender, EventArgs e)
+        {
+            int idProducto;
+            if (int.TryParse(Request.QueryString["Id"], out idProducto))
+            {
+                int idUsuario = ((Usuario)Session["usuario"]).Id;
+
+                CarroNegocio carroNegocio = new CarroNegocio();
+                carroNegocio.AgregarOActualizarProductoEnCarro(idProducto, idUsuario);
+
+                Response.Redirect("Carro.aspx");
+            }
+        }
         private void CargarDetalle(int id)
         {
             ProductoNegocio productoNegocio = new ProductoNegocio();

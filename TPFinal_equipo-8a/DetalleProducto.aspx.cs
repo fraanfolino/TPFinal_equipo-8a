@@ -3,6 +3,7 @@
 using System.Linq;
 using System.Web.UI;
 using Negocio;
+using System.Collections.Generic;
 using Dominio; 
 
 namespace TPFinal_equipo_8a
@@ -17,6 +18,7 @@ namespace TPFinal_equipo_8a
                 if (int.TryParse(Request.QueryString["Id"], out idProducto))
                 {
                     CargarDetalle(idProducto);
+                    CargarTalles(idProducto);
                 }
                 else
                 {
@@ -24,6 +26,17 @@ namespace TPFinal_equipo_8a
                     Response.Redirect("Catalogo.aspx");
                 }
             }
+        }
+
+        private void CargarTalles(int idProducto)
+        {
+            CarroNegocio negocio = new CarroNegocio();
+            List<Talle> listaTalles = negocio.ObtenerTallesPorProducto(idProducto);
+
+            ddlTalles.DataSource = listaTalles;
+            ddlTalles.DataTextField = "Etiqueta"; 
+            ddlTalles.DataValueField = "Id"; 
+            ddlTalles.DataBind();
         }
 
         protected void btnAgregarCarro_Click(object sender, EventArgs e)

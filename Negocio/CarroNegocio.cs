@@ -30,6 +30,38 @@ namespace Negocio
         }
 
 
+
+        public List<Talle> ObtenerTallesPorProducto(int idProducto)
+        {
+            List<Talle> listaTalles = new List<Talle>();
+            AccesoBD acceso = new AccesoBD();
+
+            try
+            {
+                acceso.limpiarParametros();
+                acceso.setearProcedimiento("sp_ObtenerTallesPorProducto");
+                acceso.setearParametro("@productoId", idProducto);
+                acceso.ejecutarLectura();
+
+                while (acceso.Lectorbd.Read())
+                {
+                    Talle talle = new Talle();
+                    talle.Id = Convert.ToInt32(acceso.Lectorbd["id"]);
+                    talle.Etiqueta = acceso.Lectorbd["etiqueta"].ToString();
+                    listaTalles.Add(talle);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                acceso.cerrarConexion();
+            }
+
+            return listaTalles;
+        }
         public List<ItemCarrito> ObtenerCarrito(int idUsuario)
         {
             List<ItemCarrito> carrito = new List<ItemCarrito>();
@@ -37,7 +69,7 @@ namespace Negocio
 
             try
             {
-                // Configuración del procedimiento almacenado
+               
                 acceso.limpiarParametros();
                 acceso.setearProcedimiento("sp_ObtenerCarritoPorUsuario");
                 acceso.setearParametro("@usuarioId", idUsuario);

@@ -1,67 +1,169 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="CargarProductos.aspx.cs" Inherits="TPFinal_equipo_8a.CargarProductos" %>
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+<style>
+/* Ajusta exactamente al tamaño del form-select de Bootstrap */
+.ts-control {
+  min-height: 2.375rem;
+  max-height: 2.375rem;
+  height: 2.375rem;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0.375rem;
+  border: 1px solid #ced4da;
+  background-color: #fff;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center; /* Centra verticalmente */
+  overflow: hidden;
+}
 
+/* Alinea las etiquetas dentro del control si son múltiples */
+.ts-values {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 0.25rem;
+}
+
+/* Mantener el layout similar al resto */
+.ts-control {
+  border: none;
+  box-shadow: none;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  min-height: 2.375rem;
+  height: auto;
+  background-color: transparent;
+}
+
+/* Estilo visual de focus como Bootstrap */
+.ts-wrapper:focus-within {
+  border-color: #86b7fe;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+  outline: 0;
+}
+
+</style>
 <h2>
-<asp:Label ID="Titulo" runat="server" Text="Cargar Productos" />
+    <asp:Label ID="Titulo" runat="server" Text="Cargar Productos" />
 </h2>
-
-
-
-
-
 
     <asp:UpdatePanel ID="UpdatePanel2" runat="server">
         <ContentTemplate>
             <div class="row">
-                <div class="col-md-4">
+                <!-- Cantidad -->
+                <div class="col-md-1">
+                    <div class="mb-1">
+                        <label class="form-label">Cantidad</label>
+                        <asp:TextBox ID="txtUnidades" runat="server" CssClass="form-control" TextMode="Number" />
+                    </div>
+                </div>
 
-                    <!-- Categoría -->
-                    <div class="mb-3">
+                <!-- Categoría -->
+                <div class="col-md-2">
+                    <div class="mb-2">
                         <label class="form-label">Categoría</label>
                         <asp:DropDownList ID="ddlCategoria" runat="server" CssClass="form-select" />
                     </div>
+                </div>
 
-                    <!-- Marca -->
-                    <div class="mb-3">
+                <!-- Marca -->
+                <div class="col-md-2">
+                    <div class="mb-2">
                         <label class="form-label">Marca</label>
                         <asp:DropDownList ID="ddlMarca" runat="server" CssClass="form-select" />
                     </div>
-
-                    <!-- Nombre -->
-                    <div class="mb-3">
-                        <label class="form-label">Nombre</label>
-                        <asp:TextBox ID="TextBox1" runat="server" CssClass="form-control" />
-                    </div>
-
-                    <!-- Descripción -->
-                    <div class="mb-3">
-                        <label class="form-label">Descripción</label>
-                        <asp:TextBox ID="txtDescripcion" runat="server" CssClass="form-control" TextMode="MultiLine" Rows="3" />
-                    </div>
-
-                    <!-- Precio -->
-                    <div class="mb-3">
-                        <label class="form-label">Precio</label>
-                        <asp:TextBox ID="txtPrecio" runat="server" CssClass="form-control" />
-                    </div>
-
-                    <!-- Imagen URL -->
-                    <div class="mb-3">
-                        <label class="form-label">Imagen URL</label>
-                        <asp:TextBox ID="txtImagenUrl" runat="server" CssClass="form-control" />
-                    </div>
-
-                    <!-- Botones -->
-                    <div class="mb-3">
-                        <asp:Button ID="Button1" runat="server" Text="Guardar" CssClass="btn btn-primary me-2" />
-                        <a href="Catalogo.aspx" class="btn btn-secondary">Cancelar</a>
-                    </div>
-
                 </div>
-            </div>
+
+                <!-- Productos con búsqueda -->
+                <div class="col-md-3">
+                    <div class="mb-3">
+                        <label for="<%= productoSeleccionado.ClientID %>" class="form-label">Productos</label>
+                        <select id="productoSeleccionado" runat="server"></select>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="mb-3">
+                        <label for="<%= tallesSeleccionados.ClientID %>" class="form-label">Talles</label>
+                        <select id="tallesSeleccionados" runat="server" multiple></select>
+                    </div>
+                </div>
+   </div>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" 
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
+<link href="https://cdn.jsdelivr.net/npm/tom-select@2.0.0-rc.4/dist/css/tom-select.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/tom-select@2.0.0-rc.4/dist/js/tom-select.complete.min.js"></script>
+
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function () {
+        new TomSelect("#<%= productoSeleccionado.ClientID %>", {
+            maxItems: 1,
+            plugins: [],
+            create: false,
+            onChange: function (value) {
+                this.close(); // Cierra el dropdown al seleccionar un ítem
+            },
+            render: {
+                option: function (data, escape) {
+                    const date = data.date ? escape(data.date) : '';
+                    return `<div class="d-flex">
+                <span>${escape(data.value)}</span>
+                <span class="ms-auto text-muted">${date}</span>
+            </div>`;
+                },
+                item: function (data, escape) {
+                    return `<div>${escape(data.value)}</div>`;
+                }
+            }
+        });
+
+        new TomSelect("#<%= tallesSeleccionados.ClientID %>", {
+            plugins: ['remove_button'],  // Esto activa el botón para eliminar items
+            create: false,                // Si querés permitir crear opciones nuevas (opcional)
+            maxItems: null,             // Permite seleccionar múltiples sin límite
+            onItemAdd: function () {
+                this.setTextboxValue('');
+                this.refreshOptions();
+            },
+            render: {
+                option: function (data, escape) {
+                    const date = data.date ? escape(data.date) : '';
+                    return `<div class="d-flex">
+                    <span>${escape(data.value)}</span>
+                    <span class="ms-auto text-muted">${date}</span>
+                  </div>`;
+                },
+                item: function (data, escape) {
+                    return `<div>${escape(data.value)}</div>`;
+                }
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  });
+</script>
         </ContentTemplate>
     </asp:UpdatePanel>
 
 </asp:Content>
-
-

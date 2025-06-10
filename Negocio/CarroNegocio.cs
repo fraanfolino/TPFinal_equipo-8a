@@ -1,0 +1,106 @@
+﻿using System;
+using System.Collections.Generic;
+using Dominio; 
+
+namespace Negocio
+{
+    public class CarroNegocio
+    {
+  
+        public void AgregarOActualizarProductoEnCarro(int idProducto, int idUsuario)
+        {
+            AccesoBD acceso = new AccesoBD();
+            try
+            {
+                acceso.limpiarParametros();
+              
+                acceso.setearProcedimiento("sp_AgregarOActualizarCarrito");
+                acceso.setearParametro("@usuarioId", idUsuario);
+                acceso.setearParametro("@productoId", idProducto);
+                acceso.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                acceso.cerrarConexion();
+            }
+        }
+
+
+        public List<ItemCarrito> ObtenerCarrito(int idUsuario)
+        {
+            List<ItemCarrito> carrito = new List<ItemCarrito>();
+            AccesoBD acceso = new AccesoBD(); 
+
+            try
+            {
+                // Configuración del procedimiento almacenado
+                acceso.limpiarParametros();
+                acceso.setearProcedimiento("sp_ObtenerCarritoPorUsuario");
+                acceso.setearParametro("@usuarioId", idUsuario);
+                acceso.ejecutarLectura(); 
+
+                ItemCarrito ultimoItem = null; 
+
+                while (acceso.Lectorbd.Read()) 
+                {
+                    int prodId = Convert.ToInt32(acceso.Lectorbd["producto_id"]); 
+                    string nombre = acceso.Lectorbd["nombre"].ToString();
+                    decimal precio = Convert.ToDecimal(acceso.Lectorbd["precio"]); 
+                    int cantidad = Convert.ToInt32(acceso.Lectorbd["cantidad"]); 
+
+                    
+                    if (ultimoItem != null && ultimoItem.Producto.Id == prodId)
+                    {
+                        if (acceso.Lectorbd["UrlImagen"] != DBNull.Value)
+                        {
+                            string imagenUrl = Convert.ToString(acceso.Lectorbd["UrlImagen"]);
+                            if (!ultimoItem.Producto.ImagenUrl.Contains(imagenUrl)) 
+                            {
+                                ultimoItem.Producto.ImagenUrl.Add(imagenUrl);
+                            }
+                        }
+                        continue; 
+                    }
+
+                    
+                    Producto prod = new Producto();
+                    prod.Id = prodId;
+                    prod.Nombre = nombre;
+                    prod.Precio = precio;
+
+                    
+                    if (acceso.Lectorbd["UrlImagen"] != DBNull.Value)
+                        prod.ImagenUrl = new List<string> { Convert.ToString(acceso.Lectorbd["UrlImagen"]) };
+                    else
+                        prod.ImagenUrl = new List<string>();
+
+                   
+                    ItemCarrito item = new ItemCarrito()
+                    {
+                        Producto = prod,
+                        Cantidad = cantidad
+                    };
+
+                    carrito.Add(item); 
+                    ultimoItem = item; 
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                acceso.cerrarConexion();
+            }
+
+            return carrito;
+        }
+
+
+    }
+}

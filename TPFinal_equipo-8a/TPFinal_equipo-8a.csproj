@@ -101,6 +101,7 @@
   <ItemGroup>
     <Content Include="About.aspx" />
     <Content Include="CargarProductos.aspx" />
+    <Content Include="Carro.aspx" />
     <Content Include="Catalogo.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap-grid.css" />
@@ -203,9 +204,20 @@
       <DependentUpon>CargarProductos.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+
     <Compile Include="CargarProductos.aspx.designer.cs">
       <DependentUpon>CargarProductos.aspx</DependentUpon>
+
+	</Compile>
+		
+		
+		<Compile Include="Carro.aspx.cs">
+      <DependentUpon>Carro.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Carro.aspx.designer.cs">
+      <DependentUpon>Carro.aspx</DependentUpon>
+   </Compile>
     <Compile Include="Catalogo.aspx.cs">
       <DependentUpon>Catalogo.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

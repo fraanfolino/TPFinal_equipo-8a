@@ -15,9 +15,7 @@ namespace TPFinal_equipo_8a
         {
             if (!IsPostBack)
             {
-                // Simulamos datos, reemplazá por tu fuente real
                 ProductoNegocio productoNegocio = new ProductoNegocio();
-
                 List<Producto> productos = productoNegocio.ListarProductosEnStock();
 
                 foreach (var item in productos)
@@ -27,9 +25,18 @@ namespace TPFinal_equipo_8a
                 ddlCategoria.DataTextField = "nombre";
                 ddlCategoria.DataBind();
 
-                tallesSeleccionados.Items.Add("XL");
-                tallesSeleccionados.Items.Add("L");
-                tallesSeleccionados.Items.Add("S");
+                ddlMarca.DataSource = CargarMarcas();
+                ddlMarca.DataTextField = "nombre";
+                ddlMarca.DataBind();
+
+                ddlTalles.DataSource = CargarTalles();
+                ddlTalles.DataTextField = "etiqueta";
+                ddlTalles.DataBind();
+
+
+
+                txtUnidades.Attributes["min"] = "1";
+
             }
         }
 
@@ -39,12 +46,21 @@ namespace TPFinal_equipo_8a
             return categoriaNegocio.ListarCategorias();
         }
 
+        public List<Marca> CargarMarcas()
+        {
+            MarcaNegocio marcaNegocio = new MarcaNegocio();
+            return marcaNegocio.ListarMarcas();
+        }
 
+        public List<Talle> CargarTalles()
+        {
+            TalleNegocio talleNegocio = new TalleNegocio();
+            return talleNegocio.ListarTalles();
+        }
 
-
-
-
-
-
+        protected void ddlCategoria_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+        }
     }
 }

@@ -12,7 +12,7 @@
 /* Ajusta exactamente al tamaño del form-select de Bootstrap */
 .ts-control {
   min-height: 2.375rem;
-  max-height: 2.375rem;
+  max-height: 4.375rem;
   height: 2.375rem;
   padding: 0.375rem 0.75rem;
   line-height: 1.5;
@@ -44,6 +44,19 @@
   border-radius: 0.375rem; /* igual que el control de Bootstrap */
 }
 
+.ts-control.multi .ts-control-input:focus {
+  caret-color: transparent; /* Oculta el cursor */
+}
+
+.ts-control.single .ts-control-input:focus {
+  caret-color: transparent; /* Para single select si hay texto fijo */
+}
+
+/* Solo si hay items seleccionados */
+.ts-control.multi.has-items .ts-control-input {
+  caret-color: transparent;
+}
+
 </style>
 <h2>
     <asp:Label ID="Titulo" runat="server" Text="Cargar Productos" />
@@ -51,7 +64,7 @@
 
     <asp:UpdatePanel ID="UpdatePanel2" runat="server">
         <ContentTemplate>
-            <div class="row">
+            <div class="row" style="height: 9rem;">
                 <!-- Cantidad -->
                 <div class="col-md-1">
                     <div class="mb-1">
@@ -64,7 +77,7 @@
                 <div class="col-md-2">
                     <div class="mb-2">
                         <label class="form-label">Categoría</label>
-                        <asp:DropDownList ID="ddlCategoria" runat="server" CssClass="form-select" OnSelectedIndexChanged="ddlCategoria_SelectedIndexChanged" />
+                        <asp:DropDownList ID="ddlCategoria" runat="server" CssClass="form-select" OnSelectedIndexChanged="ddlCategoria_SelectedIndexChanged" AutoPostBack="true" />
                     </div>
                 </div>
 
@@ -72,20 +85,20 @@
                 <div class="col-md-2">
                     <div class="mb-2">
                         <label class="form-label">Marca</label>
-                        <asp:DropDownList ID="ddlMarca" runat="server" CssClass="form-select" />
+                        <asp:DropDownList ID="ddlMarca" runat="server" CssClass="form-select" OnSelectedIndexChanged="ddlMarca_SelectedIndexChanged" AutoPostBack="true" />
                     </div>
                 </div>
 
                 <!-- Productos con búsqueda -->
-                <div class="col-md-3">
-                    <div class="mb-3">
+                <div class="col-md-5">
+                    <div class="mb-5">
                         <label for="<%= productoSeleccionado.ClientID %>" class="form-label">Productos</label>
                         <select id="productoSeleccionado" runat="server"></select>
                     </div>
                 </div>
 
-                <div class="col-md-3">
-                    <div class="mb-3">
+                <div class="col-md-2">
+                    <div class="mb-2">
                         <label for="<%= ddlTalles.ClientID %>" class="form-label">Talles</label>
                         <select id="ddlTalles" runat="server" multiple></select>
                     </div>
@@ -95,27 +108,27 @@
 
 
 <script type="text/javascript">
-    document.addEventListener("DOMContentLoaded", function () {
+    function initTomSelects() {
         new TomSelect("#<%= productoSeleccionado.ClientID %>", {
             maxItems: 1,
             plugins: [],
             create: false,
             onChange: function (value) {
-                this.close(); // Cierra el dropdown al seleccionar un ítem
-                },
-                onDropdownOpen: function () {
-                    if (this.items.length > 0) {
-                        this.clear();         // Elimina el item seleccionado
-                        this.focus();         // Pone el foco en el input
-                    }
-                },
+                this.close();
+            },
+            onDropdownOpen: function () {
+                if (this.items.length > 0) {
+                    this.clear();
+                    this.focus();
+                }
+            },
             render: {
                 option: function (data, escape) {
                     const date = data.date ? escape(data.date) : '';
                     return `<div class="d-flex">
-                <span>${escape(data.value)}</span>
-                <span class="ms-auto text-muted">${date}</span>
-            </div>`;
+                        <span>${escape(data.value)}</span>
+                        <span class="ms-auto text-muted">${date}</span>
+                    </div>`;
                 },
                 item: function (data, escape) {
                     return `<div>${escape(data.value)}</div>`;
@@ -123,10 +136,10 @@
             }
         });
 
-        new TomSelect("#<%= ddlTalles.ClientID %>", {
-            plugins: ['remove_button'],  // Esto activa el botón para eliminar items
-            create: false,                // Si querés permitir crear opciones nuevas (opcional)
-            maxItems: null,             // Permite seleccionar múltiples sin límite
+        var tsTalles = new TomSelect("#<%= ddlTalles.ClientID %>", {
+            plugins: ['remove_button'],
+            create: false,
+            maxItems: null,
             onItemAdd: function () {
                 this.setTextboxValue('');
                 this.refreshOptions();
@@ -135,17 +148,34 @@
                 option: function (data, escape) {
                     const date = data.date ? escape(data.date) : '';
                     return `<div class="d-flex">
-                    <span>${escape(data.value)}</span>
-                    <span class="ms-auto text-muted">${date}</span>
-                  </div>`;
+                        <span>${escape(data.value)}</span>
+                        <span class="ms-auto text-muted">${date}</span>
+                    </div>`;
                 },
                 item: function (data, escape) {
                     return `<div>${escape(data.value)}</div>`;
                 }
             }
         });
-  });
+
+        // Le asignas altura directamente al wrapper generado:
+        tsTalles.control.style.height = '6rem';
+        tsTalles.control.style.maxHeight = '6rem';
+        tsTalles.control.style.fontSize = '0.75rem';
+        tsTalles.control.querySelector('input').style.caretColor = 'transparent';
+    }
+
+    // Llamada inicial cuando la página se carga por primera vez
+    document.addEventListener("DOMContentLoaded", function () {
+        initTomSelects();
+    });
+
+    // Vuelve a aplicar TomSelect después de un postback parcial del UpdatePanel
+    Sys.Application.add_load(function () {
+        initTomSelects();
+    });
 </script>
+
         </ContentTemplate>
     </asp:UpdatePanel>
 

@@ -15,20 +15,15 @@ namespace TPFinal_equipo_8a
         {
             if (!IsPostBack)
             {
-                ProductoNegocio productoNegocio = new ProductoNegocio();
-                List<Producto> productos = productoNegocio.ListarProductosEnStock();
 
-                foreach (var item in productos)
-                    productoSeleccionado.Items.Add(item.Nombre);
 
                 ddlCategoria.DataSource = CargarCategorias();
-
-                ddlCategoria.DataTextField = "nombre";
                 ddlCategoria.DataBind();
 
                 ddlMarca.DataSource = CargarMarcas();
-                ddlMarca.DataTextField = "nombre";
                 ddlMarca.DataBind();
+
+                ActualizarListaProductos();
 
                 ddlTalles.DataSource = CargarTalles();
                 ddlTalles.DataTextField = "etiqueta";
@@ -39,16 +34,31 @@ namespace TPFinal_equipo_8a
             }
         }
 
-        public List<Categoria> CargarCategorias()
+        public List<string> CargarCategorias()
         {
             CategoriaNegocio categoriaNegocio = new CategoriaNegocio();
-            return categoriaNegocio.ListarCategorias();
+
+            List<string> listaCategorias = new List<string>();
+            listaCategorias.Add("Todas");
+
+            foreach (var marca in categoriaNegocio.ListarCategorias())
+            {
+                listaCategorias.Add(marca.Nombre);
+            }
+            return listaCategorias;
         }
 
-        public List<Marca> CargarMarcas()
+        public List<string> CargarMarcas()
         {
             MarcaNegocio marcaNegocio = new MarcaNegocio();
-            return marcaNegocio.ListarMarcas();
+            List<string> listaMarcas = new List<string>();
+            listaMarcas.Add("Todas");
+
+            foreach (var marca in marcaNegocio.ListarMarcas())
+            {
+                listaMarcas.Add(marca.Nombre);
+            }
+            return listaMarcas;
         }
 
         public List<Talle> CargarTalles()
@@ -59,7 +69,33 @@ namespace TPFinal_equipo_8a
 
         protected void ddlCategoria_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
+            ActualizarListaProductos();
+        }
+
+        private void ActualizarListaProductos()
+        {
+            ProductoNegocio productoNegocio = new ProductoNegocio();
+
+            string categoria = ddlCategoria.SelectedValue.ToString();
+            string marca = ddlMarca.SelectedValue.ToString();
+
+            if (categoria == "Todas")
+                categoria = null;
+            if (marca == "Todas")
+                marca = null;
+
+            List<Producto> productos = productoNegocio.ListarProductos(marca, categoria);
+
+            if (productoSeleccionado.Items.Count > 0)
+            { productoSeleccionado.Items.Clear(); }
+
+            foreach (var item in productos)
+                productoSeleccionado.Items.Add(item.Nombre);
+        }
+
+        protected void ddlMarca_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ActualizarListaProductos();
         }
     }
 }

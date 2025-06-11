@@ -64,11 +64,17 @@
 
     <asp:UpdatePanel ID="UpdatePanel2" runat="server">
         <ContentTemplate>
+
+            <div class="row" style="height: 2rem;">
+                 <label class="form-label">Agregar Stock a Productos Existentes</label>
+                 </div>
+
+
             <div class="row" style="height: 9rem;">
                 <!-- Cantidad -->
                 <div class="col-md-1">
                     <div class="mb-1">
-                        <label class="form-label">Cantidad</label>
+                        <label class="form-label text-muted">Cantidad</label>
                      <asp:TextBox ID="txtUnidades" runat="server" CssClass="form-control" TextMode="Number" Text="1"  />
                     </div>
                 </div>
@@ -76,7 +82,7 @@
                 <!-- Categoría -->
                 <div class="col-md-2">
                     <div class="mb-2">
-                        <label class="form-label">Categoría</label>
+                        <label class="form-label text-muted">Categoría</label>
                         <asp:DropDownList ID="ddlCategoria" runat="server" CssClass="form-select" OnSelectedIndexChanged="ddlCategoria_SelectedIndexChanged" AutoPostBack="true" />
                     </div>
                 </div>
@@ -84,7 +90,7 @@
                 <!-- Marca -->
                 <div class="col-md-2">
                     <div class="mb-2">
-                        <label class="form-label">Marca</label>
+                        <label class="form-label text-muted">Marca</label>
                         <asp:DropDownList ID="ddlMarca" runat="server" CssClass="form-select" OnSelectedIndexChanged="ddlMarca_SelectedIndexChanged" AutoPostBack="true" />
                     </div>
                 </div>
@@ -92,18 +98,81 @@
                 <!-- Productos con búsqueda -->
                 <div class="col-md-5">
                     <div class="mb-5">
-                        <label for="<%= productoSeleccionado.ClientID %>" class="form-label">Productos</label>
+                        <label for="<%= productoSeleccionado.ClientID %>" class="form-label text-muted">Productos</label>
                         <select id="productoSeleccionado" runat="server"></select>
                     </div>
                 </div>
 
                 <div class="col-md-2">
                     <div class="mb-2">
-                        <label for="<%= ddlTalles.ClientID %>" class="form-label">Talles</label>
+                        <label for="<%= ddlTalles.ClientID %>" class="form-label text-muted">Talles</label>
                         <select id="ddlTalles" runat="server" multiple></select>
                     </div>
                 </div>
    </div>
+
+                 <div class="row" style="height: 2rem;">
+                 <label class="form-label">Agregar Nuevo Producto</label>
+                 </div>
+
+                        <div class="row" style="height: 9rem;">
+                <!-- Cantidad -->
+                <div class="col-md-1">
+                    <div class="mb-1">
+                        <label class="form-label text-muted">Cantidad</label>
+                     <asp:TextBox ID="TextBox1" runat="server" CssClass="form-control" TextMode="Number" Text="1"  />
+                    </div>
+                </div>
+
+                <!-- Categoría -->
+                <div class="col-md-2">
+                    <div class="mb-2">
+                        <label class="form-label text-muted">Categoría</label>
+                        <asp:DropDownList ID="DropDownList1" runat="server" CssClass="form-select" OnSelectedIndexChanged="ddlCategoria_SelectedIndexChanged" AutoPostBack="true" />
+                    </div>
+                </div>
+
+                <!-- Marca -->
+                <div class="col-md-2">
+                    <div class="mb-2">
+                        <label class="form-label text-muted">Marca</label>
+                        <asp:DropDownList ID="DropDownList2" runat="server" CssClass="form-select" OnSelectedIndexChanged="ddlMarca_SelectedIndexChanged" AutoPostBack="true" />
+                    </div>
+                </div>
+
+                <!-- Nombre Producto -->
+                <div class="col-md-4">
+                    <div class="mb-4">
+                         <label class="form-label text-muted">Nombre</label>
+                 <asp:TextBox ID="TextBox2" runat="server" CssClass="form-control" TextMode="SingleLine"/>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+           </div>
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

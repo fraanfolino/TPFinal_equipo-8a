@@ -169,9 +169,7 @@ namespace Negocio
                         aux.ImagenUrl = new List<string> { Convert.ToString(datos.Lectorbd["UrlImagen"]) };
                     }
 
-
                     listaProductos.Add(aux);
-
                     ultCarga = aux;
                 }
             }
@@ -184,7 +182,56 @@ namespace Negocio
 
         }
 
+        public List<Producto> ListarProductos(string marca = null, string categoria = null)
+        {
+            AccesoBD datos = new AccesoBD();
+            List<Producto> listaProductos = new List<Producto>();
 
+            try
+            {
+                datos.setearProcedimiento("sp_ListarProductosPorMarcayCategoria");
+                datos.setearParametro("@MarcaNombre", string.IsNullOrEmpty(marca) ? (object)DBNull.Value : marca);
+                datos.setearParametro("@CategoriaNombre", string.IsNullOrEmpty(categoria) ? (object)DBNull.Value : categoria);
+                datos.ejecutarLectura();
+
+
+                while (datos.Lectorbd.Read())
+                {
+                
+                    Producto aux = new Producto();
+                    aux.Id = Convert.ToInt32(datos.Lectorbd["Id"]);
+                    aux.Nombre = Convert.ToString(datos.Lectorbd["Nombre"]);
+                    aux.Descripcion = Convert.ToString(datos.Lectorbd["Descripcion"]);
+                    aux.Precio = Convert.ToDecimal(datos.Lectorbd["Precio"]);
+
+                    Categoria cate = new Categoria();
+                    cate.Id = Convert.ToInt32(datos.Lectorbd["IdCategoria"]);
+                    cate.Nombre = Convert.ToString(datos.Lectorbd["Categoria"]);
+                    aux.Categoria = cate;
+
+                    Marca mar = new Marca();
+                    mar.Id = Convert.ToInt32(datos.Lectorbd["IdMarca"]);
+                    mar.Nombre = Convert.ToString(datos.Lectorbd["Marca"]);
+                    aux.Marca = mar;
+
+
+                    aux.ImagenUrl = new List<string>();
+
+                    if (datos.Lectorbd["UrlImagen"] != DBNull.Value)
+                    {
+                        aux.ImagenUrl.Add(Convert.ToString(datos.Lectorbd["UrlImagen"]));
+                    }
+
+                    listaProductos.Add(aux);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return listaProductos;
+        }
 
     }
 }

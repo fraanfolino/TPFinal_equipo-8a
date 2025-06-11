@@ -3,8 +3,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" 
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" 
       integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
 <link href="https://cdn.jsdelivr.net/npm/tom-select@2.0.0-rc.4/dist/css/tom-select.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/tom-select@2.0.0-rc.4/dist/js/tom-select.complete.min.js"></script>
@@ -28,7 +27,6 @@
   line-height: 1.5; /* Altura de línea */
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
 }
- 
 
 .ts-dropdown .option {
   font-size: 1rem;        /* Cambia el tamaño del texto */
@@ -104,7 +102,13 @@
             create: false,
             onChange: function (value) {
                 this.close(); // Cierra el dropdown al seleccionar un ítem
-            },
+                },
+                onDropdownOpen: function () {
+                    if (this.items.length > 0) {
+                        this.clear();         // Elimina el item seleccionado
+                        this.focus();         // Pone el foco en el input
+                    }
+                },
             render: {
                 option: function (data, escape) {
                     const date = data.date ? escape(data.date) : '';

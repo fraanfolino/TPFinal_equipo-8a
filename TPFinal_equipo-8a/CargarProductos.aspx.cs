@@ -22,6 +22,7 @@ namespace TPFinal_equipo_8a
                     productoSeleccionado.Items.Add(item.Nombre);
 
                 ddlCategoria.DataSource = CargarCategorias();
+
                 ddlCategoria.DataTextField = "nombre";
                 ddlCategoria.DataBind();
 
@@ -32,8 +33,6 @@ namespace TPFinal_equipo_8a
                 ddlTalles.DataSource = CargarTalles();
                 ddlTalles.DataTextField = "etiqueta";
                 ddlTalles.DataBind();
-
-
 
                 txtUnidades.Attributes["min"] = "1";
 

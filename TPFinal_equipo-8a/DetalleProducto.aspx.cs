@@ -45,9 +45,10 @@ namespace TPFinal_equipo_8a
             if (int.TryParse(Request.QueryString["Id"], out idProducto))
             {
                 int idUsuario = ((Usuario)Session["usuario"]).Id;
+                int idTalle = Convert.ToInt32(ddlTalles.SelectedValue);
 
                 CarroNegocio carroNegocio = new CarroNegocio();
-                carroNegocio.AgregarOActualizarProductoEnCarro(idProducto, idUsuario);
+                carroNegocio.AgregarOActualizarProductoEnCarro(idProducto, idUsuario, idTalle);
 
                 Response.Redirect("Carro.aspx");
             }

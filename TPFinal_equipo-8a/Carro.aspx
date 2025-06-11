@@ -34,6 +34,7 @@
                         <h5 class="card-title"><%# Eval("Producto.Nombre") %></h5>
                         <p class="card-text">Precio: $<%# Eval("Producto.Precio") %></p>
                         <p class="card-text">Cantidad: <%# Eval("Cantidad") %></p>
+                        <p class="card-text">Talle: <%# Eval("Talle") %></p>
 
                         <a href="Catalogo.aspx" class="btn btn-primary btn-lg rounded-pill">Volver al Catálogo</a>
 

@@ -32,7 +32,13 @@
         <h1><asp:Label ID="lblNombre" runat="server" CssClass="display-4"></asp:Label></h1>
         <p class="lead"><asp:Label ID="lblDescripcion" runat="server"></asp:Label></p>
         <h3>Precio: $<asp:Label ID="lblPrecio" runat="server"></asp:Label></h3>
-          <asp:DropDownList ID="ddlTalles" runat="server"></asp:DropDownList>
+          <label for="ddlTalles" class="form-label fw-bold text-primary"> Talles disponibles:</label>
+<asp:DropDownList ID="ddlTalles" runat="server" CssClass="form-select form-select-lg">
+    <asp:ListItem Text="Selecciona un talle..." Value="" Selected="True" />
+</asp:DropDownList>
+
+
+
           <asp:Button ID="AgregarCarro" runat="server" CssClass="btn btn-primary" Text="Agregar al carrito"  OnClick="btnAgregarCarro_Click" />
       </div>
     </div>

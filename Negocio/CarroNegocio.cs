@@ -110,7 +110,7 @@ namespace Negocio
                     {
                         Producto = prod,
                         Cantidad = cantidad,
-                        Talle = talleEtiqueta // 🔹 Guardar el talle en el carrito
+                        Talle = talleEtiqueta 
                     };
 
                     carrito.Add(item);

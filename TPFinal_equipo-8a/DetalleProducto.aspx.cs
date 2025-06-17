@@ -4,7 +4,8 @@ using System.Linq;
 using System.Web.UI;
 using Negocio;
 using System.Collections.Generic;
-using Dominio; 
+using Dominio;
+using System.Web.Caching;
 
 namespace TPFinal_equipo_8a
 {
@@ -28,6 +29,7 @@ namespace TPFinal_equipo_8a
             }
         }
 
+   
         private void CargarTalles(int idProducto)
         {
             CarroNegocio negocio = new CarroNegocio();
@@ -35,9 +37,12 @@ namespace TPFinal_equipo_8a
 
             ddlTalles.DataSource = listaTalles;
             ddlTalles.DataTextField = "Etiqueta"; 
-            ddlTalles.DataValueField = "Id"; 
+            ddlTalles.DataValueField = "Id";
+           
             ddlTalles.DataBind();
         }
+
+
 
         protected void btnAgregarCarro_Click(object sender, EventArgs e)
         {
@@ -53,6 +58,10 @@ namespace TPFinal_equipo_8a
                 Response.Redirect("Carro.aspx");
             }
         }
+
+       
+
+
         private void CargarDetalle(int id)
         {
             ProductoNegocio productoNegocio = new ProductoNegocio();

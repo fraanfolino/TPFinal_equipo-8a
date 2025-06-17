@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
 
 namespace TPFinal_equipo_8a
 {
@@ -29,3 +30,5 @@ namespace TPFinal_equipo_8a
         }
     }
 }
+
+

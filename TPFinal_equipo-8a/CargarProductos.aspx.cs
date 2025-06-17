@@ -25,14 +25,49 @@ namespace TPFinal_equipo_8a
 
                 ActualizarListaProductos();
 
-                ddlTalles.DataSource = CargarTalles();
-                ddlTalles.DataTextField = "etiqueta";
-                ddlTalles.DataBind();
+                //ddlTalles.DataSource = CargarTalles();
+                //ddlTalles.DataTextField = "etiqueta";
+                //ddlTalles.DataBind();
+
+                ddlTalles2.DataSource = CargarTalles();
+                ddlTalles2.DataTextField = "etiqueta";
+                ddlTalles2.DataBind();
 
                 txtUnidades.Attributes["min"] = "1";
 
+
+                MostrarStock();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             }
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         public List<string> CargarCategorias()
         {
@@ -97,5 +132,25 @@ namespace TPFinal_equipo_8a
         {
             ActualizarListaProductos();
         }
+
+
+        public void MostrarStock()
+        {
+
+
+
+            List<Producto> produ = new List<Producto>
+            {
+                new Producto { Id = 1, Nombre = "Coca-Cola", Precio = 150.00M },
+                new Producto { Id = 2, Nombre = "Pepsi", Precio = 145.00M },
+                new Producto { Id = 3, Nombre = "Fanta", Precio = 140.00M },
+            };
+
+            TablaStock.DataSource = produ;
+            TablaStock.DataBind();
+
+        }
+
+
     }
 }

@@ -12,7 +12,7 @@
 /* Ajusta exactamente al tamaño del form-select de Bootstrap */
 .ts-control {
   min-height: 2.375rem;
-  max-height: 4.375rem;
+  max-height: 2.375rem;
   height: 2.375rem;
   padding: 0.375rem 0.75rem;
   line-height: 1.5;
@@ -57,30 +57,40 @@
   caret-color: transparent;
 }
 
+
 </style>
 <h2>
-    <asp:Label ID="Titulo" runat="server" Text="Cargar Productos" />
+    <asp:Label ID="Titulo" runat="server" Text="Modificar Stock" />
 </h2>
 
     <asp:UpdatePanel ID="UpdatePanel2" runat="server">
         <ContentTemplate>
 
             <div class="row" style="height: 2rem;">
-                 <label class="form-label">Agregar Stock a Productos Existentes</label>
-                 </div>
+                 <label class="form-label">Agregar o Quitar Stock a Productos Existentes</label>
+            </div>
+      <div class="row">
+ <div class="col-md-4">
 
+       <div class="row">
 
-            <div class="row" style="height: 9rem;">
-                <!-- Cantidad -->
-                <div class="col-md-1">
+ <!-- Cantidad -->
+                <div class="col-md-3">
                     <div class="mb-1">
                         <label class="form-label text-muted">Cantidad</label>
                      <asp:TextBox ID="txtUnidades" runat="server" CssClass="form-control" TextMode="Number" Text="1"  />
                     </div>
                 </div>
 
+
+
+
+                       </div>
+
+
+       <div class="row">
                 <!-- Categoría -->
-                <div class="col-md-2">
+                <div class="col-md-6">
                     <div class="mb-2">
                         <label class="form-label text-muted">Categoría</label>
                         <asp:DropDownList ID="ddlCategoria" runat="server" CssClass="form-select" OnSelectedIndexChanged="ddlCategoria_SelectedIndexChanged" AutoPostBack="true" />
@@ -88,35 +98,77 @@
                 </div>
 
                 <!-- Marca -->
-                <div class="col-md-2">
+                <div class="col-md-6">
                     <div class="mb-2">
                         <label class="form-label text-muted">Marca</label>
                         <asp:DropDownList ID="ddlMarca" runat="server" CssClass="form-select" OnSelectedIndexChanged="ddlMarca_SelectedIndexChanged" AutoPostBack="true" />
                     </div>
                 </div>
+         </div>
+
+              <div class="row">
 
                 <!-- Productos con búsqueda -->
-                <div class="col-md-5">
-                    <div class="mb-5">
+                <div class="col-md-12">
+                    <div class="mb-2">
                         <label for="<%= productoSeleccionado.ClientID %>" class="form-label text-muted">Productos</label>
                         <select id="productoSeleccionado" runat="server"></select>
                     </div>
                 </div>
+            </div>
 
-                <div class="col-md-2">
-                    <div class="mb-2">
-                        <label for="<%= ddlTalles.ClientID %>" class="form-label text-muted">Talles</label>
-                        <select id="ddlTalles" runat="server" multiple></select>
+            <div class="row">
+                    <div class="col-md-12">
+                        <div class="mb-2">
+                            <label for="<%= ddlTalles2.ClientID %>" class="form-label text-muted">Talles</label>
+                            <select id="ddlTalles2" runat="server" multiple></select>
+                        </div>
+                    </div>
+            </div>
+                    <div class="row">
+                       <label class="form-label text-muted">Errores Acá</label>
+                          </div>
+         <div class="row">    
+                 <div class="col-md-6">
+                         <asp:Button Text="Agregar Stock" runat="server" CssClass="btn btn-primary w-100" />
+                      </div>
+             <div class="col-md-6">
+                    <asp:Button Text="Eliminar Stock" runat="server" CssClass="btn btn-danger w-100"/>       
+            </div>
+                </div>
+
+
+<div class="row my-4"></div>
+
+     </div>
+
+
+                    <div class="col-md-4">
+                    <div class="mb-1">
+                    <label class="form-label text-muted">Stock</label>
+            <asp:GridView ID="TablaStock" runat="server" AutoGenerateColumns="False">
+    <Columns>
+        <asp:BoundField DataField="Id" HeaderText="ID" />
+        <asp:BoundField DataField="Nombre" HeaderText="Nombre del Producto" />
+        <asp:BoundField DataField="Precio" HeaderText="Precio" DataFormatString="{0:C}" />
+    </Columns>
+</asp:GridView>
+
                     </div>
                 </div>
-   </div>
 
-                 <div class="row" style="height: 2rem;">
-                 <label class="form-label">Agregar Nuevo Producto</label>
-                 </div>
 
-                        <div class="row" style="height: 9rem;">
-                <!-- Cantidad -->
+       </div>
+
+
+
+<%--                        <div class="row" style="height: 2rem;">
+                 <label class="form-label">Agregar Nuevos Productos</label>
+            </div>
+
+       <div class="row">
+
+ <!-- Cantidad -->
                 <div class="col-md-1">
                     <div class="mb-1">
                         <label class="form-label text-muted">Cantidad</label>
@@ -139,35 +191,35 @@
                         <asp:DropDownList ID="DropDownList2" runat="server" CssClass="form-select" OnSelectedIndexChanged="ddlMarca_SelectedIndexChanged" AutoPostBack="true" />
                     </div>
                 </div>
+         </div>
 
-                <!-- Nombre Producto -->
-                <div class="col-md-4">
-                    <div class="mb-4">
-                         <label class="form-label text-muted">Nombre</label>
-                 <asp:TextBox ID="TextBox2" runat="server" CssClass="form-control" TextMode="SingleLine"/>
+              <div class="row">
+
+                <!-- Productos con búsqueda -->
+                <div class="col-md-5">
+                    <div class="mb-2">
+   
+
                     </div>
                 </div>
+            </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-           </div>
-
-
-
-
-
-
-
+            <div class="row">
+                    <div class="col-md-5">
+                        <div class="mb-2">
+                            <label for="<%= ddlTalles2.ClientID %>" class="form-label text-muted">Talles</label>
+                            <select id="Select2" runat="server" multiple></select>
+                        </div>
+                    </div>
+            </div>
+                    <div class="row">
+                       <label class="form-label text-muted">Errores Acá</label>
+                          </div>
+         <div class="row">    
+                <div class="mb-2">
+                    <asp:Button Text="Agregar Stock" runat="server" CssClass="btn btn-primary"/>
+                </div>
+            </div>--%>
 
 
 
@@ -205,7 +257,7 @@
             }
         });
 
-        var tsTalles = new TomSelect("#<%= ddlTalles.ClientID %>", {
+<%--        var tsTalles = new TomSelect("#<%= ddlTalles.ClientID %>", {
             plugins: ['remove_button'],
             create: false,
             maxItems: null,
@@ -228,10 +280,42 @@
         });
 
         // Le asignas altura directamente al wrapper generado:
-        tsTalles.control.style.height = '6rem';
-        tsTalles.control.style.maxHeight = '6rem';
+        tsTalles.control.style.height = '2.375rem';
+        tsTalles.control.style.maxHeight = '2.375rem';
         tsTalles.control.style.fontSize = '0.75rem';
-        tsTalles.control.querySelector('input').style.caretColor = 'transparent';
+        tsTalles.control.querySelector('input').style.caretColor = 'transparent';--%>
+
+        var tsTalles2 = new TomSelect("#<%= ddlTalles2.ClientID %>", {
+            plugins: ['remove_button'],
+            create: false,
+            maxItems: null,
+            onItemAdd: function () {
+                this.setTextboxValue('');
+                this.refreshOptions();
+            },
+            render: {
+                option: function (data, escape) {
+                    const date = data.date ? escape(data.date) : '';
+                    return `<div class="d-flex">
+                <span>${escape(data.value)}</span>
+                <span class="ms-auto text-muted">${date}</span>
+            </div>`;
+                },
+                item: function (data, escape) {
+                    return `<div>${escape(data.value)}</div>`;
+                }
+            }
+        });
+
+        // Estilo personalizado si lo necesitás:
+        //tsTalles2.control.style.height = '2.375rem';
+        //tsTalles2.control.style.maxHeight = '2.375rem';
+        //tsTalles2.control.style.fontSize = '0.75rem';
+        tsTalles2.control.style.height = '4.75rem';
+        tsTalles2.control.style.maxHeight = '4.75rem';
+        tsTalles2.control.style.fontSize = '0.75rem';
+        tsTalles2.control.querySelector('input').style.caretColor = 'transparent';
+
     }
 
     // Llamada inicial cuando la página se carga por primera vez

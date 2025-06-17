@@ -37,7 +37,8 @@ namespace TPFinal_equipo_8a
 
             ddlTalles.DataSource = listaTalles;
             ddlTalles.DataTextField = "Etiqueta"; 
-            ddlTalles.DataValueField = "Id"; 
+            ddlTalles.DataValueField = "Id";
+           
             ddlTalles.DataBind();
         }
 

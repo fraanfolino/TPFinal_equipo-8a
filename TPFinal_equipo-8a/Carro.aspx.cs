@@ -18,7 +18,31 @@ namespace TPFinal_equipo_8a
             {
                 CargarCarrito();
             }
-        }
+
+            string accion = Request.QueryString["accion"];
+
+          
+            if (!string.IsNullOrEmpty(accion))
+            {
+                int productoId, talleId;
+
+                if (int.TryParse(Request.QueryString["productoId"], out productoId) &&
+                    int.TryParse(Request.QueryString["talleId"], out talleId))
+                {
+                    int idUsuario = ((Usuario)Session["usuario"]).Id;
+                    CarroNegocio negocio = new CarroNegocio();
+
+                    if (accion == "SumarCantidad")
+                    {
+                        negocio.SumarCantidadBD(idUsuario, productoId, talleId);
+                    }
+                    else if (accion == "RestarCantidad")
+                    {
+                        negocio.RestarCantidadBD(idUsuario, productoId, talleId);
+                    }
+                }
+                Response.Redirect("Carro.aspx");
+            }
 
         private void CargarCarrito()
         {

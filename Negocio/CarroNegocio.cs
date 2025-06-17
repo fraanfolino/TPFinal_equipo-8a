@@ -130,28 +130,27 @@ namespace Negocio
         }
 
 
-        
-        
-            public void SumarCantidadBD(int usuarioId, int productoId, int talleId)
-            {
-                AccesoBD datos = new AccesoBD();
-                datos.setearProcedimiento("sp_SumarCantidadCarrito");
-                datos.setearParametro("@usuarioId", usuarioId);
-                datos.setearParametro("@productoId", productoId);
-                datos.setearParametro("@talleId", talleId);
-                datos.ejecutarAccion();
-            }
 
-            public void RestarCantidadBD(int usuarioId, int productoId, int talleId)
-            {
-                AccesoBD datos = new AccesoBD();
-                datos.setearProcedimiento("sp_RestarCantidadCarrito");
-                datos.setearParametro("@usuarioId", usuarioId);
-                datos.setearParametro("@productoId", productoId);
-                datos.setearParametro("@talleId", talleId);
-                datos.ejecutarAccion();
-            }
-        
+
+        public void SumarCantidadBD(int usuarioId, int productoId, string talle)
+        {
+            AccesoBD datos = new AccesoBD();
+            datos.setearProcedimiento("sp_SumarCantidadCarrito");
+            datos.setearParametro("@usuarioId", usuarioId);
+            datos.setearParametro("@productoId", productoId);
+            datos.setearParametro("@talle", talle); 
+            datos.ejecutarAccion();
+        }
+
+        public void RestarCantidadBD(int usuarioId, int productoId, string talle)
+        {
+            AccesoBD datos = new AccesoBD();
+            datos.setearProcedimiento("sp_RestarCantidadCarrito");
+            datos.setearParametro("@usuarioId", usuarioId);
+            datos.setearParametro("@productoId", productoId);
+            datos.setearParametro("@talle", talle);
+            datos.ejecutarAccion();
+        }
 
     }
 }

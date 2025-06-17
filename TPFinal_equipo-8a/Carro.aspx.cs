@@ -24,25 +24,27 @@ namespace TPFinal_equipo_8a
           
             if (!string.IsNullOrEmpty(accion))
             {
-                int productoId, talleId;
+                int productoId;
+              
+                string talle = Request.QueryString["talle"];  
 
-                if (int.TryParse(Request.QueryString["productoId"], out productoId) &&
-                    int.TryParse(Request.QueryString["talleId"], out talleId))
+                if (int.TryParse(Request.QueryString["productoId"], out productoId) && !string.IsNullOrEmpty(talle))
                 {
                     int idUsuario = ((Usuario)Session["usuario"]).Id;
                     CarroNegocio negocio = new CarroNegocio();
 
                     if (accion == "SumarCantidad")
                     {
-                        negocio.SumarCantidadBD(idUsuario, productoId, talleId);
+                        negocio.SumarCantidadBD(idUsuario, productoId, talle);
                     }
                     else if (accion == "RestarCantidad")
                     {
-                        negocio.RestarCantidadBD(idUsuario, productoId, talleId);
+                        negocio.RestarCantidadBD(idUsuario, productoId, talle);
                     }
                 }
                 Response.Redirect("Carro.aspx");
             }
+             }
 
         private void CargarCarrito()
         {

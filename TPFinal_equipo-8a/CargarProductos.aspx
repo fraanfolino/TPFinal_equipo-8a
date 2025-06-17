@@ -57,6 +57,11 @@
   caret-color: transparent;
 }
 
+.gridview-compact tr td {
+    padding-top: 1.2px;
+    padding-bottom: 1.2px;
+    line-height: 1.5;
+}
 
 </style>
 <h2>
@@ -146,11 +151,14 @@
                     <div class="col-md-4">
                     <div class="mb-1">
                     <label class="form-label text-muted">Stock</label>
-            <asp:GridView ID="TablaStock" runat="server" AutoGenerateColumns="False">
+
+<asp:GridView ID="TablaStock" runat="server" AutoGenerateColumns="False"
+                  CssClass="table table-striped table-bordered table-condensed gridview-compact"
+                  EnableSortingAndPagingCallbacks="false">
     <Columns>
-        <asp:BoundField DataField="Id" HeaderText="ID" />
-        <asp:BoundField DataField="Nombre" HeaderText="Nombre del Producto" />
-        <asp:BoundField DataField="Precio" HeaderText="Precio" DataFormatString="{0:C}" />
+        <asp:BoundField DataField="Talle" HeaderText="Talle" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" ItemStyle-Width ="10%" />
+        <asp:BoundField DataField="Cantidad" HeaderText="Cantidad"  HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center"  ItemStyle-Width ="10%" />
+        <asp:BoundField DataField="Nombre" HeaderText="Nombre" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" ItemStyle-Width ="80%" />
     </Columns>
 </asp:GridView>
 
@@ -158,132 +166,47 @@
                 </div>
 
 
-       </div>
-
-
-
-<%--                        <div class="row" style="height: 2rem;">
-                 <label class="form-label">Agregar Nuevos Productos</label>
-            </div>
-
-       <div class="row">
-
- <!-- Cantidad -->
-                <div class="col-md-1">
-                    <div class="mb-1">
-                        <label class="form-label text-muted">Cantidad</label>
-                     <asp:TextBox ID="TextBox1" runat="server" CssClass="form-control" TextMode="Number" Text="1"  />
-                    </div>
-                </div>
-
-                <!-- Categoría -->
-                <div class="col-md-2">
-                    <div class="mb-2">
-                        <label class="form-label text-muted">Categoría</label>
-                        <asp:DropDownList ID="DropDownList1" runat="server" CssClass="form-select" OnSelectedIndexChanged="ddlCategoria_SelectedIndexChanged" AutoPostBack="true" />
-                    </div>
-                </div>
-
-                <!-- Marca -->
-                <div class="col-md-2">
-                    <div class="mb-2">
-                        <label class="form-label text-muted">Marca</label>
-                        <asp:DropDownList ID="DropDownList2" runat="server" CssClass="form-select" OnSelectedIndexChanged="ddlMarca_SelectedIndexChanged" AutoPostBack="true" />
-                    </div>
-                </div>
-         </div>
-
-              <div class="row">
-
-                <!-- Productos con búsqueda -->
-                <div class="col-md-5">
-                    <div class="mb-2">
-   
-
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                    <div class="col-md-5">
-                        <div class="mb-2">
-                            <label for="<%= ddlTalles2.ClientID %>" class="form-label text-muted">Talles</label>
-                            <select id="Select2" runat="server" multiple></select>
-                        </div>
-                    </div>
-            </div>
-                    <div class="row">
-                       <label class="form-label text-muted">Errores Acá</label>
-                          </div>
-         <div class="row">    
-                <div class="mb-2">
-                    <asp:Button Text="Agregar Stock" runat="server" CssClass="btn btn-primary"/>
-                </div>
-            </div>--%>
-
-
-
-
-
-
-
+       </div>                               
 
 <script type="text/javascript">
     function initTomSelects() {
-        new TomSelect("#<%= productoSeleccionado.ClientID %>", {
+        new TomSelect("#<%= productoSeleccionado.ClientID %>",
+        {
             maxItems: 1,
             plugins: [],
-            create: false,
-            onChange: function (value) {
+            create: true,
+            onChange: function (value)
+            {
                 this.close();
+
+                if (value.length != 0)
+                {
+                    __doPostBack('<%= productoSeleccionado.ClientID %>', '');
+                }
             },
-            onDropdownOpen: function () {
-                if (this.items.length > 0) {
-                    this.clear();
+            onDropdownOpen: function ()
+            {
+                if (this.items.length > 0)
+                {
                     this.focus();
                 }
             },
-            render: {
-                option: function (data, escape) {
+            render:
+            {
+                option: function (data, escape)
+                {
                     const date = data.date ? escape(data.date) : '';
                     return `<div class="d-flex">
                         <span>${escape(data.value)}</span>
                         <span class="ms-auto text-muted">${date}</span>
-                    </div>`;
+                        </div>`;
                 },
-                item: function (data, escape) {
+                item: function (data, escape)
+                {
                     return `<div>${escape(data.value)}</div>`;
                 }
             }
         });
-
-<%--        var tsTalles = new TomSelect("#<%= ddlTalles.ClientID %>", {
-            plugins: ['remove_button'],
-            create: false,
-            maxItems: null,
-            onItemAdd: function () {
-                this.setTextboxValue('');
-                this.refreshOptions();
-            },
-            render: {
-                option: function (data, escape) {
-                    const date = data.date ? escape(data.date) : '';
-                    return `<div class="d-flex">
-                        <span>${escape(data.value)}</span>
-                        <span class="ms-auto text-muted">${date}</span>
-                    </div>`;
-                },
-                item: function (data, escape) {
-                    return `<div>${escape(data.value)}</div>`;
-                }
-            }
-        });
-
-        // Le asignas altura directamente al wrapper generado:
-        tsTalles.control.style.height = '2.375rem';
-        tsTalles.control.style.maxHeight = '2.375rem';
-        tsTalles.control.style.fontSize = '0.75rem';
-        tsTalles.control.querySelector('input').style.caretColor = 'transparent';--%>
 
         var tsTalles2 = new TomSelect("#<%= ddlTalles2.ClientID %>", {
             plugins: ['remove_button'],
@@ -307,10 +230,6 @@
             }
         });
 
-        // Estilo personalizado si lo necesitás:
-        //tsTalles2.control.style.height = '2.375rem';
-        //tsTalles2.control.style.maxHeight = '2.375rem';
-        //tsTalles2.control.style.fontSize = '0.75rem';
         tsTalles2.control.style.height = '4.75rem';
         tsTalles2.control.style.maxHeight = '4.75rem';
         tsTalles2.control.style.fontSize = '0.75rem';

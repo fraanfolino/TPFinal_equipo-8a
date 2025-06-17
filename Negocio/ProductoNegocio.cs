@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -233,5 +235,24 @@ namespace Negocio
             return listaProductos;
         }
 
+        public DataTable ListarStock(string nombre)
+        {
+            AccesoBD datos = new AccesoBD();
+            DataTable tabla = new DataTable();
+
+            try
+            {
+                datos.setearProcedimiento("sp_ObtenerStockPorNombre");
+                datos.setearParametro("@NombreProducto", nombre);
+                datos.ejecutarLectura();
+                tabla.Load(datos.Lectorbd);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return tabla;
+        }
     }
 }

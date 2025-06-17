@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -34,24 +35,13 @@ namespace TPFinal_equipo_8a
                 ddlTalles2.DataBind();
 
                 txtUnidades.Attributes["min"] = "1";
-
-
-                MostrarStock();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             }
+            else
+            {
+                MostrarStock();
+            }
+
+
         }
 
 
@@ -125,7 +115,11 @@ namespace TPFinal_equipo_8a
             { productoSeleccionado.Items.Clear(); }
 
             foreach (var item in productos)
+            {
                 productoSeleccionado.Items.Add(item.Nombre);
+            }
+
+            MostrarStock();
         }
 
         protected void ddlMarca_SelectedIndexChanged(object sender, EventArgs e)
@@ -133,24 +127,12 @@ namespace TPFinal_equipo_8a
             ActualizarListaProductos();
         }
 
-
         public void MostrarStock()
         {
-
-
-
-            List<Producto> produ = new List<Producto>
-            {
-                new Producto { Id = 1, Nombre = "Coca-Cola", Precio = 150.00M },
-                new Producto { Id = 2, Nombre = "Pepsi", Precio = 145.00M },
-                new Producto { Id = 3, Nombre = "Fanta", Precio = 140.00M },
-            };
-
-            TablaStock.DataSource = produ;
+            ProductoNegocio productoNegocio = new ProductoNegocio();
+            DataTable tablaStock = productoNegocio.ListarStock(productoSeleccionado.Value);
+            TablaStock.DataSource = tablaStock;
             TablaStock.DataBind();
-
         }
-
-
     }
 }

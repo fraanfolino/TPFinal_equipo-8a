@@ -52,8 +52,26 @@ namespace TPFinal_equipo_8a
                 int idUsuario = ((Usuario)Session["usuario"]).Id;
                 int idTalle = Convert.ToInt32(ddlTalles.SelectedValue);
 
+                ProductoNegocio productoNegocio = new ProductoNegocio();
+                Producto producto = productoNegocio.ObtenerProducto(idProducto);
+
+             
+                producto.Talle = new Talle
+                {
+                    Id = idTalle,
+                    Etiqueta = ddlTalles.SelectedItem.Text 
+                };
+
+                
+                ItemCarrito item = new ItemCarrito
+                {
+                    Producto = producto,
+                    Cantidad = 1
+                };
+
+             
                 CarroNegocio carroNegocio = new CarroNegocio();
-                carroNegocio.AgregarOActualizarProductoEnCarro(idProducto, idUsuario, idTalle);
+                carroNegocio.AgregarOActualizarProductoEnCarro(item, idUsuario);
 
                 Response.Redirect("Carro.aspx");
             }

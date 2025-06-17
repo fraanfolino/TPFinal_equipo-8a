@@ -7,7 +7,7 @@ namespace Negocio
     public class CarroNegocio
     {
 
-        public void AgregarOActualizarProductoEnCarro(int idProducto, int idUsuario, int idTalle)
+        public void AgregarOActualizarProductoEnCarro(ItemCarrito item, int idUsuario)
         {
             AccesoBD acceso = new AccesoBD();
             try
@@ -15,8 +15,8 @@ namespace Negocio
                 acceso.limpiarParametros();
                 acceso.setearProcedimiento("sp_AgregarOActualizarCarrito");
                 acceso.setearParametro("@usuarioId", idUsuario);
-                acceso.setearParametro("@productoId", idProducto);
-                acceso.setearParametro("@talleId", idTalle);
+                acceso.setearParametro("@productoId", item.Producto.Id);
+                acceso.setearParametro("@talleId", item.Producto.Talle.Id);
                 acceso.ejecutarAccion();
             }
             catch (Exception ex)
@@ -28,7 +28,6 @@ namespace Negocio
                 acceso.cerrarConexion();
             }
         }
-
 
         public List<Talle> ObtenerTallesPorProducto(int idProducto)
         {

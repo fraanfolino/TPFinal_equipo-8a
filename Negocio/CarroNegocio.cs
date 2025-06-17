@@ -82,7 +82,7 @@ namespace Negocio
                     int cantidad = Convert.ToInt32(acceso.Lectorbd["cantidad"]);
                     string talleEtiqueta = acceso.Lectorbd["talle_etiqueta"].ToString();
 
-                    // Ahora se agrupa solo si el producto y el talle coinciden.
+                   
                     if (ultimoItem != null &&
                         ultimoItem.Producto.Id == prodId &&
                         ultimoItem.Producto.Talle.Etiqueta == talleEtiqueta)
@@ -98,7 +98,7 @@ namespace Negocio
                         continue;
                     }
 
-                    // Si no se agrupa, se crea un nuevo ítem.
+                    
                     Producto prod = new Producto();
                     prod.Id = prodId;
                     prod.Nombre = nombre;
@@ -109,7 +109,7 @@ namespace Negocio
                     else
                         prod.ImagenUrl = new List<string>();
 
-                    // Se asigna el talle mediante la etiqueta (si tu SP tuviera el ID del talle, sería ideal incluirlo).
+                   
                     prod.Talle = new Talle()
                     {
                         Etiqueta = talleEtiqueta

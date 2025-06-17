@@ -134,5 +134,16 @@ namespace TPFinal_equipo_8a
             TablaStock.DataSource = tablaStock;
             TablaStock.DataBind();
         }
+
+        protected void btnAgregar_Click(object sender, EventArgs e)
+        {
+            foreach (ListItem item in ddlTalles2.Items)
+            {
+                if (item.Selected)
+                {
+                    string talleSeleccionado = item.Value;
+                }
+            }
+        }
     }
 }

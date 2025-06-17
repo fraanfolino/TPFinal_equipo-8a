@@ -135,37 +135,28 @@
                           </div>
          <div class="row">    
                  <div class="col-md-6">
-                         <asp:Button Text="Agregar Stock" runat="server" CssClass="btn btn-primary w-100" />
+                         <asp:Button ID="btnAgregar" Text="Agregar Stock" runat="server" CssClass="btn btn-primary w-100" OnClick="btnAgregar_Click"/>
                       </div>
              <div class="col-md-6">
                     <asp:Button Text="Eliminar Stock" runat="server" CssClass="btn btn-danger w-100"/>       
             </div>
                 </div>
-
-
 <div class="row my-4"></div>
-
      </div>
-
-
                     <div class="col-md-4">
                     <div class="mb-1">
                     <label class="form-label text-muted">Stock</label>
-
-<asp:GridView ID="TablaStock" runat="server" AutoGenerateColumns="False"
-                  CssClass="table table-striped table-bordered table-condensed gridview-compact"
-                  EnableSortingAndPagingCallbacks="false">
-    <Columns>
-        <asp:BoundField DataField="Talle" HeaderText="Talle" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" ItemStyle-Width ="10%" />
-        <asp:BoundField DataField="Cantidad" HeaderText="Cantidad"  HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center"  ItemStyle-Width ="10%" />
-        <asp:BoundField DataField="Nombre" HeaderText="Nombre" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" ItemStyle-Width ="80%" />
-    </Columns>
-</asp:GridView>
-
+                        <asp:GridView ID="TablaStock" runat="server" AutoGenerateColumns="False"
+                                          CssClass="table table-striped table-bordered table-condensed gridview-compact"
+                                          EnableSortingAndPagingCallbacks="false">
+                            <Columns>
+                                <asp:BoundField DataField="Talle" HeaderText="Talle" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" ItemStyle-Width ="10%" />
+                                <asp:BoundField DataField="Cantidad" HeaderText="Cantidad"  HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center"  ItemStyle-Width ="10%" />
+                                <asp:BoundField DataField="Nombre" HeaderText="Nombre" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" ItemStyle-Width ="80%" />
+                            </Columns>
+                        </asp:GridView>
                     </div>
                 </div>
-
-
        </div>                               
 
 <script type="text/javascript">

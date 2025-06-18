@@ -3,7 +3,11 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
   
-     <a href="Carro.aspx" class="btn btn-outline-primary">Ver mi carrito</a>
+    <% if (Session["usuario"] != null) { %>
+    <a href="Carro.aspx" class="btn btn-outline-primary">
+        🛒 Ver mi carrito
+    </a>
+<% } %>
     <div class="container mt-5">
     <div class="row">
    

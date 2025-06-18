@@ -17,12 +17,6 @@ namespace TPFinal_equipo_8a
 
 
 
-            if (Session["usuario"] == null)
-            {
-                Response.Redirect("Catalogo.aspx");
-                return;
-            }
-
 
             if (!IsPostBack)
             {

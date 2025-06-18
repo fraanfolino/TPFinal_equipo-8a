@@ -2,7 +2,9 @@
     AutoEventWireup="true" CodeBehind="Catalogo.aspx.cs" Inherits="TPFinal_equipo_8a.Catalogo" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-  <div class="container mt-5">
+  
+     <a href="Carro.aspx" class="btn btn-outline-primary">Ver mi carrito</a>
+    <div class="container mt-5">
     <div class="row">
    
       <div class="col-md-3">
@@ -71,6 +73,8 @@
                     <a href="DetalleProducto.aspx?Id=<%# Eval("Id") %>" class="btn btn-primary">
                       Ver Detalle
                     </a>
+
+                    
                   </div>
                 </div>
               </div>

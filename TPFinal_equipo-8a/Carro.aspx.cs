@@ -14,6 +14,16 @@ namespace TPFinal_equipo_8a
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+
+
+
+            if (Session["usuario"] == null)
+            {
+                Response.Redirect("Catalogo.aspx");
+                return;
+            }
+
+
             if (!IsPostBack)
             {
                 CargarCarrito();

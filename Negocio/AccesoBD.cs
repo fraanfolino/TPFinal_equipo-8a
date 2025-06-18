@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -21,9 +22,9 @@ namespace Negocio
         public AccesoBD()
         {
             //FRAN
-            conexionbd = new SqlConnection("server=.\\SQLEXPRESS; database=ECOMMERCE_P3; integrated security=true");
+            //conexionbd = new SqlConnection("server=.\\SQLEXPRESS; database=ECOMMERCE_P3; integrated security=true");
             //NICO
-            //conexionbd = new SqlConnection("server=127.0.0.1,1433; database=ECOMMERCE_P3; User ID=sa; Password=BaseDeDatos#2;");
+            conexionbd = new SqlConnection("server=127.0.0.1,1433; database=ECOMMERCE_P3; User ID=sa; Password=BaseDeDatos#2;");
             comando = new SqlCommand();
         }
 
@@ -104,6 +105,8 @@ namespace Negocio
         {
             try
             {
+                if (conexionbd.State != ConnectionState.Open)
+                { conexionbd.Open(); }
                 comando.Connection = conexionbd;
                 comando.ExecuteNonQuery();
             }

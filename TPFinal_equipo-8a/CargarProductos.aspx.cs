@@ -17,6 +17,8 @@ namespace TPFinal_equipo_8a
             if (!IsPostBack)
             {
 
+                exitoMensaje.Visible = false;
+                errorMensaje.Visible = false;
 
                 ddlCategoria.DataSource = CargarCategorias();
                 ddlCategoria.DataBind();
@@ -26,38 +28,19 @@ namespace TPFinal_equipo_8a
 
                 ActualizarListaProductos();
 
-                //ddlTalles.DataSource = CargarTalles();
-                //ddlTalles.DataTextField = "etiqueta";
-                //ddlTalles.DataBind();
-
                 ddlTalles2.DataSource = CargarTalles();
                 ddlTalles2.DataTextField = "etiqueta";
                 ddlTalles2.DataBind();
 
-                txtUnidades.Attributes["min"] = "1";
+                txtCantidad.Attributes["min"] = "1";
             }
             else
             {
                 MostrarStock();
+                exitoMensaje.Visible = false;
+                errorMensaje.Visible = false;
             }
-
-
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         public List<string> CargarCategorias()
         {
@@ -137,12 +120,98 @@ namespace TPFinal_equipo_8a
 
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
+
+            if (productoSeleccionado.Value == "")
+            {
+                errorMensaje.Visible = true;
+                errorMensaje.Text = "Debe seleccionar un producto.";
+                return;
+            }
+
+
+            List<string> talles = new List<string>();  
+
             foreach (ListItem item in ddlTalles2.Items)
             {
                 if (item.Selected)
                 {
-                    string talleSeleccionado = item.Value;
+                    talles.Add(item.Value);
                 }
+            }
+
+            ProductoNegocio productoNegocio = new ProductoNegocio();
+
+            try
+            {
+                int cantidad = int.Parse(txtCantidad.Text);
+                int resultado = productoNegocio.AgregarStock(cantidad, productoSeleccionado.Value, talles);
+
+                if (resultado == 1)
+                {
+                    exitoMensaje.Visible = true;
+                    exitoMensaje.Text = "Stock agregado correctamente.";
+                    MostrarStock();
+                }
+                else if (resultado == 0)
+                {
+                    errorMensaje.Visible = true;
+                    errorMensaje.Text = "No se agrego ningun producto.";
+                }
+                else if (resultado == -1)
+                {
+                    errorMensaje.Visible = true;
+                    errorMensaje.Text = "Error al eliminar stock.";
+                }
+            }
+            catch (Exception ex)
+            {
+                errorMensaje.Visible = true;
+                errorMensaje.Text = ex.ToString();
+                throw;
+            }
+        }
+
+        protected void btnEliminar_Click(object sender, EventArgs e)
+        {
+            List<string> talles = new List<string>();
+
+            foreach (ListItem item in ddlTalles2.Items)
+            {
+                if (item.Selected)
+                {
+                    talles.Add(item.Value);
+                }
+            }
+
+            ProductoNegocio productoNegocio = new ProductoNegocio();
+
+            try
+            {
+                int cantidad = int.Parse(txtCantidad.Text);
+                int resultado = productoNegocio.DescontarStock(cantidad, productoSeleccionado.Value, talles);
+
+                if (resultado == 1)
+                {
+                    exitoMensaje.Visible = true;
+                    exitoMensaje.Text = "Stock eliminado correctamente.";
+                    MostrarStock();
+                }
+                else if (resultado == 0)
+                {
+                    errorMensaje.Visible = true;
+                    errorMensaje.Text = "No se elimino ningun elemento.";
+                }
+                else if (resultado == -1)
+                {
+                    errorMensaje.Visible = true;
+                    errorMensaje.Text = "Error al eliminar stock.";
+                }
+            }
+            catch (Exception ex)
+            {
+                errorMensaje.Visible = true;
+                errorMensaje.Text = ex.ToString();
+                throw;
             }
         }
     }

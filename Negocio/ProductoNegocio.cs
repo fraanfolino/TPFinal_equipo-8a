@@ -254,5 +254,106 @@ namespace Negocio
 
             return tabla;
         }
+
+        public int AgregarStock(int cantidad, string nombre, List<string> talles)
+        {
+            AccesoBD datos = new AccesoBD();
+            try
+            {
+                datos.setearProcedimiento("sp_AgregarStockProductoTalle");
+
+                int contador = 0;
+
+                foreach (var talle in talles)
+                {
+                    datos.setearParametro("@NombreProducto", nombre);
+                    datos.setearParametro("@EtiquetaTalle", talle);
+                    datos.setearParametro("@CantidadAgregar", cantidad);
+                    datos.ejecutarMasAcciones();
+                    datos.limpiarParametros();
+                    contador++;
+                }
+
+                if (contador > 0)
+                {
+                    return 1;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                return -1;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+
+        public int DescontarStock(int cantidad, string nombre, List<string> talles)
+        {
+            AccesoBD datos = new AccesoBD();
+            try
+            {
+                datos.setearProcedimiento("sp_DescontarStockProductoTalle");
+
+                int contador = 0;
+
+                foreach (var talle in talles)
+                {
+                    datos.setearParametro("@NombreProducto", nombre);
+                    datos.setearParametro("@EtiquetaTalle", talle);
+                    datos.setearParametro("@CantidadDescontar", cantidad);
+                    datos.ejecutarMasAcciones();
+                    datos.limpiarParametros();
+
+                    contador++;
+                }
+
+                if (contador > 0)
+                {
+                    return 1;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                return -1;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }

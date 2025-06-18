@@ -44,18 +44,18 @@
   border-radius: 0.375rem; /* igual que el control de Bootstrap */
 }
 
-.ts-control.multi .ts-control-input:focus {
-  caret-color: transparent; /* Oculta el cursor */
-}
+/*.ts-control.multi .ts-control-input:focus {
+  caret-color: transparent;*/ /* Oculta el cursor */
+/*}
 
 .ts-control.single .ts-control-input:focus {
-  caret-color: transparent; /* Para single select si hay texto fijo */
-}
+  caret-color: transparent;*/ /* Para single select si hay texto fijo */
+/*}*/
 
 /* Solo si hay items seleccionados */
-.ts-control.multi.has-items .ts-control-input {
+/*.ts-control.multi.has-items .ts-control-input {
   caret-color: transparent;
-}
+}*/
 
 .gridview-compact tr td {
     padding-top: 1.2px;
@@ -83,7 +83,7 @@
                 <div class="col-md-3">
                     <div class="mb-1">
                         <label class="form-label text-muted">Cantidad</label>
-                     <asp:TextBox ID="txtUnidades" runat="server" CssClass="form-control" TextMode="Number" Text="1"  />
+                     <asp:TextBox ID="txtCantidad" runat="server" CssClass="form-control" TextMode="Number" Text="1"  />
                     </div>
                 </div>
 
@@ -131,14 +131,19 @@
                     </div>
             </div>
                     <div class="row">
-                       <label class="form-label text-muted">Errores Acá</label>
-                          </div>
+                        <div class="col-md-12">
+                        <div class="mb-2">
+                       <asp:Label ID="errorMensaje" runat="server" class="alert-danger"></asp:Label>
+                       <asp:Label ID="exitoMensaje" runat="server" class="alert-success"></asp:Label>
+                        </div>
+                    </div>
+            </div>
          <div class="row">    
                  <div class="col-md-6">
                          <asp:Button ID="btnAgregar" Text="Agregar Stock" runat="server" CssClass="btn btn-primary w-100" OnClick="btnAgregar_Click"/>
                       </div>
              <div class="col-md-6">
-                    <asp:Button Text="Eliminar Stock" runat="server" CssClass="btn btn-danger w-100"/>       
+                    <asp:Button ID="btnEliminar" Text="Eliminar Stock" runat="server" CssClass="btn btn-danger w-100" OnClick="btnEliminar_Click"/>       
             </div>
                 </div>
 <div class="row my-4"></div>
@@ -163,24 +168,44 @@
     function initTomSelects() {
         new TomSelect("#<%= productoSeleccionado.ClientID %>",
         {
+            persist: false,
             maxItems: 1,
             plugins: [],
-            create: true,
             onChange: function (value)
             {
                 this.close();
 
-                if (value.length != 0)
-                {
+                if (value.length != 0) {
                     __doPostBack('<%= productoSeleccionado.ClientID %>', '');
                 }
+                else
+                {
+                    this.clear(); 
+                }
             },
+            //onBlur: function () {
+
+            //    alert("¡Este es un mensaje de alerta!");
+
+            //    if (!this.getValue() == "") {
+            //        this.clear(true); // Limpia visualmente e internamente
+            //        alert("¡Este es un mensaje de alerta!");
+            //    }
+            //},
             onDropdownOpen: function ()
             {
                 if (this.items.length > 0)
                 {
                     this.focus();
                 }
+            },
+            onFocus: function () {
+                var errorLabel = document.getElementById("<%= errorMensaje.ClientID %>");
+                var exitoLabel = document.getElementById("<%= exitoMensaje.ClientID %>");
+
+                if (errorLabel) errorLabel.style.display = "none";
+                if (exitoLabel) exitoLabel.style.display = "none";
+
             },
             render:
             {
@@ -199,21 +224,33 @@
             }
         });
 
-        var tsTalles2 = new TomSelect("#<%= ddlTalles2.ClientID %>", {
+        var tsTalles2 = new TomSelect("#<%= ddlTalles2.ClientID %>",
+        {
             plugins: ['remove_button'],
             create: false,
             maxItems: null,
-            onItemAdd: function () {
+            onItemAdd: function ()
+            {
                 this.setTextboxValue('');
                 this.refreshOptions();
             },
-            render: {
-                option: function (data, escape) {
+            onFocus: function ()
+            {
+                var errorLabel = document.getElementById("<%= errorMensaje.ClientID %>");
+                var exitoLabel = document.getElementById("<%= exitoMensaje.ClientID %>");
+
+                if(errorLabel) errorLabel.style.display = "none";
+                if(exitoLabel) exitoLabel.style.display = "none";
+            },
+            render:
+            {
+                option: function (data, escape)
+                {
                     const date = data.date ? escape(data.date) : '';
                     return `<div class="d-flex">
-                <span>${escape(data.value)}</span>
-                <span class="ms-auto text-muted">${date}</span>
-            </div>`;
+                            <span>${escape(data.value)}</span>
+                            <span class="ms-auto text-muted">${date}</span>
+                            </div>`;
                 },
                 item: function (data, escape) {
                     return `<div>${escape(data.value)}</div>`;

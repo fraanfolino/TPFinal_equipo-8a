@@ -38,11 +38,11 @@
                                                     <h5 class="card-title"><%# Eval("Producto.Nombre") %></h5>
                                                     <p class="card-text">Precio: $<%# Eval("Producto.Precio") %></p>
                                                     <p class="card-text">Cantidad: <%# Eval("Cantidad") %></p>
-                                                    <p class="card-text">Talle: <%# Eval("Talle") %></p>
+             <p class="card-text">Talle: <%# Eval("Producto.Talle.Etiqueta") %></p>
                                                         <div class="d-flex align-items-center">
-                                    <a href='Carro.aspx?accion=RestarCantidad&productoId=<%# Eval("Producto.Id") %>&talle=<%# Eval("Talle") %>' class="btn btn-outline-danger btn-sm">-</a>
+                                    <a href='Carro.aspx?accion=RestarCantidad&productoId=<%# Eval("Producto.Id") %>&talle=<%# Eval("Producto.Talle.Etiqueta") %>' class="btn btn-outline-danger btn-sm">-</a>
                                     <span class="mx-2"><%# Eval("Cantidad") %></span>
-                                    <a href='Carro.aspx?accion=SumarCantidad&productoId=<%# Eval("Producto.Id") %>&talle=<%# Eval("Talle") %>' class="btn btn-outline-success btn-sm">+</a>
+                                    <a href='Carro.aspx?accion=SumarCantidad&productoId=<%# Eval("Producto.Id") %>&talle=<%# Eval("Producto.Talle.Etiqueta") %>' class="btn btn-outline-success btn-sm">+</a>
                                     </div>
 
 

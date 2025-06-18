@@ -47,8 +47,9 @@
 
 
 
-                                                <a href="Catalogo.aspx" class="btn btn-primary btn-lg rounded-pill">Volver al Catálogo</a>
+                                                    <a href="Catalogo.aspx" class="btn btn-primary btn-lg rounded-pill">Volver al Catálogo</a>
 
+                                                    
                       
                                             </div>
                                         </div>

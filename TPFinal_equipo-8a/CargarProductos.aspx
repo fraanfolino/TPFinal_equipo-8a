@@ -9,7 +9,6 @@
 <script src="https://cdn.jsdelivr.net/npm/tom-select@2.0.0-rc.4/dist/js/tom-select.complete.min.js"></script>
 
 <style>
-/*este es del tom , se hizo el css como el de boot*/
 .ts-control {
   min-height: 2.375rem;
   max-height: 2.375rem;
@@ -36,7 +35,6 @@
   background-color: #fff;
 }
 
-/* focus como Bootstrap */
 .ts-wrapper:focus-within {
   border-color: #86b7fe;
   box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
@@ -121,18 +119,69 @@
                 </div>
 <div class="row my-4"></div>
      </div>
-                    <div class="col-md-4">
+                    <div class="col-md-2">
                     <div class="mb-1">
                     <label class="form-label text-muted">Stock</label>
+    <asp:Label ID="lblNombre" runat="server" Text="" Style="font-size: 11px;" />
                         <asp:GridView ID="TablaStock" runat="server" AutoGenerateColumns="False"
                                           CssClass="table table-striped table-bordered table-condensed gridview-compact"
                                           EnableSortingAndPagingCallbacks="false">
                             <Columns>
                                 <asp:BoundField DataField="Talle" HeaderText="Talle" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" ItemStyle-Width ="10%" />
                                 <asp:BoundField DataField="Cantidad" HeaderText="Cantidad"  HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center"  ItemStyle-Width ="10%" />
-                                <asp:BoundField DataField="Nombre" HeaderText="Nombre" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" ItemStyle-Width ="80%" />
                             </Columns>
                         </asp:GridView>
+
+ </div>
+
+ </div>
+<div class="col-md-3">
+<div class="row">
+    <div class="mb-2">
+                    <label class="form-label text-muted">Imagenes</label>
+
+
+        <div id="carouselExampleIndicators" class="carousel slide bg-light" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <asp:Repeater ID="rptIndicadores" runat="server">
+                    <ItemTemplate>
+                        <button type="button"
+                                data-bs-target="#carouselExampleIndicators"
+                                data-bs-slide-to='<%# Container.ItemIndex %>'
+                                class='<%# Container.ItemIndex == 0 ? "active" : "" %>'
+                                aria-current='<%# Container.ItemIndex == 0 ? "true" : "false" %>'
+                                aria-label="Slide <%# Container.ItemIndex + 1 %>"></button>
+                    </ItemTemplate>
+                </asp:Repeater>
+            </div>
+
+            <div class="carousel-inner">
+                <asp:Repeater ID="rptImagenes" runat="server">
+                    <ItemTemplate>
+                        <div class='carousel-item <%# Container.ItemIndex == 0 ? "active" : "" %>'>
+                        <img src='<%# Container.DataItem.ToString() %>' 
+                             class="d-block w-100" 
+                             alt="..."
+                             onerror="handleImageError(this)"
+                             style="max-height: 360px; min-height: 360px; object-fit: contain;" />
+                        </div>
+                    </ItemTemplate>
+                </asp:Repeater>
+            </div>
+
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Anterior</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Siguiente</span>
+            </button>
+        </div>
+
+ </div>
+
+
                     </div>
                 </div>
        </div>                               

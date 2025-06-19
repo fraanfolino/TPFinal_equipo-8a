@@ -56,8 +56,8 @@
                           <div class="carousel-item <%# Container.ItemIndex == 0 ? "active" : "" %>">
                             <img src='<%# Container.DataItem %>' 
                                  class="d-block w-100" 
-                                 style="max-height: 350px; object-fit: contain;" 
-                                 alt="Imagen del producto" />
+                                 alt="Imagen del producto" onerror="handleImageError(this)"
+                             style="max-height: 150px; min-height: 150px; object-fit: contain;" />
                           </div>
                         </ItemTemplate>
                       </asp:Repeater>
@@ -77,8 +77,6 @@
                     <a href="DetalleProducto.aspx?Id=<%# Eval("Id") %>" class="btn btn-primary">
                       Ver Detalle
                     </a>
-
-                    
                   </div>
                 </div>
               </div>
@@ -88,4 +86,14 @@
       </div>
     </div>
   </div>
+
+    <script>
+        function handleImageError(img) {
+            if (!img.dataset.fallback) {
+                img.dataset.fallback = "true";
+                img.src = 'Images/error.png';
+            }
+        }
+    </script>
+
 </asp:Content>

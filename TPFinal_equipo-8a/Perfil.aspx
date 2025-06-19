@@ -1,15 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Perfil.aspx.cs" Inherits="TPFinal_equipo_8a.Perfil" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
-    <script type="text/javascript">
-        function imgError(me)
-        {
-            var alterNativeImg = "/Images/error.png";
-            if (alterNativeImg != me.src)
-            me.src = alterNativeImg;
-        }
-    </script>
-
  <p></p>
 <h2>
 <asp:Label ID="Titulo" runat="server" Text="Mi Perfil" />
@@ -107,4 +98,11 @@
            </div>
 </ContentTemplate>
 </asp:UpdatePanel>
+        <script type="text/javascript">
+            function imgError(me) {
+                var alterNativeImg = "/Images/error.png";
+                if (alterNativeImg != me.src)
+                    me.src = alterNativeImg;
+            }
+        </script>
 </asp:Content>

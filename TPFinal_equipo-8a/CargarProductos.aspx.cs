@@ -113,8 +113,26 @@ namespace TPFinal_equipo_8a
         {
             ProductoNegocio productoNegocio = new ProductoNegocio();
             DataTable tablaStock = productoNegocio.ListarStock(productoSeleccionado.Value);
+            var codigo = tablaStock.Rows[0]["Id"];
+
+            MostrarImagenes((int)codigo);
+
+            lblNombre.Text = "  " + productoSeleccionado.Value;
             TablaStock.DataSource = tablaStock;
             TablaStock.DataBind();
+        }
+
+
+        private void MostrarImagenes(int codigo)
+        {
+            ProductoNegocio productoNegocio = new ProductoNegocio();
+            var imagenes = productoNegocio.ObtenerProducto(codigo).ImagenUrl;
+
+            rptImagenes.DataSource = imagenes;
+            rptImagenes.DataBind();
+
+            rptIndicadores.DataSource = imagenes;
+            rptIndicadores.DataBind();
         }
 
         protected void btnAgregar_Click(object sender, EventArgs e)

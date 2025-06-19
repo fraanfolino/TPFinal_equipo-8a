@@ -416,17 +416,5 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
-
-
-
-
-
-
-
-
-
-
-
-
     }
 }

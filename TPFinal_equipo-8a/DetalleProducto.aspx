@@ -11,7 +11,7 @@
             <asp:Repeater ID="rptImagenes" runat="server">
               <ItemTemplate>
                 <div class="carousel-item <%# Container.ItemIndex == 0 ? "active" : "" %>">
-                  <img src='<%# Eval("Url") %>' class="d-block w-100" style="max-height:400px; object-fit: contain;" alt="Imagen del producto">
+                  <img src='<%# Eval("Url") %>' class="d-block w-100" style="max-height:400px; object-fit: contain;" alt="Imagen del producto"  onerror="handleImageError(this)">
                 </div>
               </ItemTemplate>
             </asp:Repeater>
@@ -51,4 +51,12 @@
 </div>
     </div>
   </div>
+        <script>
+        function handleImageError(img) {
+            if (!img.dataset.fallback) {
+                img.dataset.fallback = "true";
+                img.src = 'Images/error.png';
+            }
+        }
+        </script>
 </asp:Content>

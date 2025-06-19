@@ -34,6 +34,11 @@
                     <div class="mb-2">
                         <label class="form-label text-muted">Nombre</label>
                         <asp:TextBox ID="txtNombre" runat="server" CssClass="form-control" Style="width: 100%; max-width: none;" ></asp:TextBox>
+                        <asp:RequiredFieldValidator ID="rfvNombre" runat="server"
+                                                    ControlToValidate="txtNombre"
+                                                    ErrorMessage="El nombre es obligatorio"
+                                                    ForeColor="Red"
+                                                    Display="Dynamic" />
                     </div>
                 </div>
             </div>
@@ -64,11 +69,20 @@
                     </div>
      </div>
 
-                        <div class="row">
+                <div class="row">
                 <div class="col-md-5">
                     <div class="mb-2">
                         <label class="form-label text-muted">Precio</label>
-                        <asp:TextBox ID="txtPrecio" runat="server" CssClass="form-control" Style="width: 100%; max-width: none;"></asp:TextBox>
+                        <asp:TextBox ID="txtPrecio" runat="server" CssClass="form-control" 
+                                        TextMode="Number" 
+                                        Style="width: 100%; max-width: none;" 
+                                        min="1" 
+                                        step="1000"></asp:TextBox>
+                        <asp:RequiredFieldValidator ID="rfvPrecio" runat="server"
+                                                    ControlToValidate="txtPrecio"
+                                                    ErrorMessage="El precio es obligatorio"
+                                                    ForeColor="Red"
+                                                    Display="Dynamic" />
                     </div>
                 </div>
      </div>

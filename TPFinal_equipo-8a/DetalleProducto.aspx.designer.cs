@@ -42,6 +42,15 @@ namespace TPFinal_equipo_8a
         protected global::System.Web.UI.WebControls.Label lblDescripcion;
 
         /// <summary>
+        /// Control lblPrecioTitulo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPrecioTitulo;
+
+        /// <summary>
         /// Control lblPrecio.
         /// </summary>
         /// <remarks>
@@ -49,6 +58,15 @@ namespace TPFinal_equipo_8a
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblPrecio;
+
+        /// <summary>
+        /// Control lblTalles.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTalles;
 
         /// <summary>
         /// Control ddlTalles.

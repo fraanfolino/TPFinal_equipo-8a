@@ -27,14 +27,28 @@
         </div>
       </div>
 
-      <div class="col-md-6">
-        <h1><asp:Label ID="lblNombre" runat="server" CssClass="display-4"></asp:Label></h1>
-        <p class="lead"><asp:Label ID="lblDescripcion" runat="server"></asp:Label></p>
-        <h3>Precio: $<asp:Label ID="lblPrecio" runat="server"></asp:Label></h3>
-        <label for="ddlTalles" class="form-label fw-bold text-primary"> Talles disponibles:</label>
-        <asp:DropDownList ID="ddlTalles" runat="server" CssClass="form-select form-select-lg" />
-        <asp:Button ID="AgregarCarro" runat="server" CssClass="btn btn-primary" Text="Agregar al carrito" OnClick="btnAgregarCarro_Click" />
-      </div>
+     <div class="col-md-6">
+
+   
+    <asp:Label ID="lblNombre" runat="server" CssClass="h1 fw-bold d-block mb-3 text-dark"></asp:Label>
+
+   
+    <asp:Label ID="lblDescripcion" runat="server" CssClass="lead d-block text-muted mb-3"></asp:Label>
+
+    
+    <asp:Label ID="lblPrecioTitulo" runat="server" Text="Precio:" CssClass="fw-semibold me-1"></asp:Label>
+    <asp:Label ID="lblPrecio" runat="server" CssClass="text-success fs-4 d-inline-block mb-4"></asp:Label>
+
+    
+    <asp:Label ID="lblTalles" runat="server" Text="Talles disponibles:"  CssClass="form-label fw-bold text-primary d-block mb-2"></asp:Label>
+    <asp:DropDownList ID="ddlTalles" runat="server" CssClass="form-select form-select-lg mb-4" />
+
+
+    <asp:Button ID="AgregarCarro" runat="server" Text="Agregar al carrito"
+        CssClass="btn btn-success btn-lg px-5 shadow-sm"
+        OnClick="btnAgregarCarro_Click" />
+
+</div>
     </div>
   </div>
 </asp:Content>

@@ -103,7 +103,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="About.aspx" />
-    <Content Include="Agregar.aspx" />
+    <Content Include="Producto.aspx" />
     <Content Include="CargarProductos.aspx" />
     <Content Include="Carro.aspx" />
     <Content Include="Catalogo.aspx" />
@@ -195,12 +195,12 @@
     <Content Include="Site.Mobile.Master" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Agregar.aspx.cs">
-      <DependentUpon>Agregar.aspx</DependentUpon>
+    <Compile Include="Producto.aspx.cs">
+      <DependentUpon>Producto.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Agregar.aspx.designer.cs">
-      <DependentUpon>Agregar.aspx</DependentUpon>
+    <Compile Include="Producto.aspx.designer.cs">
+      <DependentUpon>Producto.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="About.aspx.cs">

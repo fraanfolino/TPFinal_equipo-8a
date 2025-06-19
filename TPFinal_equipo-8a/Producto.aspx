@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Agregar.aspx.cs" Inherits="TPFinal_equipo_8a.Agregar" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Producto.aspx.cs" Inherits="TPFinal_equipo_8a.Agregar" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" 
@@ -11,9 +11,6 @@
 <asp:UpdatePanel ID="UpdatePanel2" runat="server">
         <ContentTemplate>
 
-            <div class="row" style="height: 2rem;">
-                 <label class="form-label">Agregar Nuevo Producto</label>
-            </div>
 <div class="row">
  <div class="col-md-5">
       <div class="row">
@@ -90,6 +87,7 @@
          <div class="row">    
                  <div class="col-md-5">
                          <asp:Button ID="btnAgregar" Text="Agregar Producto" runat="server" CssClass="btn btn-primary w-100" OnClick="btnAgregar_Click"/>
+                         <asp:Button ID="btnModificar" Text="Modificar Producto" runat="server" CssClass="btn btn-primary w-100" OnClick="btnModificar_Click"/>
                       </div>
                 </div>
      </div>
@@ -187,27 +185,29 @@
         const li = document.createElement("li");
         li.className = "list-group-item d-flex justify-content-between align-items-center small overflow-hidden text-truncate";
         li.style.maxWidth = "100%";
-        li.innerHTML = `<span class="text-truncate d-inline-block me-2" style="max-width: 90%;">${valor}</span><button type="button" class="btn btn-sm btn-danger" onclick="this.parentElement.remove()">×</button>`;
+        li.innerHTML = `<span class="text-truncate d-inline-block me-2" style="max-width: 90%;">${valor}</span><button type="button" class="btn btn-sm btn-danger" onclick="eliminarImagen(this)">×</button>`;
         document.getElementById("listaImagenes").appendChild(li);
             txtImagen.value = "";
         __doPostBack('<%= UpdatePanel2.UniqueID %>', `AGREGAR_IMAGEN:${valor}`);
         txtImagen.value = "";Imagen.value = "";nt.getElementById("listaImagenes").appendChild(li);
-            txtImagen.value = "";
+        txtImagen.value = "";
+    }
+
+    function eliminarImagen(boton)
+    {
+        boton.parentElement.remove()
+        const listItem = boton.closest('li');
+        const index = listItem.dataset.index;
+        __doPostBack('<%= UpdatePanel2.UniqueID %>', `ELIMINAR_IMAGEN:${index}`);
     }
 
     function prepararEnvio()
     {
         const imagenes = [];
-        document.querySelectorAll('#listaImagenes li span').forEach(span => {imagenes.push(span.textContent.trim());});
+        document.querySelectorAll('#listaImagenes li span').forEach(span => { imagenes.push(span.textContent.trim()); });
         document.getElementById('<%= hfImagenes.ClientID %>').value = JSON.stringify(imagenes);
         return true;
     }
 
-    function eliminarImagen(boton)
-    {
-            const listItem = boton.closest('li');
-            const index = listItem.dataset.index;
-            __doPostBack('<%= UpdatePanel2.UniqueID %>', `ELIMINAR_IMAGEN:${index}`);
-    }
 </script>
 </asp:Content>

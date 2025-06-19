@@ -32,18 +32,44 @@ namespace TPFinal_equipo_8a
 
         private void IniciarControles()
         {
-            exitoMensaje.Visible = false;
-            errorMensaje.Visible = false;
-
             ddlCategoria.DataSource = CargarCategorias();
             ddlCategoria.DataBind();
 
             ddlMarca.DataSource = CargarMarcas();
             ddlMarca.DataBind();
 
-            ImagenesProducto = new List<string>();
-
+            if (Request.QueryString["id"] != null && int.TryParse(Request.QueryString["id"], out int index))
+            {
+                PrecargarElementos(index);
+                btnAgregar.Visible = false;
+                btnModificar.Visible = true;
+                Titulo.Text = "Modificar Producto";
+            }
+            else
+            {
+                btnAgregar.Visible = true;
+                btnModificar.Visible = false;
+                ImagenesProducto = new List<string>();
+            }
             RefreshImagenes();
+        }
+
+        private void PrecargarElementos(int index)
+        {
+            btnAgregar.Visible = false;
+            btnModificar.Visible = true;
+
+            ProductoNegocio productoNegocio = new ProductoNegocio();
+            Producto producto = productoNegocio.ObtenerProducto(index);
+
+            txtNombre.Text = producto.Nombre;
+            txtDescripcion.Text = producto.Descripcion;
+
+            txtPrecio.Text = producto.Precio.ToString();
+            ddlCategoria.SelectedValue = producto.Categoria.Nombre;
+            ddlMarca.SelectedValue = producto.Marca.Nombre;
+
+            ActualizarListaImg(producto.ImagenUrl);
         }
 
         public List<string> CargarCategorias()
@@ -136,7 +162,6 @@ namespace TPFinal_equipo_8a
             //otro diiiiaaaa....
             //dentro de marcanegocio este metodo? q devuelva el id mandandole el nombre
             MarcaNegocio marcaNegocio = new MarcaNegocio();
-
             foreach (var marca in marcaNegocio.ListarMarcas())
             {
                if (marca.Nombre == ddlMarca.SelectedValue)
@@ -171,8 +196,77 @@ namespace TPFinal_equipo_8a
             catch (Exception ex)
             {
                 errorMensaje.Visible = true;
-                errorMensaje.Text = "Error al eliminar stock:" + ex;
+                errorMensaje.Text = "Error al agregar: " + ex;
             }
+        }
+
+        protected void btnModificar_Click(object sender, EventArgs e)
+        {
+            Producto producto = new Producto();
+            producto.Id = Convert.ToInt32(Request.QueryString["id"]);
+            producto.Nombre = txtNombre.Text;
+            producto.Descripcion = txtDescripcion.Text;
+            producto.Precio = decimal.Parse(txtPrecio.Text);
+            producto.ImagenUrl = ImagenesProducto;
+
+            MarcaNegocio marcaNegocio = new MarcaNegocio();
+            foreach (var marca in marcaNegocio.ListarMarcas())
+            {
+                if (marca.Nombre == ddlMarca.SelectedValue)
+                {
+                    producto.Marca = marca;
+                    break;
+                }
+            }
+
+            CategoriaNegocio categoriaNegocio = new CategoriaNegocio();
+            foreach (var categoria in categoriaNegocio.ListarCategorias())
+            {
+                if (categoria.Nombre == ddlCategoria.SelectedValue)
+                {
+                    producto.Categoria = categoria;
+                    break;
+                }
+            }
+
+            if (CompararProductos(producto, new ProductoNegocio().ObtenerProducto(producto.Id)))
+            {
+                errorMensaje.Visible = true;
+                errorMensaje.Text = "No se han realizado cambios en el producto.";
+                return;
+            }
+
+            try
+            {
+                ProductoNegocio productoNegocio = new ProductoNegocio();
+                productoNegocio.ModificarProducto(producto);
+                exitoMensaje.Visible = true;
+                exitoMensaje.Text = "Producto modificado correctamente.";
+            }
+            catch (Exception ex)
+            {
+                errorMensaje.Visible = true;
+                errorMensaje.Text = "Error al modificar: " + ex;
+            }
+        }
+
+        protected bool CompararProductos(Producto prod1, Producto prod2)
+        {
+            if (prod1 == null || prod2 == null)
+                return false;
+
+            bool comparar =
+                 prod1.Id == prod2.Id &&
+                 prod1.Nombre == prod2.Nombre &&
+                 prod1.Descripcion == prod2.Descripcion &&
+                 prod1.Precio == prod2.Precio &&
+                 prod1.Marca?.Id == prod2.Marca?.Id &&
+                 prod1.Categoria?.Id == prod2.Categoria?.Id &&
+                 prod1.ImagenUrl != null &&
+                 prod2.ImagenUrl != null &&
+                 prod1.ImagenUrl.SequenceEqual(prod2.ImagenUrl);
+
+            return comparar;
         }
     }
 }

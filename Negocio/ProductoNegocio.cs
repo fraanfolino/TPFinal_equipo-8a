@@ -50,6 +50,15 @@ namespace Negocio
                     producto.Descripcion = datos.Lectorbd["Descripcion"].ToString();
                     producto.Precio = Convert.ToDecimal(datos.Lectorbd["Precio"]);
 
+                    producto.Categoria = new Categoria();
+                    producto.Categoria.Id = Convert.ToInt32(datos.Lectorbd["IdCategoria"]);
+                    producto.Categoria.Nombre = Convert.ToString(datos.Lectorbd["Categoria"]);
+
+                    producto.Marca = new Marca();
+                    producto.Marca.Id = Convert.ToInt32(datos.Lectorbd["IdMarca"]);
+                    producto.Marca.Nombre = Convert.ToString(datos.Lectorbd["Marca"]);
+
+
                     if (datos.Lectorbd["UrlImagen"] != DBNull.Value)
                         producto.ImagenUrl = new List<string> { Convert.ToString(datos.Lectorbd["UrlImagen"]) };
                     else
@@ -339,8 +348,7 @@ namespace Negocio
             AccesoBD datos = new AccesoBD();
             try
             {
-                datos.setearProcedimiento("sp_InsertarProducto");
-
+                datos.setearProcedimiento("sp_AgregarProducto");
                 datos.setearParametro("@nombre", produ.Nombre);
                 datos.setearParametro("@descripcion", produ.Descripcion);
                 datos.setearParametro("@precio", produ.Precio);
@@ -369,7 +377,45 @@ namespace Negocio
             }
         }
 
+        public void ModificarProducto(Producto produ)
+        {
+            AccesoBD datos = new AccesoBD();
+            try
+            {
+                datos.setearProcedimiento("sp_ModificarProducto");
+                datos.setearParametro("@producto_id", produ.Id);
+                datos.setearParametro("@nombre", produ.Nombre);
+                datos.setearParametro("@descripcion", produ.Descripcion);
+                datos.setearParametro("@precio", produ.Precio);
+                datos.setearParametro("@marca_id", produ.Marca.Id);
+                datos.setearParametro("@categoria_id", produ.Categoria.Id);
+                datos.ejecutarAccion();
 
+                datos.limpiarParametros();
+                datos.setearParametro("@producto_id", produ.Id);
+                datos.setearConsulta("DELETE FROM imagenes_productos WHERE producto_id = @producto_id");
+                datos.ejecutarMasAcciones();
+
+                foreach (string imagen in produ.ImagenUrl)
+                {
+                    datos.limpiarParametros();
+                    datos.setearProcedimiento("sp_InsertarImagenProducto");
+                    datos.setearParametro("@producto_id", produ.Id);
+                    datos.setearParametro("@url_imagen", imagen);
+                    datos.setearParametro("@es_principal", 0);
+                    datos.ejecutarMasAcciones();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
 
 
 

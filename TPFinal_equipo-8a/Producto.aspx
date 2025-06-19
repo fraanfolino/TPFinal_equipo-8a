@@ -76,8 +76,7 @@
                         <asp:TextBox ID="txtPrecio" runat="server" CssClass="form-control" 
                                         TextMode="Number" 
                                         Style="width: 100%; max-width: none;" 
-                                        min="1" 
-                                        step="1000"></asp:TextBox>
+                                        min="1"></asp:TextBox>
                         <asp:RequiredFieldValidator ID="rfvPrecio" runat="server"
                                                     ControlToValidate="txtPrecio"
                                                     ErrorMessage="El precio es obligatorio"

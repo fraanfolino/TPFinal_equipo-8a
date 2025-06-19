@@ -9,7 +9,7 @@
 <script src="https://cdn.jsdelivr.net/npm/tom-select@2.0.0-rc.4/dist/js/tom-select.complete.min.js"></script>
 
 <style>
-/* Ajusta exactamente al tamaño del form-select de Bootstrap */
+/*este es del tom , se hizo el css como el de boot*/
 .ts-control {
   min-height: 2.375rem;
   max-height: 2.375rem;
@@ -21,41 +21,28 @@
   background-color: #fff;
   box-sizing: border-box;
   display: flex;
-  align-items: center; /* Centra verticalmente */
+  align-items: center;
   overflow: hidden;
-  font-size: 1rem;  /* Tamaño del texto */
-  line-height: 1.5; /* Altura de línea */
+  font-size: 1rem;
+  line-height: 1.5;
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
 }
 
 .ts-dropdown .option {
-  font-size: 1rem;        /* Cambia el tamaño del texto */
+  font-size: 1rem;       
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
-  padding: 0.5rem 1rem;      /* Ajusta el padding */
-  color: #212529;            /* Color del texto */
-  background-color: #fff;    /* Fondo por defecto */
+  padding: 0.5rem 1rem;
+  color: #212529; 
+  background-color: #fff;
 }
 
-/* Estilo visual de focus como Bootstrap */
+/* focus como Bootstrap */
 .ts-wrapper:focus-within {
   border-color: #86b7fe;
   box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
   outline: 0;
-  border-radius: 0.375rem; /* igual que el control de Bootstrap */
+  border-radius: 0.375rem;
 }
-
-/*.ts-control.multi .ts-control-input:focus {
-  caret-color: transparent;*/ /* Oculta el cursor */
-/*}
-
-.ts-control.single .ts-control-input:focus {
-  caret-color: transparent;*/ /* Para single select si hay texto fijo */
-/*}*/
-
-/* Solo si hay items seleccionados */
-/*.ts-control.multi.has-items .ts-control-input {
-  caret-color: transparent;
-}*/
 
 .gridview-compact tr td {
     padding-top: 1.2px;
@@ -78,31 +65,20 @@
  <div class="col-md-4">
 
        <div class="row">
-
- <!-- Cantidad -->
                 <div class="col-md-3">
                     <div class="mb-1">
                         <label class="form-label text-muted">Cantidad</label>
                      <asp:TextBox ID="txtCantidad" runat="server" CssClass="form-control" TextMode="Number" Text="1"  />
                     </div>
                 </div>
-
-
-
-
-                       </div>
-
-
-       <div class="row">
-                <!-- Categoría -->
+      </div>
+      <div class="row">
                 <div class="col-md-6">
                     <div class="mb-2">
                         <label class="form-label text-muted">Categoría</label>
                         <asp:DropDownList ID="ddlCategoria" runat="server" CssClass="form-select" OnSelectedIndexChanged="ddlCategoria_SelectedIndexChanged" AutoPostBack="true" />
                     </div>
                 </div>
-
-                <!-- Marca -->
                 <div class="col-md-6">
                     <div class="mb-2">
                         <label class="form-label text-muted">Marca</label>
@@ -110,10 +86,7 @@
                     </div>
                 </div>
          </div>
-
               <div class="row">
-
-                <!-- Productos con búsqueda -->
                 <div class="col-md-12">
                     <div class="mb-2">
                         <label for="<%= productoSeleccionado.ClientID %>" class="form-label text-muted">Productos</label>
@@ -183,15 +156,6 @@
                     this.clear(); 
                 }
             },
-            //onBlur: function () {
-
-            //    alert("¡Este es un mensaje de alerta!");
-
-            //    if (!this.getValue() == "") {
-            //        this.clear(true); // Limpia visualmente e internamente
-            //        alert("¡Este es un mensaje de alerta!");
-            //    }
-            //},
             onDropdownOpen: function ()
             {
                 if (this.items.length > 0)
@@ -205,7 +169,6 @@
 
                 if (errorLabel) errorLabel.style.display = "none";
                 if (exitoLabel) exitoLabel.style.display = "none";
-
             },
             render:
             {
@@ -265,13 +228,13 @@
 
     }
 
-    // Llamada inicial cuando la página se carga por primera vez
-    document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function ()
+    {
         initTomSelects();
     });
 
-    // Vuelve a aplicar TomSelect después de un postback parcial del UpdatePanel
-    Sys.Application.add_load(function () {
+    Sys.Application.add_load(function ()
+    {
         initTomSelects();
     });
 </script>

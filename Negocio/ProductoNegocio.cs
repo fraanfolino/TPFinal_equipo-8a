@@ -334,13 +334,40 @@ namespace Negocio
         }
 
 
+        public void AgregarProducto(Producto produ)
+        {
+            AccesoBD datos = new AccesoBD();
+            try
+            {
+                datos.setearProcedimiento("sp_InsertarProducto");
 
+                datos.setearParametro("@nombre", produ.Nombre);
+                datos.setearParametro("@descripcion", produ.Descripcion);
+                datos.setearParametro("@precio", produ.Precio);
+                datos.setearParametro("@marca_id", produ.Marca.Id);
+                datos.setearParametro("@categoria_id", produ.Categoria.Id);
+                int id = datos.ejecutarAccionconreturn();
 
+                foreach (string imagen in produ.ImagenUrl)
+                {
+                    datos.limpiarParametros();
+                    datos.setearProcedimiento("sp_InsertarImagenProducto");
+                    datos.setearParametro("@producto_id", id);
+                    datos.setearParametro("@url_imagen", imagen);
+                    datos.setearParametro("@es_principal", 0);
+                    datos.ejecutarMasAcciones();
+                }
 
-
-
-
-
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
 
 
 

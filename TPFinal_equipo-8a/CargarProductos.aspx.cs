@@ -16,7 +16,6 @@ namespace TPFinal_equipo_8a
         {
             if (!IsPostBack)
             {
-
                 exitoMensaje.Visible = false;
                 errorMensaje.Visible = false;
 
@@ -120,14 +119,12 @@ namespace TPFinal_equipo_8a
 
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
-
             if (productoSeleccionado.Value == "")
             {
                 errorMensaje.Visible = true;
                 errorMensaje.Text = "Debe seleccionar un producto.";
                 return;
             }
-
 
             List<string> talles = new List<string>();  
 

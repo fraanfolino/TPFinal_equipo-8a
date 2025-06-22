@@ -19,13 +19,13 @@
       CssClass="fw-bold" />
   </div>
 
-  <!-- Repeater principal -->
+ 
   <asp:Repeater ID="rptCarrito" runat="server">
     <ItemTemplate>
       <div class="card mb-3">
         <div class="row g-0">
 
-          <!-- Carousel de imágenes -->
+          
           <div class="col-md-4">
             <div id='<%# "carousel_" + Container.ItemIndex %>'
                  class="carousel slide" data-bs-ride="carousel">
@@ -56,7 +56,6 @@
             </div>
           </div>
 
-          <!-- Detalle del producto -->
           <div class="col-md-8">
             <div class="card-body">
               <h5 class="card-title">

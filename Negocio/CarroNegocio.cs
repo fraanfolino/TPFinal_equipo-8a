@@ -9,77 +9,99 @@ namespace Negocio
     {
 
 
-        public Carrito ObtenerCarrito(int idUsuario)
+        public List<ItemCarrito> ObtenerCarrito(int idUsuario)
         {
-            Carrito carrito = new Carrito { IdUsuario = idUsuario };
+            List<ItemCarrito> carrito = new List<ItemCarrito>();
+            int idCarro;
 
-            /* creamos u obtnemos el carrito*/
-            
-            AccesoBD acceso1 = new AccesoBD();
+            // 1) Obtener o crear el carrito y quedarnos con su Id
+            AccesoBD a1 = new AccesoBD();
             try
             {
-                acceso1.limpiarParametros();
-                acceso1.setearProcedimiento("sp_ObtenerOCrearCarrito");
-                acceso1.setearParametro("@idUsuario", idUsuario);
-                acceso1.ejecutarLectura();
-                acceso1.Lectorbd.Read();
-                carrito.IdCarro = Convert.ToInt32(acceso1.Lectorbd["idCarro"]);
+                a1.limpiarParametros();
+                a1.setearProcedimiento("sp_ObtenerOCrearCarrito");
+                a1.setearParametro("@idUsuario", idUsuario);
+                a1.ejecutarLectura();
+                a1.Lectorbd.Read();
+                idCarro = Convert.ToInt32(a1.Lectorbd["idCarro"]);
             }
             finally
             {
-                acceso1.cerrarConexion();
+                a1.cerrarConexion();
             }
 
            
-            /* obtenemos los items de ese IdCarro*/
-
-            AccesoBD acceso2 = new AccesoBD();
+            AccesoBD a2 = new AccesoBD();
             try
             {
-                acceso2.limpiarParametros();
-                acceso2.setearProcedimiento("sp_ObtenerItemsCarrito");
-                acceso2.setearParametro("@idCarrito", carrito.IdCarro);
-                acceso2.ejecutarLectura();
+                a2.limpiarParametros();
+                a2.setearProcedimiento("sp_ObtenerItemsCarrito");
+                a2.setearParametro("@idCarrito", idCarro);
+                a2.ejecutarLectura();
 
-                while (acceso2.Lectorbd.Read())
+                ItemCarrito ultimoItem = null;
+
+                while (a2.Lectorbd.Read())
                 {
-                    Producto producto = new Producto
+                   
+                    int prodId = Convert.ToInt32(a2.Lectorbd["id_producto"]);
+                    string nombre = a2.Lectorbd["producto_nombre"].ToString();
+                    decimal precio = Convert.ToDecimal(a2.Lectorbd["producto_precio"]);
+                    int cantidad = Convert.ToInt32(a2.Lectorbd["cantidad"]);
+                    int talleId = Convert.ToInt32(a2.Lectorbd["id_talle"]);
+                    string talleEtiqueta = a2.Lectorbd["talle_etiqueta"].ToString();
+                    
+                    string urlImagen = a2.Lectorbd["UrlImagen"] == DBNull.Value? null : a2.Lectorbd["UrlImagen"].ToString();
+
+                   
+                    if (ultimoItem != null
+                     && ultimoItem.Producto.Id == prodId
+                     && ultimoItem.Producto.Talle.Id == talleId)
                     {
-                        Id = Convert.ToInt32(acceso2.Lectorbd["id_producto"]),
-                        Nombre = acceso2.Lectorbd["producto_nombre"].ToString(),
-                        Precio = Convert.ToDecimal(acceso2.Lectorbd["producto_precio"]),
-                        Talle = new Talle
+                        if (!string.IsNullOrEmpty(urlImagen)
+                         && !ultimoItem.Producto.ImagenUrl.Contains(urlImagen))
                         {
-                            Id = Convert.ToInt32(acceso2.Lectorbd["id_talle"]),
-                            Etiqueta = acceso2.Lectorbd["talle_etiqueta"].ToString()
+                            ultimoItem.Producto.ImagenUrl.Add(urlImagen);
                         }
+                        continue;
+                    }
+
+                  
+                    Producto prod = new Producto
+                    {
+                        Id = prodId,
+                        Nombre = nombre,
+                        Precio = precio,
+                        Talle = new Talle { Id = talleId, Etiqueta = talleEtiqueta },
+                        ImagenUrl = new List<string>()
                     };
+                    if (!string.IsNullOrEmpty(urlImagen))
+                        prod.ImagenUrl.Add(urlImagen);
 
                     ItemCarrito item = new ItemCarrito
                     {
-                        IdItemCarro = Convert.ToInt32(acceso2.Lectorbd["id_item"]),
-                        IdCarrito = carrito.IdCarro,
-                        Producto = producto,
-                        Cantidad = Convert.ToInt32(acceso2.Lectorbd["cantidad"])
+                        IdCarrito = idCarro,
+                        Producto = prod,
+                        Cantidad = cantidad
                     };
 
-                    carrito.Items.Add(item);
+                    carrito.Add(item);
+                    ultimoItem = item;
                 }
             }
             finally
             {
-                acceso2.cerrarConexion();
+                a2.cerrarConexion();
             }
 
             return carrito;
         }
-     
 
         public void AgregarOActualizarProductoEnCarro(ItemCarrito item, int idUsuario)
         {
             int idCarrito;
 
-            
+            // A) Obtener o crear carrito
             AccesoBD a1 = new AccesoBD();
             try
             {

@@ -52,9 +52,12 @@ namespace TPFinal_equipo_8a
             if (!IsPostBack)
             {
                 int idUsuario = ((Usuario)Session["usuario"]).Id;
-                Carrito carrito = new CarroNegocio().ObtenerCarrito(idUsuario);
-                lblTotal.Text = carrito.PrecioTotal().ToString("N2");
-                rptCarrito.DataSource = carrito.Items;
+                CarroNegocio negocio = new CarroNegocio();
+
+                List<ItemCarrito> items = negocio.ObtenerCarrito(idUsuario);
+                decimal total = items.Sum(i => i.Precio());    
+                lblTotal.Text = total.ToString("N2");
+                rptCarrito.DataSource = items;
                 rptCarrito.DataBind();
 
             }

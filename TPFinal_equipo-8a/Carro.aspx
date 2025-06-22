@@ -5,7 +5,8 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
   <h2>Tu Carrito</h2>
 
-     <div class="d-flex justify-content-end mb-3">
+  <!-- Total arriba a la derecha -->
+  <div class="d-flex justify-content-end mb-3">
     <asp:Label 
       ID="lblTextoTotal" 
       runat="server" 
@@ -17,21 +18,27 @@
       runat="server" 
       CssClass="fw-bold" />
   </div>
+
+  <!-- Repeater principal -->
   <asp:Repeater ID="rptCarrito" runat="server">
     <ItemTemplate>
       <div class="card mb-3">
         <div class="row g-0">
 
+          <!-- Carousel de imágenes -->
           <div class="col-md-4">
             <div id='<%# "carousel_" + Container.ItemIndex %>'
                  class="carousel slide" data-bs-ride="carousel">
               <div class="carousel-inner">
-                <asp:Repeater ID="rptImagenes" runat="server"
-                              DataSource='<%# Eval("Producto.ImagenUrl") %>'>
+                <asp:Repeater 
+                  ID="rptImagenes" 
+                  runat="server" 
+                  DataSource='<%# Eval("Producto.ImagenUrl") %>'>
                   <ItemTemplate>
                     <div class='carousel-item <%# Container.ItemIndex == 0 ? "active" : "" %>'>
                       <img src='<%# Container.DataItem %>'
-                           class="d-block w-100" style="max-height:200px; object-fit:contain;" />
+                           class="d-block w-100" 
+                           style="max-height:200px;object-fit:contain;" />
                     </div>
                   </ItemTemplate>
                 </asp:Repeater>
@@ -49,29 +56,28 @@
             </div>
           </div>
 
+          <!-- Detalle del producto -->
           <div class="col-md-8">
             <div class="card-body">
-              <h5 class="card-title"><%# Eval("Producto.Nombre") %></h5>
+              <h5 class="card-title">
+                <%# Eval("Producto.Nombre") %>
+              </h5>
               <p class="card-text">
-                Precio: $<%# Eval("Producto.Precio", "{0:N2}") %>
+                Precio unitario: $<%# Eval("Producto.Precio","{0:N2}") %>
               </p>
               <p class="card-text">
                 Cantidad: <%# Eval("Cantidad") %>
               </p>
-              
-            
               <p class="card-text fw-bold">
                 Subtotal: $
                 <%# ((Dominio.ItemCarrito)Container.DataItem)
                        .Precio()
                        .ToString("N2") %>
               </p>
-
               <p class="card-text">
                 Talle: <%# Eval("Producto.Talle.Etiqueta") %>
               </p>
-              <a href="Catalogo.aspx"
-                 class="btn btn-primary rounded-pill mt-2">
+              <a href="Catalogo.aspx" class="btn btn-primary rounded-pill mt-2">
                 Volver al catálogo
               </a>
             </div>
@@ -81,6 +87,4 @@
       </div>
     </ItemTemplate>
   </asp:Repeater>
-
-
 </asp:Content>

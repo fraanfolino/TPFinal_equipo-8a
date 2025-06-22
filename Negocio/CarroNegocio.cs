@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using Dominio; 
 
 namespace Negocio
@@ -7,60 +8,138 @@ namespace Negocio
     public class CarroNegocio
     {
 
-        public void AgregarOActualizarProductoEnCarro(ItemCarrito item, int idUsuario)
+
+        public Carrito ObtenerCarrito(int idUsuario)
         {
-            AccesoBD acceso = new AccesoBD();
+            Carrito carrito = new Carrito { IdUsuario = idUsuario };
+
+            /* creamos u obtnemos el carrito*/
+            
+            AccesoBD acceso1 = new AccesoBD();
             try
             {
-                acceso.limpiarParametros();
-                acceso.setearProcedimiento("sp_AgregarOActualizarCarrito");
-                acceso.setearParametro("@usuarioId", idUsuario);
-                acceso.setearParametro("@productoId", item.Producto.Id);
-                acceso.setearParametro("@talleId", item.Producto.Talle.Id);
-                acceso.ejecutarAccion();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+                acceso1.limpiarParametros();
+                acceso1.setearProcedimiento("sp_ObtenerOCrearCarrito");
+                acceso1.setearParametro("@idUsuario", idUsuario);
+                acceso1.ejecutarLectura();
+                acceso1.Lectorbd.Read();
+                carrito.IdCarro = Convert.ToInt32(acceso1.Lectorbd["idCarro"]);
             }
             finally
             {
-                acceso.cerrarConexion();
+                acceso1.cerrarConexion();
             }
-        }
 
-        public List<Talle> ObtenerTallesPorProducto(int idProducto)
-        {
-            List<Talle> listaTalles = new List<Talle>();
-            AccesoBD acceso = new AccesoBD();
+           
+            /* obtenemos los items de ese IdCarro*/
 
+            AccesoBD acceso2 = new AccesoBD();
             try
             {
-                acceso.limpiarParametros();
-                acceso.setearProcedimiento("sp_ObtenerTallesPorProducto");
-                acceso.setearParametro("@productoId", idProducto);
-                acceso.ejecutarLectura();
+                acceso2.limpiarParametros();
+                acceso2.setearProcedimiento("sp_ObtenerItemsCarrito");
+                acceso2.setearParametro("@idCarrito", carrito.IdCarro);
+                acceso2.ejecutarLectura();
 
-                while (acceso.Lectorbd.Read())
+                while (acceso2.Lectorbd.Read())
                 {
-                    Talle talle = new Talle();
-                    talle.Id = Convert.ToInt32(acceso.Lectorbd["id"]);
-                    talle.Etiqueta = acceso.Lectorbd["etiqueta"].ToString();
-                    listaTalles.Add(talle);
+                    Producto producto = new Producto
+                    {
+                        Id = Convert.ToInt32(acceso2.Lectorbd["id_producto"]),
+                        Nombre = acceso2.Lectorbd["producto_nombre"].ToString(),
+                        Precio = Convert.ToDecimal(acceso2.Lectorbd["producto_precio"]),
+                        Talle = new Talle
+                        {
+                            Id = Convert.ToInt32(acceso2.Lectorbd["id_talle"]),
+                            Etiqueta = acceso2.Lectorbd["talle_etiqueta"].ToString()
+                        }
+                    };
+
+                    ItemCarrito item = new ItemCarrito
+                    {
+                        IdItemCarro = Convert.ToInt32(acceso2.Lectorbd["id_item"]),
+                        IdCarrito = carrito.IdCarro,
+                        Producto = producto,
+                        Cantidad = Convert.ToInt32(acceso2.Lectorbd["cantidad"])
+                    };
+
+                    carrito.Items.Add(item);
                 }
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
             finally
             {
-                acceso.cerrarConexion();
+                acceso2.cerrarConexion();
             }
 
-            return listaTalles;
+            return carrito;
         }
-        public List<ItemCarrito> ObtenerCarrito(int idUsuario)
+     
+
+        public void AgregarOActualizarProductoEnCarro(ItemCarrito item, int idUsuario)
+        {
+            int idCarrito;
+
+            
+            AccesoBD a1 = new AccesoBD();
+            try
+            {
+                a1.limpiarParametros();
+                a1.setearProcedimiento("sp_ObtenerOCrearCarrito");
+                a1.setearParametro("@idUsuario", idUsuario);
+                a1.ejecutarLectura();
+                a1.Lectorbd.Read();
+                idCarrito = Convert.ToInt32(a1.Lectorbd["idCarro"]);
+            }
+            finally { a1.cerrarConexion(); }
+
+            
+            AccesoBD a2 = new AccesoBD();
+            try
+            {
+                a2.limpiarParametros();
+                a2.setearProcedimiento("sp_AgregarOActualizarItemCarrito");
+                a2.setearParametro("@idCarrito", idCarrito);
+                a2.setearParametro("@idProducto", item.Producto.Id);
+                a2.setearParametro("@idTalle", item.Producto.Talle.Id);
+                a2.setearParametro("@cantidad", item.Cantidad);
+                a2.ejecutarAccion();
+            }
+            finally { a2.cerrarConexion(); }
+        }
+
+         public List<Talle> ObtenerTallesPorProducto(int idProducto)
+         {
+             List<Talle> listaTalles = new List<Talle>();
+             AccesoBD acceso = new AccesoBD();
+
+             try
+             {
+                 acceso.limpiarParametros();
+                 acceso.setearProcedimiento("sp_ObtenerTallesPorProducto");
+                 acceso.setearParametro("@productoId", idProducto);
+                 acceso.ejecutarLectura();
+
+                 while (acceso.Lectorbd.Read())
+                 {
+                     Talle talle = new Talle();
+                     talle.Id = Convert.ToInt32(acceso.Lectorbd["id"]);
+                     talle.Etiqueta = acceso.Lectorbd["etiqueta"].ToString();
+                     listaTalles.Add(talle);
+                 }
+             }
+             catch (Exception ex)
+             {
+                 throw ex;
+             }
+             finally
+             {
+                 acceso.cerrarConexion();
+             }
+
+             return listaTalles;
+         }
+
+        /*public List<ItemCarrito> ObtenerCarrito(int idUsuario)
         {
             List<ItemCarrito> carrito = new List<ItemCarrito>();
             AccesoBD acceso = new AccesoBD();
@@ -135,7 +214,7 @@ namespace Negocio
             }
 
             return carrito;
-        }
+        }*/
 
 
 

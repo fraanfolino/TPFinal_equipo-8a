@@ -22,12 +22,12 @@ namespace TPFinal_equipo_8a
 
             string accion = Request.QueryString["accion"];
 
-          
+
             if (!string.IsNullOrEmpty(accion))
             {
                 int productoId;
-              
-                string talle = Request.QueryString["talle"];  
+
+                string talle = Request.QueryString["talle"];
 
                 if (int.TryParse(Request.QueryString["productoId"], out productoId) && !string.IsNullOrEmpty(talle))
                 {
@@ -45,17 +45,20 @@ namespace TPFinal_equipo_8a
                 }
                 Response.Redirect("Carro.aspx");
             }
-             }
+        }
 
         private void CargarCarrito()
         {
-            int idUsuario = ((Usuario)Session["usuario"]).Id;
-            CarroNegocio carroNegocio = new CarroNegocio();
-            List<ItemCarrito> carrito = carroNegocio.ObtenerCarrito(idUsuario);
-            rptCarrito.DataSource = carrito;
-            rptCarrito.DataBind();
+            if (!IsPostBack)
+            {
+                int idUsuario = ((Usuario)Session["usuario"]).Id;
+                Carrito carrito = new CarroNegocio().ObtenerCarrito(idUsuario);
+                lblTotal.Text = carrito.PrecioTotal().ToString("N2");
+                rptCarrito.DataSource = carrito.Items;
+                rptCarrito.DataBind();
+
+            }
         }
     }
 }
-
 

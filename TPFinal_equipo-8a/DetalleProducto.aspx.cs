@@ -42,44 +42,17 @@ namespace TPFinal_equipo_8a
 
         protected void btnAgregarCarro_Click(object sender, EventArgs e)
         {
-            int idProducto;
-            if (int.TryParse(Request.QueryString["Id"], out idProducto))
-            {
-                int idUsuario = ((Usuario)Session["usuario"]).Id;
+            int idUsuario = ((Usuario)Session["usuario"]).Id;
+            int idProducto = Convert.ToInt32(Request.QueryString["Id"]);
+            int idTalle = Convert.ToInt32(ddlTalles.SelectedValue);
 
-               
-                string valorSeleccionado = ddlTalles.SelectedValue;
-                if (string.IsNullOrEmpty(valorSeleccionado) || valorSeleccionado == "0")
-                {
-                   
-                    return;
-                }
+            Producto producto = new ProductoNegocio().ObtenerProducto(idProducto);
+            producto.Talle = new Talle { Id = idTalle, Etiqueta = ddlTalles.SelectedItem.Text };
 
-                
-                int idTalle = Convert.ToInt32(valorSeleccionado);
+            ItemCarrito item = new ItemCarrito { Producto = producto, Cantidad = 1 };
+            new CarroNegocio().AgregarOActualizarProductoEnCarro(item, idUsuario);
 
-                ProductoNegocio productoNegocio = new ProductoNegocio();
-                Producto producto = productoNegocio.ObtenerProducto(idProducto);
-
-               
-                producto.Talle = new Talle
-                {
-                    Id = idTalle,
-                    Etiqueta = ddlTalles.SelectedItem.Text
-                };
-
-                
-                ItemCarrito item = new ItemCarrito
-                {
-                    Producto = producto,
-                    Cantidad = 1
-                };
-
-                CarroNegocio carroNegocio = new CarroNegocio();
-                carroNegocio.AgregarOActualizarProductoEnCarro(item, idUsuario);
-
-                Response.Redirect("Carro.aspx");
-            }
+            Response.Redirect("Carro.aspx");
         }
 
         private void CargarDetalle(int id)

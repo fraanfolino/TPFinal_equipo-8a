@@ -14,36 +14,33 @@ namespace TPFinal_equipo_8a
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
-            if (!IsPostBack)
-            {
-                CargarCarrito();
-            }
-
             string accion = Request.QueryString["accion"];
-
 
             if (!string.IsNullOrEmpty(accion))
             {
                 int productoId;
+                int talleId;
 
-                string talle = Request.QueryString["talle"];
-
-                if (int.TryParse(Request.QueryString["productoId"], out productoId) && !string.IsNullOrEmpty(talle))
+                if (int.TryParse(Request.QueryString["productoId"], out productoId)
+                 && int.TryParse(Request.QueryString["talleId"], out talleId))
                 {
                     int idUsuario = ((Usuario)Session["usuario"]).Id;
                     CarroNegocio negocio = new CarroNegocio();
 
+                   
+                    int idCarrito = negocio.ObtenerOCrearCarrito(idUsuario);
+
                     if (accion == "SumarCantidad")
-                    {
-                        negocio.SumarCantidadBD(idUsuario, productoId, talle);
-                    }
+                        negocio.SumarCantidadBD(idCarrito, productoId, talleId);
                     else if (accion == "RestarCantidad")
-                    {
-                        negocio.RestarCantidadBD(idUsuario, productoId, talle);
-                    }
+                        negocio.RestarCantidadBD(idCarrito, productoId, talleId);
                 }
-                Response.Redirect("Carro.aspx");
+
+                CargarCarrito(); 
+            }
+            else if (!IsPostBack)
+            {
+                CargarCarrito();
             }
         }
 

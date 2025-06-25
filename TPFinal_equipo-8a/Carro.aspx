@@ -5,7 +5,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
   <h2>Tu Carrito</h2>
 
-  <!-- Total arriba a la derecha -->
+ 
   <div class="d-flex justify-content-end mb-3">
     <asp:Label 
       ID="lblTextoTotal" 
@@ -73,6 +73,20 @@
                        .Precio()
                        .ToString("N2") %>
               </p>
+
+<div class="mt-2">
+  <a href='<%# "Carro.aspx?accion=RestarCantidad&productoId=" 
+           + Eval("Producto.Id") 
+           + "&talleId=" 
+           + Eval("Producto.Talle.Id") %>' 
+     class="btn btn-outline-danger btn-sm me-1">−</a>
+
+  <a href='<%# "Carro.aspx?accion=SumarCantidad&productoId=" 
+           + Eval("Producto.Id") 
+           + "&talleId=" 
+           + Eval("Producto.Talle.Id") %>' 
+     class="btn btn-outline-success btn-sm">+</a>
+</div>
               <p class="card-text">
                 Talle: <%# Eval("Producto.Talle.Etiqueta") %>
               </p>

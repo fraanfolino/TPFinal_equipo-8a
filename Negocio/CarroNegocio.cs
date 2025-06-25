@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
-using Dominio; 
+using Dominio;
 
 namespace Negocio
 {
@@ -14,7 +14,7 @@ namespace Negocio
             List<ItemCarrito> carrito = new List<ItemCarrito>();
             int idCarro;
 
-            // 1) Obtener o crear el carrito y quedarnos con su Id
+            /* para obtener o crear el carro */
             AccesoBD a1 = new AccesoBD();
             try
             {
@@ -30,7 +30,7 @@ namespace Negocio
                 a1.cerrarConexion();
             }
 
-           
+
             AccesoBD a2 = new AccesoBD();
             try
             {
@@ -43,17 +43,17 @@ namespace Negocio
 
                 while (a2.Lectorbd.Read())
                 {
-                   
+
                     int prodId = Convert.ToInt32(a2.Lectorbd["id_producto"]);
                     string nombre = a2.Lectorbd["producto_nombre"].ToString();
                     decimal precio = Convert.ToDecimal(a2.Lectorbd["producto_precio"]);
                     int cantidad = Convert.ToInt32(a2.Lectorbd["cantidad"]);
                     int talleId = Convert.ToInt32(a2.Lectorbd["id_talle"]);
                     string talleEtiqueta = a2.Lectorbd["talle_etiqueta"].ToString();
-                    
-                    string urlImagen = a2.Lectorbd["UrlImagen"] == DBNull.Value? null : a2.Lectorbd["UrlImagen"].ToString();
 
-                   
+                    string urlImagen = a2.Lectorbd["UrlImagen"] == DBNull.Value ? null : a2.Lectorbd["UrlImagen"].ToString();
+
+
                     if (ultimoItem != null
                      && ultimoItem.Producto.Id == prodId
                      && ultimoItem.Producto.Talle.Id == talleId)
@@ -66,7 +66,7 @@ namespace Negocio
                         continue;
                     }
 
-                  
+
                     Producto prod = new Producto
                     {
                         Id = prodId,
@@ -101,7 +101,7 @@ namespace Negocio
         {
             int idCarrito;
 
-            // A) Obtener o crear carrito
+
             AccesoBD a1 = new AccesoBD();
             try
             {
@@ -114,7 +114,7 @@ namespace Negocio
             }
             finally { a1.cerrarConexion(); }
 
-            
+
             AccesoBD a2 = new AccesoBD();
             try
             {
@@ -129,37 +129,37 @@ namespace Negocio
             finally { a2.cerrarConexion(); }
         }
 
-         public List<Talle> ObtenerTallesPorProducto(int idProducto)
-         {
-             List<Talle> listaTalles = new List<Talle>();
-             AccesoBD acceso = new AccesoBD();
+        public List<Talle> ObtenerTallesPorProducto(int idProducto)
+        {
+            List<Talle> listaTalles = new List<Talle>();
+            AccesoBD acceso = new AccesoBD();
 
-             try
-             {
-                 acceso.limpiarParametros();
-                 acceso.setearProcedimiento("sp_ObtenerTallesPorProducto");
-                 acceso.setearParametro("@productoId", idProducto);
-                 acceso.ejecutarLectura();
+            try
+            {
+                acceso.limpiarParametros();
+                acceso.setearProcedimiento("sp_ObtenerTallesPorProducto");
+                acceso.setearParametro("@productoId", idProducto);
+                acceso.ejecutarLectura();
 
-                 while (acceso.Lectorbd.Read())
-                 {
-                     Talle talle = new Talle();
-                     talle.Id = Convert.ToInt32(acceso.Lectorbd["id"]);
-                     talle.Etiqueta = acceso.Lectorbd["etiqueta"].ToString();
-                     listaTalles.Add(talle);
-                 }
-             }
-             catch (Exception ex)
-             {
-                 throw ex;
-             }
-             finally
-             {
-                 acceso.cerrarConexion();
-             }
+                while (acceso.Lectorbd.Read())
+                {
+                    Talle talle = new Talle();
+                    talle.Id = Convert.ToInt32(acceso.Lectorbd["id"]);
+                    talle.Etiqueta = acceso.Lectorbd["etiqueta"].ToString();
+                    listaTalles.Add(talle);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                acceso.cerrarConexion();
+            }
 
-             return listaTalles;
-         }
+            return listaTalles;
+        }
 
         /*public List<ItemCarrito> ObtenerCarrito(int idUsuario)
         {
@@ -238,27 +238,47 @@ namespace Negocio
             return carrito;
         }*/
 
-
-
-        public void SumarCantidadBD(int usuarioId, int productoId, string talle)
+        public int ObtenerOCrearCarrito(int idUsuario)
         {
-            AccesoBD datos = new AccesoBD();
-            datos.setearProcedimiento("sp_SumarCantidadCarrito");
-            datos.setearParametro("@usuarioId", usuarioId);
-            datos.setearParametro("@productoId", productoId);
-            datos.setearParametro("@talle", talle); 
-            datos.ejecutarAccion();
+            AccesoBD db = new AccesoBD();
+            db.limpiarParametros();
+            db.setearProcedimiento("sp_ObtenerOCrearCarrito");
+            db.setearParametro("@idUsuario", idUsuario);
+            db.ejecutarLectura();
+
+            int idCarrito = 0;
+            if (db.Lectorbd.Read())
+            {
+                idCarrito = Convert.ToInt32(db.Lectorbd["idCarro"]);
+            }
+
+            db.cerrarConexion();
+            return idCarrito;
         }
 
-        public void RestarCantidadBD(int usuarioId, int productoId, string talle)
+
+        public void SumarCantidadBD(int idCarrito, int idProducto, int idTalle)
         {
-            AccesoBD datos = new AccesoBD();
-            datos.setearProcedimiento("sp_RestarCantidadCarrito");
-            datos.setearParametro("@usuarioId", usuarioId);
-            datos.setearParametro("@productoId", productoId);
-            datos.setearParametro("@talle", talle);
-            datos.ejecutarAccion();
+            AccesoBD db = new AccesoBD();
+            db.limpiarParametros();
+            db.setearProcedimiento("sp_SumarCantidadCarrito");
+            db.setearParametro("@idCarrito", idCarrito);
+            db.setearParametro("@idProducto", idProducto);
+            db.setearParametro("@idTalle", idTalle);
+            db.ejecutarAccion();
         }
 
+        public void RestarCantidadBD(int idCarrito, int idProducto, int idTalle)
+        {
+            AccesoBD db = new AccesoBD();
+            db.limpiarParametros();
+            db.setearProcedimiento("sp_RestarCantidadCarrito");
+            db.setearParametro("@idCarrito", idCarrito);
+            db.setearParametro("@idProducto", idProducto);
+            db.setearParametro("@idTalle", idTalle);
+            db.ejecutarAccion();
+
+
+        }
     }
 }

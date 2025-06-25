@@ -38,9 +38,9 @@ namespace TPFinal_equipo_8a
             ddlMarca.DataSource = CargarMarcas();
             ddlMarca.DataBind();
 
-            if (Request.QueryString["id"] != null && int.TryParse(Request.QueryString["id"], out int index))
+            if (Request.QueryString["id"] != null && int.TryParse(Request.QueryString["id"], out int index) && PrecargarElementos(index) == 1)
             {
-                PrecargarElementos(index);
+                //if (PrecargarElementos(index) == 1);
                 btnAgregar.Visible = false;
                 btnModificar.Visible = true;
                 Titulo.Text = "Modificar Producto";
@@ -54,13 +54,18 @@ namespace TPFinal_equipo_8a
             RefreshImagenes();
         }
 
-        private void PrecargarElementos(int index)
+        private int PrecargarElementos(int index)
         {
             btnAgregar.Visible = false;
             btnModificar.Visible = true;
 
             ProductoNegocio productoNegocio = new ProductoNegocio();
             Producto producto = productoNegocio.ObtenerProducto(index);
+
+            if (producto == null)
+            {
+                return 0;
+            }
 
             txtNombre.Text = producto.Nombre;
             txtDescripcion.Text = producto.Descripcion;
@@ -70,6 +75,7 @@ namespace TPFinal_equipo_8a
             ddlMarca.SelectedValue = producto.Marca.Nombre;
 
             ActualizarListaImg(producto.ImagenUrl);
+            return 1;
         }
 
         public List<string> CargarCategorias()

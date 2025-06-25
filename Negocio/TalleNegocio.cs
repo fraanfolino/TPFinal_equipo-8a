@@ -9,13 +9,14 @@ namespace Negocio
 {
     public class TalleNegocio
     {
-        public List<Talle> ListarTalles()
+        public List<Talle> ListarTalles(string nombreProducto)
         {
             AccesoBD datos = new AccesoBD();
             List<Talle> talles = new List<Talle>();
             try
             {
                 datos.setearProcedimiento("dbo.sp_ListarTalles");
+                datos.setearParametro("@producto_nombre", nombreProducto);
                 datos.ejecutarLectura();
 
                 while (datos.Lectorbd.Read())

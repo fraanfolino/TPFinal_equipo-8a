@@ -14,6 +14,16 @@ namespace TPFinal_equipo_8a
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+
+            if (IsPostBack)
+            {
+                string evento = Request["__EVENTTARGET"];
+                if (evento == "productoSeleccionado")
+                {
+                    MostrarTalles();
+                }
+            }
+
             if (!IsPostBack)
             {
                 exitoMensaje.Visible = false;
@@ -26,11 +36,6 @@ namespace TPFinal_equipo_8a
                 ddlMarca.DataBind();
 
                 ActualizarListaProductos();
-
-                ddlTalles2.DataSource = CargarTalles();
-                ddlTalles2.DataTextField = "etiqueta";
-                ddlTalles2.DataBind();
-
                 txtCantidad.Attributes["min"] = "1";
             }
             else
@@ -68,10 +73,10 @@ namespace TPFinal_equipo_8a
             return listaMarcas;
         }
 
-        public List<Talle> CargarTalles()
+        public List<Talle> CargarTalles(string producto)
         {
             TalleNegocio talleNegocio = new TalleNegocio();
-            return talleNegocio.ListarTalles();
+            return talleNegocio.ListarTalles(producto);
         }
 
         protected void ddlCategoria_SelectedIndexChanged(object sender, EventArgs e)
@@ -102,6 +107,7 @@ namespace TPFinal_equipo_8a
             }
 
             MostrarStock();
+            MostrarTalles();
         }
 
         protected void ddlMarca_SelectedIndexChanged(object sender, EventArgs e)
@@ -112,27 +118,58 @@ namespace TPFinal_equipo_8a
         public void MostrarStock()
         {
             ProductoNegocio productoNegocio = new ProductoNegocio();
-            DataTable tablaStock = productoNegocio.ListarStock(productoSeleccionado.Value);
-            var codigo = tablaStock.Rows[0]["Id"];
 
-            MostrarImagenes((int)codigo);
+            int idProdu = productoNegocio.ObtenerIdConNombre(productoSeleccionado.Value);
 
+            if (idProdu == -1)
+            { return; }
+
+            DataTable tablaStock = productoNegocio.ListarStock(idProdu);
+            MostrarImagenes(idProdu);
+
+            if (tablaStock.Rows.Count > 0)
+            {
+//                var codigo = tablaStock.Rows[0]["Id"];
+                
+                lblNombre.Text = "  " + productoSeleccionado.Value;
+                TablaStock.DataSource = tablaStock;
+                TablaStock.DataBind();
+            }
+            else
+            {
+                TablaStock.DataSource = null;
+                TablaStock.DataBind();
+            }
+            
             lblNombre.Text = "  " + productoSeleccionado.Value;
-            TablaStock.DataSource = tablaStock;
-            TablaStock.DataBind();
         }
 
-
+        private void MostrarTalles()
+        {
+            ddlTalles2.DataSource = CargarTalles(productoSeleccionado.Value);
+            ddlTalles2.DataTextField = "etiqueta";
+            ddlTalles2.DataBind();
+        }
         private void MostrarImagenes(int codigo)
         {
             ProductoNegocio productoNegocio = new ProductoNegocio();
             var imagenes = productoNegocio.ObtenerProducto(codigo).ImagenUrl;
 
-            rptImagenes.DataSource = imagenes;
-            rptImagenes.DataBind();
+            if (imagenes.Count > 0)
+            {
+                rptImagenes.DataSource = imagenes;
+                rptImagenes.DataBind();
 
-            rptIndicadores.DataSource = imagenes;
-            rptIndicadores.DataBind();
+                rptIndicadores.DataSource = imagenes;
+                rptIndicadores.DataBind();
+            }
+            else
+            {
+                rptImagenes.DataSource = null;
+                rptImagenes.DataBind();
+                rptIndicadores.DataSource = null;
+                rptIndicadores.DataBind();
+            }
         }
 
         protected void btnAgregar_Click(object sender, EventArgs e)

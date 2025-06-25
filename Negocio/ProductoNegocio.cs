@@ -244,15 +244,15 @@ namespace Negocio
             return listaProductos;
         }
 
-        public DataTable ListarStock(string nombre)
+        public DataTable ListarStock(int id)
         {
             AccesoBD datos = new AccesoBD();
             DataTable tabla = new DataTable();
 
             try
             {
-                datos.setearProcedimiento("sp_ObtenerStockPorNombre");
-                datos.setearParametro("@NombreProducto", nombre);
+                datos.setearProcedimiento("sp_ObtenerStockPorId");
+                datos.setearParametro("@IdProducto", id);
                 datos.ejecutarLectura();
                 tabla.Load(datos.Lectorbd);
             }
@@ -348,7 +348,7 @@ namespace Negocio
             AccesoBD datos = new AccesoBD();
             try
             {
-                datos.setearProcedimiento("sp_AgregarProducto");
+                datos.setearProcedimiento("sp_InsertarProducto");
                 datos.setearParametro("@nombre", produ.Nombre);
                 datos.setearParametro("@descripcion", produ.Descripcion);
                 datos.setearParametro("@precio", produ.Precio);
@@ -415,6 +415,36 @@ namespace Negocio
             {
                 datos.cerrarConexion();
             }
+        }
+
+
+
+        public int ObtenerIdConNombre(string nombreProducto)
+        {
+            AccesoBD datos = new AccesoBD();
+            int idProducto = -1;
+
+            try
+            {
+                datos.setearProcedimiento("sp_ObtenerIdProductoPorNombre");
+                datos.setearParametro("@nombre_producto", nombreProducto);
+                datos.ejecutarLectura();
+
+                if (datos.Lectorbd.Read())
+                {
+                    idProducto = datos.Lectorbd.GetInt32(0);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+
+            return idProducto;
         }
     }
 }

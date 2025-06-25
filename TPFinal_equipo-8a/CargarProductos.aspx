@@ -89,6 +89,7 @@
                     <div class="mb-2">
                         <label for="<%= productoSeleccionado.ClientID %>" class="form-label text-muted">Productos</label>
                         <select id="productoSeleccionado" runat="server"></select>
+                        <asp:HiddenField ID="hdnProductoSeleccionado" runat="server" />
                     </div>
                 </div>
             </div>
@@ -198,7 +199,7 @@
                 this.close();
 
                 if (value.length != 0) {
-                    __doPostBack('<%= productoSeleccionado.ClientID %>', '');
+                    __doPostBack('productoSeleccionado', '');
                 }
                 else
                 {

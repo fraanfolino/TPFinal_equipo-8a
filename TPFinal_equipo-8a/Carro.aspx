@@ -6,19 +6,17 @@
   <h2>Tu Carrito</h2>
 
  
-  <div class="d-flex justify-content-end mb-3">
-    <asp:Label 
-      ID="lblTextoTotal" 
-      runat="server" 
-      Font-Bold="true" 
-      Text="Total a pagar:" 
-      CssClass="me-2" />
-    <asp:Label 
-      ID="lblTotal" 
-      runat="server" 
-      CssClass="fw-bold" />
-  </div>
+  <div class="d-flex justify-content-end align-items-center mt-4 gap-3">
+  <span class="fw-bold">Total a pagar:</span>
+  <asp:Label ID="lblTotal" runat="server" CssClass="fw-bold fs-5" />
 
+  <asp:Button 
+    ID="btnContinuarCompra" 
+    runat="server" 
+    Text="Continuar compra" 
+    CssClass="btn btn-success"
+    OnClick="btnContinuarCompra_Click" />
+</div>
  
   <asp:Repeater ID="rptCarrito" runat="server">
     <ItemTemplate>

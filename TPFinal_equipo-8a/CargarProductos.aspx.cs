@@ -14,15 +14,24 @@ namespace TPFinal_equipo_8a
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
-            if (IsPostBack)
+            if (IsPostBack && Request["__EVENTTARGET"] == "productoSeleccionado")
             {
-                string evento = Request["__EVENTTARGET"];
-                if (evento == "productoSeleccionado")
+                string idProducto = Request.Form[productoSeleccionado.UniqueID];
+
+                if (!string.IsNullOrEmpty(idProducto))
                 {
-                    MostrarTalles();
+                    MostrarTalles(); // aquí actualizás talles, imágenes, etc.
                 }
             }
+
+            //if (IsPostBack)
+            //{
+            //    string evento = Request["__EVENTTARGET"];
+            //    if (evento == "productoSeleccionado")
+            //    {
+            //        MostrarTalles();
+            //    }
+            //}
 
             if (!IsPostBack)
             {

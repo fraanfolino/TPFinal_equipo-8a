@@ -24,6 +24,7 @@ namespace Negocio
                     Categoria categoria = new Categoria();
                     categoria.Id = Convert.ToInt32(datos.Lectorbd["id"]);
                     categoria.Nombre = datos.Lectorbd["nombre"].ToString();
+                    categoria.TipoTalle = datos.Lectorbd["tipotalle"].ToString();
                     categorias.Add(categoria);
                 }
             }

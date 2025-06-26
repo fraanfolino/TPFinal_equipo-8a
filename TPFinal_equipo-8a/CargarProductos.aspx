@@ -53,7 +53,7 @@
     <asp:Label ID="Titulo" runat="server" Text="Modificar Stock" />
 </h2>
 
-    <asp:UpdatePanel ID="UpdatePanel2" runat="server">
+    <asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Conditional">
         <ContentTemplate>
 
             <div class="row" style="height: 2rem;">
@@ -187,6 +187,10 @@
                 </div>
        </div>                               
 
+            
+        </ContentTemplate>
+    </asp:UpdatePanel>
+
 <script type="text/javascript">
     function initTomSelects() {
         new TomSelect("#<%= productoSeleccionado.ClientID %>",
@@ -289,7 +293,5 @@
     });
 </script>
 
-        </ContentTemplate>
-    </asp:UpdatePanel>
 
 </asp:Content>

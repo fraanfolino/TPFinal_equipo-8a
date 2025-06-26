@@ -1,6 +1,7 @@
 ﻿using Dominio;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -39,5 +40,27 @@ namespace Negocio
             return talles;
         }
 
+        public DataTable ListarTallesTabla()
+        {
+            AccesoBD datos = new AccesoBD();
+            DataTable tabla = new DataTable();
+
+            try
+            {
+                datos.setearProcedimiento("dbo.sp_ListarTallesPorTipo");
+                datos.ejecutarLectura();
+                tabla.Load(datos.Lectorbd);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+
+            return tabla;
+        }
     }
 }

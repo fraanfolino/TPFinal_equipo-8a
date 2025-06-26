@@ -42,33 +42,6 @@ namespace TPFinal_equipo_8a
         protected global::System.Web.UI.WebControls.Repeater rptItems;
 
         /// <summary>
-        /// Control lblSubtotalTitulo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblSubtotalTitulo;
-
-        /// <summary>
-        /// Control lblSubtotal.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblSubtotal;
-
-        /// <summary>
-        /// Control pnlPago.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlPago;
-
-        /// <summary>
         /// Control lblFormaPagoTitulo.
         /// </summary>
         /// <remarks>

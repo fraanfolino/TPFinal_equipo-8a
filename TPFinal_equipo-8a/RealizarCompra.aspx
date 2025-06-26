@@ -27,14 +27,9 @@
         </ItemTemplate>
       </asp:Repeater>
 
-      
-      <div class="mt-3">
-        <asp:Label ID="lblSubtotalTitulo" runat="server" Text="Subtotal:" CssClass="fw-bold me-2" />
-        <asp:Label ID="lblSubtotal" runat="server" CssClass="fw-bold fs-5" />
-      </div>
-
+ 
      
-      <asp:Panel ID="pnlPago" runat="server" CssClass="mt-4" Visible="false">
+     
         <div class="mb-3">
           <asp:Label ID="lblFormaPagoTitulo" runat="server" Text="Forma de pago:" CssClass="form-label d-block fw-bold" />
           <asp:DropDownList 
@@ -45,7 +40,7 @@
         </div>
         <asp:Label ID="lblTotalFinalTitulo" runat="server" Text="Total con ajuste:" CssClass="fw-bold d-block mb-1" />
         <asp:Label ID="lblTotalFinal" runat="server" CssClass="fw-bold fs-5 d-block" />
-      </asp:Panel>
+     
 
       
       <div class="mt-4">

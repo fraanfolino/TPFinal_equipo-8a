@@ -32,18 +32,16 @@
 <div class="d-flex gap-2">
     <asp:Button ID="btnAgregar" Text="Agregar" runat="server" CssClass="btn btn-secondary flex-fill" OnClick="btnAgregar_Click" />
     <asp:Button ID="btnModificar" Text="Modificar" runat="server" CssClass="btn btn-secondary flex-fill" OnClick="btnModificar_Click" />
-    <asp:Button ID="btnEliminar" Text="Eliminar" runat="server" CssClass="btn btn-danger flex-fill" />
+    <asp:Button ID="btnDesactivar" Text="Desactivar" runat="server" CssClass="btn btn-danger flex-fill" OnClick="btnDesactivar_Click" />
+    <asp:Button ID="btnActivar" Text="Activar" runat="server" CssClass="btn btn-success flex-fill" OnClick="btnActivar_Click" />
     <asp:Button ID="btnVolver" Text="Volver" runat="server" CssClass="btn btn-secondary flex-fill" OnClick="btnVolver_Click" />
 </div>
 
 <div class="d-flex gap-2 mt-2">
     <div id="alertDiv" runat="server" class="alert alert-secondary w-100 py-1 px-2" role="alert"  style="padding-top: 2px; padding-bottom: 2px;">
-        
-    </div>
+    </div>     
 </div>
-
-
-
+    <asp:Button ID="btnConfirmar" Text="Confirmar" runat="server" CssClass="btn btn-warning flex-fill" OnClick="btnConfirmar_Click" Visible="false" />
     </div>
 </div>
 

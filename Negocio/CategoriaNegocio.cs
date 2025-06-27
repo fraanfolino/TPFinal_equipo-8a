@@ -24,6 +24,7 @@ namespace Negocio
                     categoria.Id = Convert.ToInt32(datos.Lectorbd["id"]);
                     categoria.Nombre = datos.Lectorbd["nombre"].ToString();
                     categoria.TipoTalle = datos.Lectorbd["tipotalle"].ToString();
+                    categoria.Activo = Convert.ToBoolean(datos.Lectorbd["activo"]);
                     categorias.Add(categoria);
                 }
             }
@@ -77,6 +78,7 @@ namespace Negocio
                     categoria.Id = Convert.ToInt32(datos.Lectorbd["id"]);
                     categoria.Nombre = datos.Lectorbd["nombre"].ToString();
                     categoria.TipoTalle = datos.Lectorbd["tipotalle"].ToString();
+                    categoria.Activo = Convert.ToBoolean(datos.Lectorbd["activo"]);
                 }
             }
             catch (Exception ex)
@@ -115,6 +117,47 @@ namespace Negocio
             }
 
             return categoria;
+        }
+
+        public void BajaCategoria(int id)
+        {
+            AccesoBD datos = new AccesoBD();
+            Categoria categoria = null;
+
+            try
+            {
+                datos.setearProcedimiento("sp_BajaCategoria");
+                datos.setearParametro("@id", id);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public void AltaCategoria(int id)
+        {
+            AccesoBD datos = new AccesoBD();
+
+            try
+            {
+                datos.setearProcedimiento("sp_AltaCategoria");
+                datos.setearParametro("@id", id);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
         }
     }
 }

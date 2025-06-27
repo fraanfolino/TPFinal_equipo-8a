@@ -28,13 +28,14 @@ namespace TPFinal_equipo_8a
                 Subtitulo.Text = "Modificar Categoria";
                 btnAgregar.Visible = false;
                 btnModificar.Visible = true;
-                btnEliminar.Visible = true;
+
             }
             else
             {
                 btnModificar.Visible = false;
                 btnAgregar.Visible = true;
-                btnEliminar.Visible = false;
+                btnDesactivar.Visible = false;
+                btnActivar.Visible = false;
             }
         }
 
@@ -52,8 +53,6 @@ namespace TPFinal_equipo_8a
 
                 //ojo esto edita el dropdown lpm
                 //ddlTipoTalle.SelectedItem.Text = categoria.TipoTalle;
-                //est tmp sirve
-                //ddlTipoTalle.SelectedValue = categoria.TipoTalle;
 
                 //ASII - aca lo busco y lo seleccion
                 ListItem item = ddlTipoTalle.Items.FindByText(categoria.TipoTalle);
@@ -64,13 +63,23 @@ namespace TPFinal_equipo_8a
 
                 txtNombreCategoria.Text = categoria.Nombre.ToString();
 
+                if (categoria.Activo)
+                {
+                    btnActivar.Visible = false;
+                    btnDesactivar.Visible = true;
+                }
+                else
+                {
+                    btnActivar.Visible = true;
+                    btnDesactivar.Visible = false;
+                }
+
                 return true;
             }
             catch (Exception)
             {
                 return false;
             }
-
         }
 
         private void CargarTipodeTalles()
@@ -115,11 +124,14 @@ namespace TPFinal_equipo_8a
             ModificarCategoria();
         }
 
+        protected void btnConfirmar_Click(object sender, EventArgs e)
+        {
+            ModificarCategoria(true);
+        }
 
-        private void ModificarCategoria()
+        private void ModificarCategoria(bool confirmar = false)
         {
             CategoriaNegocio catNegocio = new CategoriaNegocio();
-
 
             if (int.TryParse(Request.QueryString["id"], out int index))
             {
@@ -131,12 +143,20 @@ namespace TPFinal_equipo_8a
                     alertDiv.InnerHtml = "No hubo Modificaciones";
                     return;
                 }
+
+                if (ddlTipoTalle.SelectedItem.Text != categoria.TipoTalle && !confirmar)
+                {
+                     alertDiv.Attributes["class"] = "alert alert-warning w-100 py-1 px-2";
+                     alertDiv.InnerHtml = "Al modificar el tipo de talle se eliminará TODO el Stock actual.&nbsp;Esta seguro que desea continuar?";
+                      btnConfirmar.Visible = true;
+                     return;
+                }
             }
 
             if (String.IsNullOrEmpty(txtNombreCategoria.Text))
             {
                 alertDiv.Attributes["class"] = "alert alert-primary w-100 py-1 px-2";
-                alertDiv.InnerHtml = "La categoria no puede estar vacía";
+                alertDiv.InnerHtml = "El nombre no puede estar vacío";
                 return;
             }
 
@@ -145,7 +165,67 @@ namespace TPFinal_equipo_8a
                 CategoriaNegocio negocio = new CategoriaNegocio();
                 negocio.ModificarCategoria(Request.QueryString["id"], txtNombreCategoria.Text,int.Parse(ddlTipoTalle.SelectedValue));
                 alertDiv.Attributes["class"] = "alert alert-success w-100 py-1 px-2";
-                alertDiv.InnerHtml = "Categoria Modificada correctamente";
+
+                if (confirmar)
+                {
+                    alertDiv.InnerHtml = "Categoria Modificada. &nbsp;El Stock ha sido reiniciado.";
+                    btnConfirmar.Visible = false;
+                }
+                else
+                {
+                    alertDiv.InnerHtml = "Categoria Modificada.";
+                }
+
+            }
+            catch (SqlException ex)
+            {
+                alertDiv.Attributes["class"] = "alert alert-danger w-100 py-1 px-2";
+                alertDiv.InnerHtml = ex.Message.ToString();
+            }
+        }
+
+        protected void btnActivar_Click(object sender, EventArgs e)
+        {
+            AltaCategoria();
+        }
+  
+        private void AltaCategoria()
+        {
+            CategoriaNegocio catNegocio = new CategoriaNegocio();
+
+            try
+            {
+                CategoriaNegocio negocio = new CategoriaNegocio();
+                negocio.AltaCategoria(int.Parse(Request.QueryString["id"]));
+                alertDiv.Attributes["class"] = "alert alert-success w-100 py-1 px-2";
+                alertDiv.InnerHtml = "Categoria Activada correctamente";
+                btnActivar.Visible = false;
+                btnDesactivar.Visible = true;
+
+            }
+            catch (SqlException ex)
+            {
+                alertDiv.Attributes["class"] = "alert alert-danger w-100 py-1 px-2";
+                alertDiv.InnerHtml = ex.Message.ToString();
+            }
+        }
+
+        protected void btnDesactivar_Click(object sender, EventArgs e)
+        {
+            BajaCategoria();
+        }
+        private void BajaCategoria()
+        {
+            CategoriaNegocio catNegocio = new CategoriaNegocio();
+
+            try
+            {
+                CategoriaNegocio negocio = new CategoriaNegocio();
+                negocio.BajaCategoria(int.Parse(Request.QueryString["id"]));
+                alertDiv.Attributes["class"] = "alert alert-warning w-100 py-1 px-2";
+                alertDiv.InnerHtml = "Categoria desactivada correctamente";
+                btnActivar.Visible = true;
+                btnDesactivar.Visible = false;
             }
             catch (SqlException ex)
             {
@@ -156,20 +236,11 @@ namespace TPFinal_equipo_8a
 
 
 
-
-
-
-
-
-
-
-
-
-
-
         protected void btnVolver_Click(object sender, EventArgs e)
         {
             Response.Redirect("GestionarMC.aspx", false);
         }
+
+
     }
 }

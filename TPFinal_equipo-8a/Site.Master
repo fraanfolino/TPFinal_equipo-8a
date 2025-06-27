@@ -51,6 +51,7 @@
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/Catalogo">Catalogo</a></li>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/CargarProductos">Cargar Stock</a></li>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/Producto">Agregar Productos</a></li>
+                        <li class="nav-item"><a class="nav-link" runat="server" href="~/GestionarMC">Gestionar MCT</a></li>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/About">Acerca de</a></li>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/Contact">Contacto</a></li>
                     </ul>
@@ -73,6 +74,7 @@
                               {%>
                                  <li><a class="dropdown-item" href="Producto">Agregar Productos</a></li>
                                  <li><a class="dropdown-item" href="CargarProductos">Cargar Stock</a></li>
+                                <li><a class="dropdown-item" href="GestionarMC">Cargar Stock</a></li>
                             <%}%>
 
                          <asp:Button Text="Salir" ID="Button2" class="dropdown-item" OnClick="btnSalir_Click" runat="server" CausesValidation="false" UseSubmitBehavior="false" />

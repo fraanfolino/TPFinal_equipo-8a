@@ -22,13 +22,10 @@
     
  <div class="col-md-3">
      <div class="row">
-             <label class="form-label text-muted">Categorias</label>
+             <label class="form-label">Categorias</label>
 
          <div class="row"  style="margin: 0px">
-<asp:Button ID="Button1"
-            Text="Agregar Categoría"
-            runat="server"
-            CssClass="btn btn-secondary" />
+            <a href="categoria.aspx" class="btn btn-secondary">Agregar Categoría</a>
     </div>
 
 <asp:GridView ID="dgvTablaCategorias"
@@ -70,7 +67,7 @@
  <div class="col-md-3">
 
 <div class="row">
-         <label class="form-label text-muted">Marcas</label>
+         <label class="form-label">Marcas</label>
              <div class="row"  style="margin: 0px">
 <asp:Button ID="Button2"
             Text="Agregar Marca"
@@ -107,7 +104,7 @@
  <div class="col-md-3">
 
 <div class="row">
-         <label class="form-label text-muted">Tipos de Talles</label>
+         <label class="form-label">Tipos de Talles</label>
                  <div class="row"  style="margin: 0px">
 <asp:Button ID="Button4"
             Text="Agregar Tipo"

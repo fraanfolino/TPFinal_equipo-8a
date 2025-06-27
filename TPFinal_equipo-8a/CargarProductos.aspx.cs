@@ -24,15 +24,6 @@ namespace TPFinal_equipo_8a
                 }
             }
 
-            //if (IsPostBack)
-            //{
-            //    string evento = Request["__EVENTTARGET"];
-            //    if (evento == "productoSeleccionado")
-            //    {
-            //        MostrarTalles();
-            //    }
-            //}
-
             if (!IsPostBack)
             {
                 exitoMensaje.Visible = false;

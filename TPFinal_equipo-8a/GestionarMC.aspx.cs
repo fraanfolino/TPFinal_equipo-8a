@@ -14,12 +14,10 @@ namespace TPFinal_equipo_8a
         {
             if (!IsPostBack)
             {
-
                 CargarCategorias();
                 CargarMarcas();
                 CargarTipodeTalles();
             }
-        
         }
 
         private void CargarCategorias()
@@ -47,7 +45,7 @@ namespace TPFinal_equipo_8a
         protected void dgvTablaCategorias_SelectedIndexChanged(object sender, EventArgs e)
         {
             int idSeleccionado = Convert.ToInt32(dgvTablaCategorias.SelectedDataKey.Value);
-
+            Response.Redirect("Categoria.aspx?id=" + idSeleccionado, false);
         }
 
         protected void dgvTablaMarcas_SelectedIndexChanged(object sender, EventArgs e)

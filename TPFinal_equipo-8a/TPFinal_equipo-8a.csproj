@@ -103,6 +103,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="About.aspx" />
+    <Content Include="Categoria.aspx" />
     <Content Include="GestionarMC.aspx" />
     <Content Include="Producto.aspx" />
     <Content Include="CargarProductos.aspx" />
@@ -197,6 +198,13 @@
     <Content Include="Site.Mobile.Master" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Categoria.aspx.cs">
+      <DependentUpon>Categoria.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Categoria.aspx.designer.cs">
+      <DependentUpon>Categoria.aspx</DependentUpon>
+    </Compile>
     <Compile Include="GestionarMC.aspx.cs">
       <DependentUpon>GestionarMC.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

@@ -104,6 +104,7 @@
   <ItemGroup>
     <Content Include="About.aspx" />
     <Content Include="Categoria.aspx" />
+    <Content Include="Confirmacion.aspx" />
     <Content Include="GestionarMC.aspx" />
     <Content Include="Marca.aspx" />
     <Content Include="Producto.aspx" />
@@ -206,6 +207,13 @@
     </Compile>
     <Compile Include="Categoria.aspx.designer.cs">
       <DependentUpon>Categoria.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Confirmacion.aspx.cs">
+      <DependentUpon>Confirmacion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Confirmacion.aspx.designer.cs">
+      <DependentUpon>Confirmacion.aspx</DependentUpon>
     </Compile>
     <Compile Include="GestionarMC.aspx.cs">
       <DependentUpon>GestionarMC.aspx</DependentUpon>

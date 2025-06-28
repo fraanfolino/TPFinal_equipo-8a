@@ -238,6 +238,116 @@ namespace Negocio
             return carrito;
         }*/
 
+
+
+
+        public List<ItemCarrito> ObtenerDetallesPedido(int pedidoId)
+        {
+            List<ItemCarrito> detalles = new List<ItemCarrito>();
+            AccesoBD db = new AccesoBD();
+
+            try
+            {
+                db.limpiarParametros();
+                db.setearProcedimiento("sp_ObtenerDetallesPedido");
+                db.setearParametro("@pedidoId", pedidoId);
+                db.ejecutarLectura();
+
+                while (db.Lectorbd.Read())
+                {
+                    var producto = new Producto
+                    {
+                        Id = Convert.ToInt32(db.Lectorbd["id_producto"]),
+                        Nombre = db.Lectorbd["producto_nombre"].ToString(),
+                        Precio = Convert.ToDecimal(db.Lectorbd["precio_unitario"]),
+                        Talle = new Talle
+                        {
+                            Id = Convert.ToInt32(db.Lectorbd["id_talle"]),
+                            Etiqueta = db.Lectorbd["talle_etiqueta"].ToString()
+                        }
+                    };
+
+                    detalles.Add(new ItemCarrito
+                    {
+                        Producto = producto,
+                        Cantidad = Convert.ToInt32(db.Lectorbd["cantidad"])
+                    });
+                }
+            }
+            finally { db.cerrarConexion(); }
+
+            return detalles;
+        }
+
+
+        
+       public DateTime ObtenerFechaPedido(int pedidoId)
+        {
+            AccesoBD db = new AccesoBD();
+            DateTime fecha = DateTime.MinValue;
+
+            try
+            {
+                db.setearProcedimiento("sp_ObtenerFechaPedido");
+                db.setearParametro("@idPedido", pedidoId);
+                db.ejecutarLectura();
+
+                if (db.Lectorbd.Read() && db.Lectorbd["fecha"] != DBNull.Value)
+                    fecha = Convert.ToDateTime(db.Lectorbd["fecha"]);
+            }
+            finally
+            {
+                db.cerrarConexion();
+            }
+
+            return fecha;
+        }
+
+        public decimal ObtenerTotalPedido(int pedidoId)
+        {
+            var db = new AccesoBD();
+            db.limpiarParametros();
+            db.setearProcedimiento("sp_ObtenerTotalPedido");
+            db.setearParametro("@pedidoId", pedidoId);
+            db.ejecutarLectura();
+
+            decimal total = 0;
+            if (db.Lectorbd.Read())
+                total = (decimal)db.Lectorbd["total"];
+
+            db.cerrarConexion();
+            return total;
+        }
+        public void RegistrarDetallePedido(int pedidoId, ItemCarrito item)
+        {
+            AccesoBD db = new AccesoBD();
+            db.limpiarParametros();
+            db.setearProcedimiento("sp_RegistrarPedidoDetalle");
+            db.setearParametro("@pedido_id", pedidoId);
+            db.setearParametro("@producto_id", item.Producto.Id);
+            db.setearParametro("@talle_id", item.Producto.Talle.Id);
+            db.setearParametro("@cantidad", item.Cantidad);
+            db.setearParametro("@precio_unitario", item.Producto.Precio);
+            db.ejecutarAccion();
+            db.cerrarConexion();
+        }
+        public int RegistrarPedido(int idUsuario, decimal total)
+        {
+           AccesoBD db = new AccesoBD();
+            db.limpiarParametros();
+            db.setearProcedimiento("sp_RegistrarPedido");
+            db.setearParametro("@cliente_id", idUsuario);
+            db.setearParametro("@total", total);
+            db.ejecutarLectura();
+
+            int idPedido = 0;
+            if (db.Lectorbd.Read())
+                idPedido = Convert.ToInt32(db.Lectorbd["idPedido"]);
+
+            db.cerrarConexion();
+            return idPedido;
+        }
+
         public int ObtenerOCrearCarrito(int idUsuario)
         {
             AccesoBD db = new AccesoBD();

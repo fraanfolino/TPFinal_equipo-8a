@@ -34,6 +34,11 @@ namespace TPFinal_equipo_8a
             lblMetodoPago.Text = metodo;
 
 
+            DateTime fecha = negocio.ObtenerFechaPedido(idPedido);
+            lblFecha.Text = fecha.ToString("dd/MM/yyyy");
+
+
+
 
         }
 

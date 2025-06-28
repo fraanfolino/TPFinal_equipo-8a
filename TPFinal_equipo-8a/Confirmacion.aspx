@@ -25,7 +25,7 @@
                     <asp:Label runat="server" Text='<%# String.Format("{0:C2}", (Convert.ToDecimal(Eval("Producto.Precio")) * Convert.ToInt32(Eval("Cantidad")))) %>' />
 
 
-             
+      
 
                 </asp:Panel>
 
@@ -33,11 +33,16 @@
         </asp:Repeater>
 
 
-             <asp:Label ID="lblMetodoPagoTitulo" runat="server" Text="Método de pago: " />
-          <asp:Label ID="lblMetodoPago" runat="server" />
 
-        <asp:Label ID="lblTotalTitulo" runat="server" Text="Total: " />
-        <asp:Label ID="lblTotal" runat="server" Font-Bold="true" Font-Size="Large" />
-    </asp:Panel>
+                  <asp:Label ID="lblFechaTitulo" runat="server" Text="Fecha del pedido: " />
+                  <asp:Label ID="lblFecha" runat="server"  />
+
+
+                 <asp:Label ID="lblMetodoPagoTitulo" runat="server" Text="Método de pago: " />
+                 <asp:Label ID="lblMetodoPago" runat="server" />
+
+                <asp:Label ID="lblTotalTitulo" runat="server" Text="Total: " />
+                <asp:Label ID="lblTotal" runat="server" Font-Bold="true" Font-Size="Large" />
+        </asp:Panel>
 
 </asp:Content>

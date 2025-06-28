@@ -280,6 +280,29 @@ namespace Negocio
         }
 
 
+        
+       public DateTime ObtenerFechaPedido(int pedidoId)
+        {
+            AccesoBD db = new AccesoBD();
+            DateTime fecha = DateTime.MinValue;
+
+            try
+            {
+                db.setearProcedimiento("sp_ObtenerFechaPedido");
+                db.setearParametro("@idPedido", pedidoId);
+                db.ejecutarLectura();
+
+                if (db.Lectorbd.Read() && db.Lectorbd["fecha"] != DBNull.Value)
+                    fecha = Convert.ToDateTime(db.Lectorbd["fecha"]);
+            }
+            finally
+            {
+                db.cerrarConexion();
+            }
+
+            return fecha;
+        }
+
         public decimal ObtenerTotalPedido(int pedidoId)
         {
             var db = new AccesoBD();

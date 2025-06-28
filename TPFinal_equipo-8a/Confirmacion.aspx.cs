@@ -34,7 +34,7 @@ namespace TPFinal_equipo_8a
         private void CargarTotal(int idPedido)
         {
             CarroNegocio negocio = new CarroNegocio();
-            decimal total = negocio.ObtenerTotalPedido(idPedido);
+            decimal total = negocio.ObtenerTotalPedido(idPedido); 
             lblTotal.Text = total.ToString("C2");
         }
     }

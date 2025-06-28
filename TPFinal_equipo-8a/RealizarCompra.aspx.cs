@@ -75,24 +75,32 @@ namespace TPFinal_equipo_8a
         {
             if (Session["usuario"] == null)
             {
-               
                 Response.Redirect("Login.aspx");
                 return;
             }
 
             int idUsuario = ((Usuario)Session["usuario"]).Id;
             CarroNegocio negocio = new CarroNegocio();
-
             List<ItemCarrito> carrito = negocio.ObtenerCarrito(idUsuario);
 
 
-            decimal total = carrito.Sum(i => i.Producto.Precio * i.Cantidad);
+            
+            decimal subtotal = carrito.Sum(i => i.Producto.Precio * i.Cantidad);
 
-            int idPedido = negocio.RegistrarPedido(idUsuario, total);
+           
+            string metodoValor = ddlFormaPago.SelectedValue;
+            decimal porcentaje = Convert.ToDecimal(metodoValor);
+
+          
+            decimal totalConAjuste = subtotal + (subtotal * porcentaje / 100);
+
+           
+            int idPedido = negocio.RegistrarPedido(idUsuario, totalConAjuste);
 
             foreach (var item in carrito)
                 negocio.RegistrarDetallePedido(idPedido, item);
 
+           
             Response.Redirect("Confirmacion.aspx?pedidoId=" + idPedido);
         }
 

@@ -87,7 +87,10 @@ namespace TPFinal_equipo_8a
             
             decimal subtotal = carrito.Sum(i => i.Producto.Precio * i.Cantidad);
 
-           
+            string metodoValorText = ddlFormaPago.SelectedItem.Text;
+
+
+
             string metodoValor = ddlFormaPago.SelectedValue;
             decimal porcentaje = Convert.ToDecimal(metodoValor);
 
@@ -101,7 +104,7 @@ namespace TPFinal_equipo_8a
                 negocio.RegistrarDetallePedido(idPedido, item);
 
            
-            Response.Redirect("Confirmacion.aspx?pedidoId=" + idPedido);
+            Response.Redirect("Confirmacion.aspx?pedidoId=" + idPedido + "&metodo=" + metodoValorText);
         }
 
 

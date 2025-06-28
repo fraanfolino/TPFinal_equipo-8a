@@ -29,6 +29,12 @@ namespace TPFinal_equipo_8a
 
             repDetalles.DataSource = detalles;
             repDetalles.DataBind();
+
+            string metodo = Request.QueryString["metodo"];
+            lblMetodoPago.Text = metodo;
+
+
+
         }
 
         private void CargarTotal(int idPedido)

@@ -42,6 +42,24 @@ namespace TPFinal_equipo_8a
         protected global::System.Web.UI.WebControls.Repeater repDetalles;
 
         /// <summary>
+        /// Control lblMetodoPagoTitulo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblMetodoPagoTitulo;
+
+        /// <summary>
+        /// Control lblMetodoPago.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblMetodoPago;
+
+        /// <summary>
         /// Control lblTotalTitulo.
         /// </summary>
         /// <remarks>

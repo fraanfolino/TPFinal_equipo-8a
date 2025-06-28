@@ -238,6 +238,63 @@ namespace Negocio
             return carrito;
         }*/
 
+
+
+
+        public List<ItemCarrito> ObtenerDetallesPedido(int pedidoId)
+        {
+            List<ItemCarrito> detalles = new List<ItemCarrito>();
+            AccesoBD db = new AccesoBD();
+
+            try
+            {
+                db.limpiarParametros();
+                db.setearProcedimiento("sp_ObtenerDetallesPedido");
+                db.setearParametro("@pedidoId", pedidoId);
+                db.ejecutarLectura();
+
+                while (db.Lectorbd.Read())
+                {
+                    var producto = new Producto
+                    {
+                        Id = Convert.ToInt32(db.Lectorbd["id_producto"]),
+                        Nombre = db.Lectorbd["producto_nombre"].ToString(),
+                        Precio = Convert.ToDecimal(db.Lectorbd["precio_unitario"]),
+                        Talle = new Talle
+                        {
+                            Id = Convert.ToInt32(db.Lectorbd["id_talle"]),
+                            Etiqueta = db.Lectorbd["talle_etiqueta"].ToString()
+                        }
+                    };
+
+                    detalles.Add(new ItemCarrito
+                    {
+                        Producto = producto,
+                        Cantidad = Convert.ToInt32(db.Lectorbd["cantidad"])
+                    });
+                }
+            }
+            finally { db.cerrarConexion(); }
+
+            return detalles;
+        }
+
+
+        public decimal ObtenerTotalPedido(int pedidoId)
+        {
+            var db = new AccesoBD();
+            db.limpiarParametros();
+            db.setearProcedimiento("sp_ObtenerTotalPedido");
+            db.setearParametro("@pedidoId", pedidoId);
+            db.ejecutarLectura();
+
+            decimal total = 0;
+            if (db.Lectorbd.Read())
+                total = (decimal)db.Lectorbd["total"];
+
+            db.cerrarConexion();
+            return total;
+        }
         public void RegistrarDetallePedido(int pedidoId, ItemCarrito item)
         {
             AccesoBD db = new AccesoBD();

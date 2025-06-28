@@ -26,6 +26,9 @@ namespace TPFinal_equipo_8a
             }
         }
 
+
+       
+
         private void cargarCarrito()
         {
             CarroNegocio negocio = new CarroNegocio();
@@ -39,12 +42,7 @@ namespace TPFinal_equipo_8a
             rptItems.DataBind();
 
           
-            decimal total = 0;
-            foreach (var item in items)
-                total += item.Precio();
-
-            lblTotalFinal.Text = total.ToString("C2");
-       
+            
         }
 
         private void CargarFormasDePago()
@@ -75,9 +73,27 @@ namespace TPFinal_equipo_8a
 
         protected void btnConfirmar_Click(object sender, EventArgs e)
         {
-            Response.Redirect("Carro.aspx");
+            if (Session["usuario"] == null)
+            {
+               
+                Response.Redirect("Login.aspx");
+                return;
+            }
+
+            int idUsuario = ((Usuario)Session["usuario"]).Id;
+            CarroNegocio negocio = new CarroNegocio();
+
+            List<ItemCarrito> carrito = negocio.ObtenerCarrito(idUsuario);
 
 
+            decimal total = carrito.Sum(i => i.Producto.Precio * i.Cantidad);
+
+            int idPedido = negocio.RegistrarPedido(idUsuario, total);
+
+            foreach (var item in carrito)
+                negocio.RegistrarDetallePedido(idPedido, item);
+
+            Response.Redirect("Confirmacion.aspx?pedidoId=" + idPedido);
         }
 
 

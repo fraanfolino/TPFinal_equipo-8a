@@ -238,6 +238,36 @@ namespace Negocio
             return carrito;
         }*/
 
+        public void RegistrarDetallePedido(int pedidoId, ItemCarrito item)
+        {
+            AccesoBD db = new AccesoBD();
+            db.limpiarParametros();
+            db.setearProcedimiento("sp_RegistrarPedidoDetalle");
+            db.setearParametro("@pedido_id", pedidoId);
+            db.setearParametro("@producto_id", item.Producto.Id);
+            db.setearParametro("@talle_id", item.Producto.Talle.Id);
+            db.setearParametro("@cantidad", item.Cantidad);
+            db.setearParametro("@precio_unitario", item.Producto.Precio);
+            db.ejecutarAccion();
+            db.cerrarConexion();
+        }
+        public int RegistrarPedido(int idUsuario, decimal total)
+        {
+           AccesoBD db = new AccesoBD();
+            db.limpiarParametros();
+            db.setearProcedimiento("sp_RegistrarPedido");
+            db.setearParametro("@cliente_id", idUsuario);
+            db.setearParametro("@total", total);
+            db.ejecutarLectura();
+
+            int idPedido = 0;
+            if (db.Lectorbd.Read())
+                idPedido = Convert.ToInt32(db.Lectorbd["idPedido"]);
+
+            db.cerrarConexion();
+            return idPedido;
+        }
+
         public int ObtenerOCrearCarrito(int idUsuario)
         {
             AccesoBD db = new AccesoBD();

@@ -73,7 +73,7 @@ namespace TPFinal_equipo_8a
             return listaMarcas;
         }
 
-        public List<Talle> CargarTalles(string producto)
+        public List<Dominio.Talle> CargarTalles(string producto)
         {
             TalleNegocio talleNegocio = new TalleNegocio();
             return talleNegocio.ListarTalles(producto);

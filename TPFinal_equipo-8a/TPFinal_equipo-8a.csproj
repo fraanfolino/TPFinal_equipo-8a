@@ -105,6 +105,7 @@
     <Content Include="About.aspx" />
     <Content Include="Categoria.aspx" />
     <Content Include="GestionarMC.aspx" />
+    <Content Include="Marca.aspx" />
     <Content Include="Producto.aspx" />
     <Content Include="CargarProductos.aspx" />
     <Content Include="Carro.aspx" />
@@ -192,6 +193,7 @@
     <Content Include="Scripts\WebForms\WebParts.js" />
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
     <Content Include="Site.Master" />
+    <Content Include="Talle.aspx" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config" />
     <Content Include="Bundle.config" />
@@ -211,6 +213,13 @@
     </Compile>
     <Compile Include="GestionarMC.aspx.designer.cs">
       <DependentUpon>GestionarMC.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Marca.aspx.cs">
+      <DependentUpon>Marca.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Marca.aspx.designer.cs">
+      <DependentUpon>Marca.aspx</DependentUpon>
     </Compile>
     <Compile Include="Producto.aspx.cs">
       <DependentUpon>Producto.aspx</DependentUpon>
@@ -301,6 +310,13 @@
     </Compile>
     <Compile Include="Site.Mobile.Master.designer.cs">
       <DependentUpon>Site.Mobile.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Talle.aspx.cs">
+      <DependentUpon>Talle.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Talle.aspx.designer.cs">
+      <DependentUpon>Talle.aspx</DependentUpon>
     </Compile>
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>

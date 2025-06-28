@@ -30,7 +30,7 @@ namespace TPFinal_equipo_8a
         private void CargarTalles(int idProducto)
         {
             CarroNegocio negocio = new CarroNegocio();
-            List<Talle> listaTalles = negocio.ObtenerTallesPorProducto(idProducto);
+            List<Dominio.Talle> listaTalles = negocio.ObtenerTallesPorProducto(idProducto);
 
             ddlTalles.DataSource = listaTalles;
             ddlTalles.DataTextField = "Etiqueta";
@@ -47,7 +47,7 @@ namespace TPFinal_equipo_8a
             int idTalle = Convert.ToInt32(ddlTalles.SelectedValue);
 
             Producto producto = new ProductoNegocio().ObtenerProducto(idProducto);
-            producto.Talle = new Talle
+            producto.Talle = new Dominio.Talle
             { Id = idTalle, 
              Etiqueta = ddlTalles.SelectedItem.Text
             };

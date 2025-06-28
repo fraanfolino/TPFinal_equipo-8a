@@ -63,9 +63,73 @@ namespace Negocio
             return tabla;
         }
 
+        public TipoTalle ObtenerTipo(int idTipo)
+        {
+            AccesoBD datos = new AccesoBD();
+            TipoTalle tipoTalle;
 
+            try
+            {
+                datos.setearProcedimiento("dbo.sp_ListarTipoTalle");
+                datos.setearParametro("@idTipoTalle", idTipo);
+                datos.ejecutarLectura();
 
+                tipoTalle = new TipoTalle();
+                tipoTalle.Etiqueta = new List<string>();
+                bool primerVuelta = true;
 
+                while (datos.Lectorbd.Read())
+                {
+                    if (primerVuelta)
+                    {
+                        tipoTalle.Nombre = datos.Lectorbd["Tipo de talle"].ToString();
+                        tipoTalle.Id = idTipo;
+                        primerVuelta = false;
+                    }
+
+                    tipoTalle.Etiqueta.Add(datos.Lectorbd["Etiqueta"].ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+
+            return tipoTalle;
+        }
+
+        public void InsertarTipoDeTalle(string nombreTalle, List<string> etiquetas)
+        {
+            AccesoBD datos = new AccesoBD();
+
+            try
+            {
+                datos.setearProcedimiento("dbo.sp_InsertarTipoTalle");
+                datos.setearParametro("@nombre", nombreTalle);
+                int id = datos.ejecutarAccionconreturn();
+
+                foreach (string etiqueta in etiquetas)
+                {
+                    datos.limpiarParametros();
+                    datos.setearProcedimiento("dbo.sp_InsertarTalle");
+                    datos.setearParametro("@etiqueta", etiqueta);
+                    datos.setearParametro("@tipo_talle_id", id);
+                    datos.ejecutarMasAcciones();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
 
     }
 }

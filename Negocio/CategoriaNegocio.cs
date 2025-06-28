@@ -94,10 +94,9 @@ namespace Negocio
         }
 
 
-        public Categoria ModificarCategoria(string id, string nombrenuevo, int idTalles)
+        public void ModificarCategoria(string id, string nombrenuevo, int idTalles)
         {
             AccesoBD datos = new AccesoBD();
-            Categoria categoria = null;
 
             try
             {
@@ -115,14 +114,11 @@ namespace Negocio
             {
                 datos.cerrarConexion();
             }
-
-            return categoria;
         }
 
         public void BajaCategoria(int id)
         {
             AccesoBD datos = new AccesoBD();
-            Categoria categoria = null;
 
             try
             {

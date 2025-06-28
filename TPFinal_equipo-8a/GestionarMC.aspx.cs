@@ -50,7 +50,14 @@ namespace TPFinal_equipo_8a
 
         protected void dgvTablaMarcas_SelectedIndexChanged(object sender, EventArgs e)
         {
+            int idSeleccionado = Convert.ToInt32(dgvTablaMarcas.SelectedDataKey.Value);
+            Response.Redirect("Marca.aspx?id=" + idSeleccionado, false);
+        }
 
+        protected void dgvTablaTalles_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int idSeleccionado = Convert.ToInt32(dgvTablaTalles.SelectedDataKey.Value);
+            Response.Redirect("Talle.aspx?id=" + idSeleccionado, false);
         }
     }
 }

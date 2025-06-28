@@ -23,6 +23,7 @@ namespace Negocio
                     Marca marca = new Marca();
                     marca.Id = Convert.ToInt32(datos.Lectorbd["id"]);
                     marca.Nombre = datos.Lectorbd["nombre"].ToString();
+                    marca.Activo = Convert.ToBoolean(datos.Lectorbd["activo"]);
                     marcas.Add(marca);
                 }
             }
@@ -36,6 +37,118 @@ namespace Negocio
             }
 
             return marcas;
+        }
+
+        public void InsertarMarca(string nombreMarca)
+        {
+            AccesoBD datos = new AccesoBD();
+
+            try
+            {
+                datos.setearProcedimiento("dbo.sp_InsertarMarca");
+                datos.setearParametro("@nombre", nombreMarca);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public Marca ObtenerMarca(int id)
+        {
+            AccesoBD datos = new AccesoBD();
+            Marca marca = null;
+
+            try
+            {
+                datos.setearProcedimiento("sp_ObtenerMarcaPorId");
+                datos.setearParametro("@id", id);
+                datos.ejecutarLectura();
+
+                if (datos.Lectorbd.Read())
+                {
+                    marca = new Marca();
+                    marca.Id = Convert.ToInt32(datos.Lectorbd["id"]);
+                    marca.Nombre = datos.Lectorbd["nombre"].ToString();
+                    marca.Activo = Convert.ToBoolean(datos.Lectorbd["activo"]);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+
+            return marca;
+        }
+
+        public void ModificarMarca(string id, string nombrenuevo)
+        {
+            AccesoBD datos = new AccesoBD();
+
+            try
+            {
+                datos.setearProcedimiento("sp_ModificarMarca");
+                datos.setearParametro("@id", id);
+                datos.setearParametro("@nombrenuevo", nombrenuevo);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public void BajaMarca(int id)
+        {
+            AccesoBD datos = new AccesoBD();
+
+            try
+            {
+                datos.setearProcedimiento("sp_BajaMarca");
+                datos.setearParametro("@id", id);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public void AltaMarca(int id)
+        {
+            AccesoBD datos = new AccesoBD();
+
+            try
+            {
+                datos.setearProcedimiento("sp_AltaMarca");
+                datos.setearParametro("@id", id);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
         }
     }
 }

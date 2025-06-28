@@ -1,5 +1,4 @@
-﻿using Dominio;
-using Negocio;
+﻿using Negocio;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -10,25 +9,25 @@ using System.Web.UI.WebControls;
 
 namespace TPFinal_equipo_8a
 {
-    public partial class Categoria : System.Web.UI.Page
+    public partial class Marca : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+            if (!IsPostBack) 
             {
-                CargarTipodeTalles();
                 ChequearModificar();
             }
         }
+
+
 
         private void ChequearModificar()
         {
             if (Request.QueryString["id"] != null && int.TryParse(Request.QueryString["id"], out int index) && Precargar(index))
             {
-                Subtitulo.Text = "Modificar Categoria";
+                Subtitulo.Text = "Modificar Marca";
                 btnAgregar.Visible = false;
                 btnModificar.Visible = true;
-
             }
             else
             {
@@ -39,31 +38,21 @@ namespace TPFinal_equipo_8a
             }
         }
 
-        private bool Precargar(int idCategoria)
+        private bool Precargar(int idMarca)
         {
-            CategoriaNegocio catNegocio = new CategoriaNegocio();
+            MarcaNegocio marcaNegocio = new MarcaNegocio();
             try
             {
-                Dominio.Categoria categoria = catNegocio.ObtenerCategoria(idCategoria);
+                Dominio.Marca marca = marcaNegocio.ObtenerMarca(idMarca);
 
-                if (categoria == null)
+                if (marca == null)
                 {
                     return false;
                 }
 
-                //ojo esto edita el dropdown lpm
-                //ddlTipoTalle.SelectedItem.Text = categoria.TipoTalle;
+                txtNombreMarca.Text = marca.Nombre;
 
-                //ASII - aca lo busco y lo seleccion
-                ListItem item = ddlTipoTalle.Items.FindByText(categoria.TipoTalle);
-                if (item != null)
-                {
-                    item.Selected = true;
-                }
-
-                txtNombreCategoria.Text = categoria.Nombre.ToString();
-
-                if (categoria.Activo)
+                if (marca.Activo)
                 {
                     btnActivar.Visible = false;
                     btnDesactivar.Visible = true;
@@ -82,18 +71,15 @@ namespace TPFinal_equipo_8a
             }
         }
 
-        private void CargarTipodeTalles()
+
+        protected void btnAgregar_Click(object sender, EventArgs e)
         {
-            TalleNegocio talleNegocio = new TalleNegocio();
-            ddlTipoTalle.DataTextField = "Tipo de talle";    
-            ddlTipoTalle.DataValueField = "id";       
-            ddlTipoTalle.DataSource = talleNegocio.ListarTallesTabla();
-            ddlTipoTalle.DataBind();
+            InsertarMarca();
         }
 
-        private void InsertarCategoria()
+        private void InsertarMarca()
         {
-            if (String.IsNullOrEmpty(txtNombreCategoria.Text))
+            if (String.IsNullOrEmpty(txtNombreMarca.Text))
             {
                 alertDiv.Attributes["class"] = "alert alert-primary w-100 py-1 px-2";
                 alertDiv.InnerHtml = "El nombre no puede estar vacío";
@@ -102,10 +88,10 @@ namespace TPFinal_equipo_8a
 
             try
             {
-                CategoriaNegocio negocio = new CategoriaNegocio();
-                negocio.InsertarCategoria(int.Parse(ddlTipoTalle.SelectedValue), txtNombreCategoria.Text);
+                MarcaNegocio negocio = new MarcaNegocio();
+                negocio.InsertarMarca(txtNombreMarca.Text);
                 alertDiv.Attributes["class"] = "alert alert-success w-100 py-1 px-2";
-                alertDiv.InnerHtml = "Categoria Agregada correctamente";
+                alertDiv.InnerHtml = "Marca Agregada correctamente";
             }
             catch (SqlException ex)
             {
@@ -114,46 +100,28 @@ namespace TPFinal_equipo_8a
             }
         }
 
-        protected void btnAgregar_Click(object sender, EventArgs e)
-        {
-            InsertarCategoria();
-        }
-
         protected void btnModificar_Click(object sender, EventArgs e)
         {
-            ModificarCategoria();
+            ModificarMarca();
         }
 
-        protected void btnConfirmar_Click(object sender, EventArgs e)
+        private void ModificarMarca()
         {
-            ModificarCategoria(true);
-        }
-
-        private void ModificarCategoria(bool confirmar = false)
-        {
-            CategoriaNegocio catNegocio = new CategoriaNegocio();
+            MarcaNegocio marcaNegocio = new MarcaNegocio();
 
             if (int.TryParse(Request.QueryString["id"], out int index))
             {
-                Dominio.Categoria categoria = catNegocio.ObtenerCategoria(index);
+                Dominio.Marca marca = marcaNegocio.ObtenerMarca(index);
 
-                if (txtNombreCategoria.Text == categoria.Nombre && ddlTipoTalle.SelectedItem.Text == categoria.TipoTalle)
+                if (txtNombreMarca.Text == marca.Nombre)
                 {
                     alertDiv.Attributes["class"] = "alert alert-primary w-100 py-1 px-2";
                     alertDiv.InnerHtml = "No hubo Modificaciones";
                     return;
                 }
-
-                if (ddlTipoTalle.SelectedItem.Text != categoria.TipoTalle && !confirmar)
-                {
-                     alertDiv.Attributes["class"] = "alert alert-warning w-100 py-1 px-2";
-                     alertDiv.InnerHtml = "Al modificar el tipo de talle se eliminará TODO el Stock actual.&nbsp;Esta seguro que desea continuar?";
-                      btnConfirmar.Visible = true;
-                     return;
-                }
             }
 
-            if (String.IsNullOrEmpty(txtNombreCategoria.Text))
+            if (String.IsNullOrEmpty(txtNombreMarca.Text))
             {
                 alertDiv.Attributes["class"] = "alert alert-primary w-100 py-1 px-2";
                 alertDiv.InnerHtml = "El nombre no puede estar vacío";
@@ -162,42 +130,30 @@ namespace TPFinal_equipo_8a
 
             try
             {
-                catNegocio.ModificarCategoria(Request.QueryString["id"], txtNombreCategoria.Text,int.Parse(ddlTipoTalle.SelectedValue));
+                marcaNegocio.ModificarMarca(Request.QueryString["id"], txtNombreMarca.Text);
                 alertDiv.Attributes["class"] = "alert alert-success w-100 py-1 px-2";
-
-                if (confirmar)
-                {
-                    alertDiv.InnerHtml = "Categoria Modificada. &nbsp;El Stock ha sido reiniciado.";
-                    btnConfirmar.Visible = false;
-                }
-                else
-                {
-                    alertDiv.InnerHtml = "Categoria Modificada correctamente.";
-                }
-
+                alertDiv.InnerHtml = "Marca Modificada correctamente.";
             }
             catch (SqlException ex)
             {
                 alertDiv.Attributes["class"] = "alert alert-danger w-100 py-1 px-2";
                 alertDiv.InnerHtml = ex.Message.ToString();
             }
-        }
 
+        }
         protected void btnActivar_Click(object sender, EventArgs e)
         {
-            AltaCategoria();
+            AltaMarca();
         }
-  
-        private void AltaCategoria()
-        {
-            CategoriaNegocio catNegocio = new CategoriaNegocio();
 
+        private void AltaMarca()
+        {
             try
             {
-                CategoriaNegocio negocio = new CategoriaNegocio();
-                negocio.AltaCategoria(int.Parse(Request.QueryString["id"]));
+                MarcaNegocio negocio = new MarcaNegocio();
+                negocio.AltaMarca(int.Parse(Request.QueryString["id"]));
                 alertDiv.Attributes["class"] = "alert alert-success w-100 py-1 px-2";
-                alertDiv.InnerHtml = "Categoria Activada correctamente";
+                alertDiv.InnerHtml = "Marca Activada correctamente";
                 btnActivar.Visible = false;
                 btnDesactivar.Visible = true;
 
@@ -211,16 +167,15 @@ namespace TPFinal_equipo_8a
 
         protected void btnDesactivar_Click(object sender, EventArgs e)
         {
-            BajaCategoria();
+            BajaMarca();
         }
-        private void BajaCategoria()
-        {
-            CategoriaNegocio catNegocio = new CategoriaNegocio();
 
+        private void BajaMarca()
+        {
             try
             {
-                CategoriaNegocio negocio = new CategoriaNegocio();
-                negocio.BajaCategoria(int.Parse(Request.QueryString["id"]));
+                MarcaNegocio negocio = new MarcaNegocio();
+                negocio.BajaMarca(int.Parse(Request.QueryString["id"]));
                 alertDiv.Attributes["class"] = "alert alert-warning w-100 py-1 px-2";
                 alertDiv.InnerHtml = "Categoria desactivada correctamente";
                 btnActivar.Visible = true;
@@ -234,12 +189,9 @@ namespace TPFinal_equipo_8a
         }
 
 
-
         protected void btnVolver_Click(object sender, EventArgs e)
         {
             Response.Redirect("GestionarMC.aspx", false);
         }
-
-
     }
 }

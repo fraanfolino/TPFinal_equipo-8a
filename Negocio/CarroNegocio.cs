@@ -280,8 +280,26 @@ namespace Negocio
         }
 
 
-        
-       public DateTime ObtenerFechaPedido(int pedidoId)
+        public void DescontarStock(int productoId, int talleId, int cantidad)
+        {
+            AccesoBD db = new AccesoBD();
+            try
+            {
+                db.setearProcedimiento("sp_DescontarStock");
+                db.setearParametro("@productoId", productoId);
+                db.setearParametro("@talleId", talleId);
+                db.setearParametro("@cantidad", cantidad);
+                db.ejecutarAccion();
+            }
+            finally
+            {
+                db.cerrarConexion();
+            }
+        }
+
+
+
+        public DateTime ObtenerFechaPedido(int pedidoId)
         {
             AccesoBD db = new AccesoBD();
             DateTime fecha = DateTime.MinValue;

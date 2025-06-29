@@ -18,16 +18,11 @@ namespace TPFinal_equipo_8a
 
             if (!string.IsNullOrEmpty(accion))
             {
-                int productoId;
-                int talleId;
-
-                if (int.TryParse(Request.QueryString["productoId"], out productoId)
-                 && int.TryParse(Request.QueryString["talleId"], out talleId))
+                if (int.TryParse(Request.QueryString["productoId"], out int productoId) &&
+                    int.TryParse(Request.QueryString["talleId"], out int talleId))
                 {
                     int idUsuario = ((Usuario)Session["usuario"]).Id;
-                    CarroNegocio negocio = new CarroNegocio();
-
-                   
+                    var negocio = new CarroNegocio();
                     int idCarrito = negocio.ObtenerOCrearCarrito(idUsuario);
 
                     if (accion == "SumarCantidad")
@@ -36,14 +31,13 @@ namespace TPFinal_equipo_8a
                         negocio.RestarCantidadBD(idCarrito, productoId, talleId);
                 }
 
-                CargarCarrito(); 
+                Response.Redirect("Carro.aspx", false);
+                return;
             }
-            else if (!IsPostBack)
-            {
-                CargarCarrito();
-            }
-        }
 
+            if (!IsPostBack)
+                CargarCarrito();
+        }
         private void CargarCarrito()
         {
             if (!IsPostBack)

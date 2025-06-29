@@ -20,7 +20,7 @@ namespace TPFinal_equipo_8a
 
                 if (!string.IsNullOrEmpty(idProducto))
                 {
-                    MostrarTalles(); // aquí actualizás talles, imágenes, etc.
+                    MostrarTalles();
                 }
             }
 
@@ -150,6 +150,7 @@ namespace TPFinal_equipo_8a
             ddlTalles2.DataTextField = "etiqueta";
             ddlTalles2.DataBind();
         }
+
         private void MostrarImagenes(int codigo)
         {
             ProductoNegocio productoNegocio = new ProductoNegocio();

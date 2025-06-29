@@ -307,8 +307,8 @@ namespace Negocio
             try
             {
                 db.setearProcedimiento("sp_DescontarStock");
-                db.setearParametro("@productoId", productoId);
-                db.setearParametro("@talleId", talleId);
+                db.setearParametro("idProducto", productoId);
+                db.setearParametro("@idTalle", talleId);
                 db.setearParametro("@cantidad", cantidad);
                 db.ejecutarAccion();
             }

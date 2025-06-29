@@ -279,6 +279,27 @@ namespace Negocio
             return detalles;
         }
 
+        public void vaciarCarrito(int idUsuario)
+        {
+
+            AccesoBD db = new AccesoBD();
+
+
+            try
+            {
+                db.setearProcedimiento("sp_vaciarCarrito");
+                db.setearParametro("@idUsuario", idUsuario);
+                db.ejecutarAccion();
+
+            }
+
+            finally
+            {
+
+                db.cerrarConexion();
+            }
+        }
+
 
         public void DescontarStock(int productoId, int talleId, int cantidad)
         {

@@ -103,6 +103,12 @@ namespace TPFinal_equipo_8a
             foreach (var item in carrito)
                 negocio.RegistrarDetallePedido(idPedido, item);
 
+
+            foreach (var item in carrito)
+                negocio.DescontarStock(item.Producto.Id, item.Producto.Talle.Id, item.Cantidad);
+
+
+            negocio.vaciarCarrito(idUsuario);
            
             Response.Redirect("Confirmacion.aspx?pedidoId=" + idPedido + "&metodo=" + metodoValorText);
         }

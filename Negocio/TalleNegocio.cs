@@ -66,7 +66,7 @@ namespace Negocio
         public TipoTalle ObtenerTipo(int idTipo)
         {
             AccesoBD datos = new AccesoBD();
-            TipoTalle tipoTalle;
+            TipoTalle tipoTalle = new TipoTalle();
 
             try
             {
@@ -74,7 +74,7 @@ namespace Negocio
                 datos.setearParametro("@idTipoTalle", idTipo);
                 datos.ejecutarLectura();
 
-                tipoTalle = new TipoTalle();
+                tipoTalle.Id = -1;
                 tipoTalle.Etiqueta = new List<string>();
                 bool primerVuelta = true;
 
@@ -120,6 +120,29 @@ namespace Negocio
                     datos.setearParametro("@tipo_talle_id", id);
                     datos.ejecutarMasAcciones();
                 }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public void ModificarTipoDeTalle(string nombreTalle, List<string> etiquetas, int idTalle)
+        {
+            string talles = string.Join(",", etiquetas);
+            AccesoBD datos = new AccesoBD();
+
+            try
+            {
+                datos.setearProcedimiento("dbo.sp_ModificarTipoTalle");
+                datos.setearParametro("@nuevoNombre", nombreTalle);
+                datos.setearParametro("@etiquetasCSV", talles);
+                datos.setearParametro("@tipoTalleId", idTalle);
+                datos.ejecutarAccion();
             }
             catch (Exception ex)
             {

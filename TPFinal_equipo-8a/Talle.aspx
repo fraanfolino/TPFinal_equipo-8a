@@ -51,7 +51,7 @@
     <div id="alertDiv" runat="server" class="alert alert-secondary w-100 py-1 px-2" role="alert"  style="padding-top: 2px; padding-bottom: 2px;">
     </div>     
 </div>
-
+ <asp:Button ID="btnConfirmar" Text="Confirmar" runat="server" CssClass="btn btn-warning flex-fill" OnClick="btnConfirmar_Click" Visible="false" />
 </div>
 <div class="col-md-3">
 <asp:GridView ID="GridTalles" runat="server" 
@@ -78,24 +78,7 @@
     </Columns>
 </asp:GridView>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
+    </div>
 
      </div>
         </ContentTemplate>

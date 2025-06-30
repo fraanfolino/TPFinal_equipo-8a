@@ -19,5 +19,8 @@ namespace Dominio
         public Categoria Categoria { get; set; }
 
         public Talle Talle { get; set; }
+
+        public bool Activo { get; set; }
+
     }
 }

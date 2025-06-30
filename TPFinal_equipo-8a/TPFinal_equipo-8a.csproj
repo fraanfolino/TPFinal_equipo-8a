@@ -106,6 +106,7 @@
     <Content Include="Categoria.aspx" />
     <Content Include="Confirmacion.aspx" />
     <Content Include="GestionarMC.aspx" />
+    <Content Include="ListaProductos.aspx" />
     <Content Include="Marca.aspx" />
     <Content Include="Producto.aspx" />
     <Content Include="CargarProductos.aspx" />
@@ -221,6 +222,13 @@
     </Compile>
     <Compile Include="GestionarMC.aspx.designer.cs">
       <DependentUpon>GestionarMC.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ListaProductos.aspx.cs">
+      <DependentUpon>ListaProductos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ListaProductos.aspx.designer.cs">
+      <DependentUpon>ListaProductos.aspx</DependentUpon>
     </Compile>
     <Compile Include="Marca.aspx.cs">
       <DependentUpon>Marca.aspx</DependentUpon>

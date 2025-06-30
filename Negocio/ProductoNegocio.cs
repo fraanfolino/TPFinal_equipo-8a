@@ -58,7 +58,6 @@ namespace Negocio
                     producto.Marca.Id = Convert.ToInt32(datos.Lectorbd["IdMarca"]);
                     producto.Marca.Nombre = Convert.ToString(datos.Lectorbd["Marca"]);
 
-
                     if (datos.Lectorbd["UrlImagen"] != DBNull.Value)
                         producto.ImagenUrl = new List<string> { Convert.ToString(datos.Lectorbd["UrlImagen"]) };
                     else
@@ -243,6 +242,56 @@ namespace Negocio
 
             return listaProductos;
         }
+
+
+
+
+
+
+        public List<Producto> ListarProductosSinImagenes()
+        {
+            AccesoBD datos = new AccesoBD();
+            List<Producto> listaProductos = new List<Producto>();
+
+            try
+            {
+                datos.setearProcedimiento("sp_ListarTodosLosProductosSinImagen");
+                datos.ejecutarLectura();
+
+
+                while (datos.Lectorbd.Read())
+                {
+                    Producto aux = new Producto();
+                    aux.Id = Convert.ToInt32(datos.Lectorbd["Id"]);
+                    aux.Nombre = Convert.ToString(datos.Lectorbd["Nombre"]);
+                    aux.Descripcion = Convert.ToString(datos.Lectorbd["Descripcion"]);
+                    aux.Precio = Convert.ToDecimal(datos.Lectorbd["Precio"]);
+
+                    Categoria cate = new Categoria();
+                    cate.Id = Convert.ToInt32(datos.Lectorbd["IdCategoria"]);
+                    cate.Nombre = Convert.ToString(datos.Lectorbd["Categoria"]);
+                    aux.Categoria = cate;
+
+                    Marca mar = new Marca();
+                    mar.Id = Convert.ToInt32(datos.Lectorbd["IdMarca"]);
+                    mar.Nombre = Convert.ToString(datos.Lectorbd["Marca"]);
+                    aux.Marca = mar;
+
+                    aux.Activo = Convert.ToBoolean(datos.Lectorbd["Activo"]);
+
+                    listaProductos.Add(aux);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return listaProductos;
+        }
+
+
+
 
         public DataTable ListarStock(int id)
         {

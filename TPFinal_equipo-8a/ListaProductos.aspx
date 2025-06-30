@@ -1,41 +1,62 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ListaProductos.aspx.cs" Inherits="TPFinal_equipo_8a.ListaProductos" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" 
+integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">    
+
 
 
 
     <h2>
-    <asp:Label ID="Titulo" runat="server" Text="Marca" />
+    <asp:Label ID="Titulo" runat="server" Text="Productos" />
 </h2>
+
+
 
 
         <asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Conditional">
         <ContentTemplate>
 
-            <div class="row" style="height: 2rem;">
-                 <asp:Label class="form-label" runat="server">Productos</asp:Label>
-            </div>
-      <div class="row">
+
+<style>
+    .gridview-compact a {
+        text-decoration: none !important;
+        background-color: transparent !important;
+        border-bottom: none !important;
+        color: black !important;
+        text-decoration: none !important;
+    }
+</style>
+
+
+ <div class="row">
 
 
 <div class="row">
-    <div class="col-md-12">
+<div class="col-md-12">
+  <div class="row align-items-end">
 
+    <div class="col-md-9">
         <div class="mb-2">
-            <label class="form-label text-muted">Nombre</label>
-            <asp:TextBox ID="txtNombreMarca" runat="server" CssClass="form-control" Style="width: 100%; max-width: none;"/>
+            <label class="form-label text-muted">Buscar</label>
+            <asp:TextBox ID="txtNombreMarca" runat="server" CssClass="form-control" Style="width: 100%; max-width: none;" />
         </div>
-
-
-
-                <div class="mb-2">
+    </div>
 
 
 
 
+
+  </div>
+</div>
+
+
+
+    <div class="col-md-12">
     <asp:GridView ID="dgvlistaProductos" runat="server" 
                   DataKeyNames="Id"
-                  CssClass= "table table-striped table-bordered table-condensed" 
+                  CssClass= "table table-striped table-bordered table-condensed gridview-compact" 
                   AutoGenerateColumns="false"
                   OnSelectedIndexChanged="dgvlistaProductos_SelectedIndexChanged"
                   OnPageIndexChanging="dgvlistaProductos_PageIndexChanging"
@@ -45,74 +66,60 @@
                   PageSize="10"
                   OnSorting="dgvlistaProductos_Sorting"
                   >
-            <PagerStyle CssClass="pagination1" />
+            <PagerStyle CssClass="pagination2" HorizontalAlign="Right" />
             <Columns>
-            <asp:BoundField HeaderText="ID"            DataField="Id" HeaderStyle-HorizontalAlign="Center" ItemStyle-HorizontalAlign="Center" ItemStyle-Width="5%" SortExpression="Id"/>
-            <asp:BoundField HeaderText="Nombre"        DataField="Nombre" HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="15%" SortExpression="Nombre" />
-            <asp:BoundField HeaderText="Categoria"     DataField="Categoria.Nombre" HeaderStyle-HorizontalAlign="Center" ItemStyle-Width ="15" SortExpression="Categoria"/>
-            <asp:BoundField HeaderText="Marca"         DataField="Marca.Nombre" HeaderStyle-HorizontalAlign="Center" ItemStyle-Width ="15%" SortExpression="Marca"/>
-            <asp:BoundField HeaderText="Descripcion"   DataField="Descripcion" HeaderStyle-HorizontalAlign="Center" ItemStyle-Width ="48"/>
+            <asp:BoundField HeaderText="ID"        DataField="Id"               HeaderStyle-CssClass="text-center" ItemStyle-HorizontalAlign="Center" ItemStyle-Width="5%" SortExpression="Id"/>
+            <asp:BoundField HeaderText="Categoria" DataField="Categoria.Nombre" HeaderStyle-CssClass="text-center" ItemStyle-HorizontalAlign="Center" HeaderStyle-Width="10%" ItemStyle-Width="10" SortExpression="Categoria"/>
+            <asp:BoundField HeaderText="Marca"     DataField="Marca.Nombre"     HeaderStyle-CssClass="text-center" ItemStyle-HorizontalAlign="Center" HeaderStyle-Width="10%" ItemStyle-Width="10"  SortExpression="Marca"/>
+            <asp:BoundField HeaderText="Nombre"    DataField="Nombre"           HeaderStyle-CssClass="text-left" HeaderStyle-Width="15%" ItemStyle-Width="15%" SortExpression="Nombre" />
+            <asp:BoundField HeaderText="Descripcion"   DataField="Descripcion"  HeaderStyle-CssClass="text-left" HeaderStyle-Width="46%" ItemStyle-Width="46%"/>
+            <asp:TemplateField HeaderText="Precio" ItemStyle-HorizontalAlign="Right" HeaderStyle-CssClass="text-center" ItemStyle-Width="10%"  SortExpression="Precio">
+                <ItemTemplate>
+                    $ <%# Eval("Precio", "{0:N2}") %>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="" ItemStyle-Width="2%">
+                <ItemTemplate>
+                    <span class='<%# (bool)Eval("Activo") ? "text-success bi bi-check-circle-fill" : "text-danger bi bi-x-circle-fill" %>'></span>
+                </ItemTemplate>
+            </asp:TemplateField>
 
-  <%--          <asp:CheckBoxField HeaderText="Estado"     DataField="artestado" ItemStyle-HorizontalAlign="Center"  ItemStyle-Width ="3%" SortExpression="artestado"/>--%>
+
+
             <asp:CommandField HeaderText="✏️"          ShowSelectButton="true" SelectText="📝​" ItemStyle-Width="2%" />
-
+            
             </Columns>
 
     </asp:GridView>
 
 
-
-
-
-
-
+<div class="row mb-2">
+    <div class="col-12 d-flex justify-content-between align-items-end">
+        <div>
+            <a href="Producto.aspx" class="btn btn-secondary w-250">Agregar</a>
         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="d-flex gap-2">
-    <asp:Button ID="btnAgregar" Text="Agregar" runat="server" CssClass="btn btn-secondary flex-fill" />
-    <asp:Button ID="btnModificar" Text="Modificar" runat="server" CssClass="btn btn-secondary flex-fill"/>
-    <asp:Button ID="btnDesactivar" Text="Desactivar" runat="server" CssClass="btn btn-danger flex-fill" />
-    <asp:Button ID="btnActivar" Text="Activar" runat="server" CssClass="btn btn-success flex-fill"/>
-    <asp:Button ID="btnVolver" Text="Volver" runat="server" CssClass="btn btn-secondary flex-fill"/>
+        <div class="d-flex align-items-center">
+            <asp:Label Text="Cantidad por página" runat="server" CssClass="form-label mb-0 me-2" />
+            <asp:TextBox runat="server" TextMode="Number" ID="Cantidadxpagina" 
+                         CssClass="form-control" Width="75px" 
+                         OnTextChanged="Cantidadxpagina_TextChanged" 
+                         AutoPostBack="true" />
+        </div>
+    </div>
 </div>
 
-<div class="d-flex gap-2 mt-2">
-    <div id="alertDiv" runat="server" class="alert alert-secondary w-100 py-1 px-2" role="alert"  style="padding-top: 2px; padding-bottom: 2px;">
-    </div>     
-</div>
+
+
+
+
+
+
+
+
     </div>
 </div>
 
      </div>
-
-
-
-
-
         </ContentTemplate>
     </asp:UpdatePanel>
-
-
-
-
-
-
-
-
-
-
 </asp:Content>

@@ -84,25 +84,58 @@
                                                     Display="Dynamic" />
                     </div>
                 </div>
+
+
      </div>
 
 
 
-    <div class="row" style="height: 40px;">
+<%--    <div class="row" style="height: 40px;">
                         <div class="col-md-10">
                         <div class="mb-2">
                            <asp:Label ID="errorMensaje" runat="server" class="alert-danger"></asp:Label>
                            <asp:Label ID="exitoMensaje" runat="server" class="alert-success"></asp:Label>
                         </div>
                     </div>
-            </div>
+            </div>--%>
+
+
+
+
+
+
+
+
+
 
          <div class="row">    
                  <div class="col-md-5">
-                         <asp:Button ID="btnAgregar" Text="Agregar Producto" runat="server" CssClass="btn btn-primary w-100" OnClick="btnAgregar_Click"/>
-                         <asp:Button ID="btnModificar" Text="Modificar Producto" runat="server" CssClass="btn btn-primary w-100" OnClick="btnModificar_Click"/>
+                         <asp:Button ID="btnAgregar" Text="Agregar Producto" runat="server" CssClass="btn btn-secondary w-100" OnClick="btnAgregar_Click"/>
+                         <asp:Button ID="btnModificar" Text="Modificar Producto" runat="server" CssClass="btn btn-secondary w-100" OnClick="btnModificar_Click"/>
+                      </div>
+
+             <div class="col-md-5">
+                    <div class="d-flex gap-2">
+                        <asp:Button ID="btnDesactivar" Text="Desactivar" runat="server" CssClass="btn btn-danger w-50" OnClick="btnDesactivar_Click"/>
+                        <asp:Button ID="btnActivar" Text="Activar" runat="server" CssClass="btn btn-success w-50" OnClick="btnActivar_Click"/>
+                        <a href="ListaProductos.aspx" class="btn btn-secondary w-50">Volver</a>
+                         </div>
                       </div>
                 </div>
+
+
+                
+      <div class="row">
+          <div class="col-md-10">
+     <div class="d-flex gap-2 mt-2">
+    <div id="alertDiv" runat="server" class="alert alert-secondary w-100 py-1 px-2" role="alert"  style="padding-top: 2px; padding-bottom: 2px;">
+    </div>     
+    </div>
+ </div>
+</div>
+
+
+
      </div>
 
 

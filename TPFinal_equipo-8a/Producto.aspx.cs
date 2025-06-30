@@ -2,6 +2,7 @@
 using Negocio;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -40,7 +41,6 @@ namespace TPFinal_equipo_8a
 
             if (Request.QueryString["id"] != null && int.TryParse(Request.QueryString["id"], out int index) && PrecargarElementos(index) == 1)
             {
-                //if (PrecargarElementos(index) == 1);
                 btnAgregar.Visible = false;
                 btnModificar.Visible = true;
                 Titulo.Text = "Modificar Producto";
@@ -50,6 +50,8 @@ namespace TPFinal_equipo_8a
                 btnAgregar.Visible = true;
                 btnModificar.Visible = false;
                 ImagenesProducto = new List<string>();
+                btnDesactivar.Visible = false;
+                btnActivar.Visible = false;
             }
             RefreshImagenes();
         }
@@ -73,6 +75,17 @@ namespace TPFinal_equipo_8a
             txtPrecio.Text = producto.Precio.ToString();
             ddlCategoria.SelectedValue = producto.Categoria.Nombre;
             ddlMarca.SelectedValue = producto.Marca.Nombre;
+
+            if (producto.Activo)
+            {
+                btnActivar.Visible = false;
+                btnDesactivar.Visible = true;
+            }
+            else
+            {
+                btnActivar.Visible = true;
+                btnDesactivar.Visible = false;
+            }
 
             ActualizarListaImg(producto.ImagenUrl);
             return 1;
@@ -196,13 +209,13 @@ namespace TPFinal_equipo_8a
             {
                 ProductoNegocio productoNegocio = new ProductoNegocio();
                 productoNegocio.AgregarProducto(producto);
-                exitoMensaje.Visible = true;
-                exitoMensaje.Text = "Producto agregado correctamente.";
+                alertDiv.Attributes["class"] = "alert alert-success w-100 py-1 px-2";
+                alertDiv.InnerHtml = "Producto agregado correctamente.";
             }
             catch (Exception ex)
             {
-                errorMensaje.Visible = true;
-                errorMensaje.Text = "Error al agregar: " + ex;
+                alertDiv.Attributes["class"] = "alert alert-danger w-100 py-1 px-2";
+                alertDiv.InnerHtml = ex.Message.ToString();
             }
         }
 
@@ -237,8 +250,8 @@ namespace TPFinal_equipo_8a
 
             if (CompararProductos(producto, new ProductoNegocio().ObtenerProducto(producto.Id)))
             {
-                errorMensaje.Visible = true;
-                errorMensaje.Text = "No se han realizado cambios en el producto.";
+                alertDiv.Attributes["class"] = "alert alert-primary w-100 py-1 px-2";
+                alertDiv.InnerHtml = "No hubo Modificaciones";
                 return;
             }
 
@@ -246,13 +259,13 @@ namespace TPFinal_equipo_8a
             {
                 ProductoNegocio productoNegocio = new ProductoNegocio();
                 productoNegocio.ModificarProducto(producto);
-                exitoMensaje.Visible = true;
-                exitoMensaje.Text = "Producto modificado correctamente.";
+                alertDiv.Attributes["class"] = "alert alert-success w-100 py-1 px-2";
+                alertDiv.InnerHtml = "Producto modificado correctamente.";
             }
             catch (Exception ex)
             {
-                errorMensaje.Visible = true;
-                errorMensaje.Text = "Error al modificar: " + ex;
+                alertDiv.Attributes["class"] = "alert alert-danger w-100 py-1 px-2";
+                alertDiv.InnerHtml = ex.Message.ToString();
             }
         }
 
@@ -274,5 +287,54 @@ namespace TPFinal_equipo_8a
 
             return comparar;
         }
+
+
+
+        protected void btnActivar_Click(object sender, EventArgs e)
+        {
+            ProductoNegocio catNegocio = new ProductoNegocio();
+
+            try
+            {
+                ProductoNegocio negocio = new ProductoNegocio();
+                negocio.AltaProducto(int.Parse(Request.QueryString["id"]));
+                alertDiv.Attributes["class"] = "alert alert-success w-100 py-1 px-2";
+                alertDiv.InnerHtml = "Producto Activado correctamente";
+                btnActivar.Visible = false;
+                btnDesactivar.Visible = true;
+
+            }
+            catch (SqlException ex)
+            {
+                alertDiv.Attributes["class"] = "alert alert-danger w-100 py-1 px-2";
+                alertDiv.InnerHtml = ex.Message.ToString();
+            }
+        }
+
+        protected void btnDesactivar_Click(object sender, EventArgs e)
+        {
+            ProductoNegocio catNegocio = new ProductoNegocio();
+
+            try
+            {
+                ProductoNegocio negocio = new ProductoNegocio();
+                negocio.BajaProducto(int.Parse(Request.QueryString["id"]));
+                alertDiv.Attributes["class"] = "alert alert-warning w-100 py-1 px-2";
+                alertDiv.InnerHtml = "Producto Desactivado correctamente";
+                btnActivar.Visible = true;
+                btnDesactivar.Visible = false;
+
+            }
+            catch (SqlException ex)
+            {
+                alertDiv.Attributes["class"] = "alert alert-danger w-100 py-1 px-2";
+                alertDiv.InnerHtml = ex.Message.ToString();
+            }
+        }
+
+
+
+
+
     }
 }

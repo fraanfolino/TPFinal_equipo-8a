@@ -49,6 +49,8 @@ namespace Negocio
                     producto.Nombre = datos.Lectorbd["Nombre"].ToString();
                     producto.Descripcion = datos.Lectorbd["Descripcion"].ToString();
                     producto.Precio = Convert.ToDecimal(datos.Lectorbd["Precio"]);
+                    producto.Activo = Convert.ToBoolean(datos.Lectorbd["Activo"]);
+
 
                     producto.Categoria = new Categoria();
                     producto.Categoria.Id = Convert.ToInt32(datos.Lectorbd["IdCategoria"]);
@@ -495,5 +497,48 @@ namespace Negocio
 
             return idProducto;
         }
+
+
+
+        public void BajaProducto(int id)
+        {
+            AccesoBD datos = new AccesoBD();
+
+            try
+            {
+                datos.setearProcedimiento("sp_BajaProducto");
+                datos.setearParametro("@id", id);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public void AltaProducto(int id)
+        {
+            AccesoBD datos = new AccesoBD();
+
+            try
+            {
+                datos.setearProcedimiento("sp_AltaProducto");
+                datos.setearParametro("@id", id);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
     }
 }

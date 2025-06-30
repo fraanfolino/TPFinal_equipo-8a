@@ -16,6 +16,7 @@ namespace TPFinal_equipo_8a
             if (!IsPostBack)
             {
                 CargarLista();
+                Cantidadxpagina.Text = "20";
             }
         }
 
@@ -70,6 +71,13 @@ namespace TPFinal_equipo_8a
                     else
                         listaordenada = listaordenada.OrderBy(x => x.Marca.Nombre).ToList();
                     break;
+                case "Precio":
+                    if (listaordenada.SequenceEqual(listaordenada.OrderBy(x => x.Precio)))
+                        listaordenada = listaordenada.OrderByDescending(x => x.Precio).ToList();
+                    else
+                        listaordenada = listaordenada.OrderBy(x => x.Precio).ToList();
+                    break;
+
                 default:
                     //if (listaordenada.SequenceEqual(listaordenada.OrderBy(x => x.GetType().GetProperty(sortexp).GetValue(x, null))))
                     //    listaordenada = listaordenada.OrderByDescending(x => x.GetType().GetProperty(sortexp).GetValue(x, null)).ToList();
@@ -93,7 +101,6 @@ namespace TPFinal_equipo_8a
 
         protected void dgvlistaProductos_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
-
             dgvlistaProductos.DataSource = Session["listaProductos"];
             dgvlistaProductos.PageIndex = e.NewPageIndex;
             dgvlistaProductos.DataBind();
@@ -110,7 +117,31 @@ namespace TPFinal_equipo_8a
 
 
 
+        protected void Cantidadxpagina_TextChanged(object sender, EventArgs e)
+        {
+            CargarCantidadxPagina();
+        }
 
+
+        protected void CargarCantidadxPagina()
+        {
+            int a;
+            if (int.TryParse(Cantidadxpagina.Text, out a))
+            {
+                dgvlistaProductos.PageSize = a;
+                dgvlistaProductos.DataSource = Session["listaProductos"];
+                dgvlistaProductos.PageIndex = 0;
+                //Session.Add("cantxpagina", a);
+                dgvlistaProductos.DataBind();
+            }
+            else
+            {
+                dgvlistaProductos.PageSize = 10;
+                dgvlistaProductos.DataSource = Session["listaProductos"];
+                dgvlistaProductos.PageIndex = 0;
+                dgvlistaProductos.DataBind();
+            }
+        }
 
 
 

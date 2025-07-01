@@ -21,6 +21,8 @@ namespace TPFinal_equipo_8a
 
                 rptProductos.DataSource = productos;
                 rptProductos.DataBind();
+
+                CargarMarcas();
             }
 
 
@@ -35,6 +37,21 @@ namespace TPFinal_equipo_8a
                 rptImagenes.DataBind();
             }
         }
+
+        public void CargarMarcas()
+        {
+            MarcaNegocio negocio = new MarcaNegocio();
+            List<Dominio.Marca> marcas = negocio.listarMarcas2();
+
+            ddlMarca.DataSource = marcas;
+            ddlMarca.DataTextField = "Nombre";
+            ddlMarca.DataValueField = "Id";
+            ddlMarca.DataBind();
+
+
+        }
+
+
 
         public string ObtenerPrimeraImagen(object imagenesObj)
         {

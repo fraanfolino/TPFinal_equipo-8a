@@ -19,14 +19,7 @@
           <div class="card-body">
             
                 <div class="mb-3">
-                  <asp:DropDownList ID="ddlMarca" runat="server" CssClass="form-select">
-                    <asp:ListItem Value="0" Text="Todas" />
-                    <asp:ListItem Value="Nike" Text="Nike" />
-                    <asp:ListItem Value="Adidas" Text="Adidas" />
-                    <asp:ListItem Value="Vans" Text="Vans" />
-                    <asp:ListItem Value="Puma" Text="Puma" />
-                    <asp:ListItem Value="Reebok" Text="Reebok" />
-                  </asp:DropDownList>
+                <asp:DropDownList ID="ddlMarca" runat="server" CssClass="form-select" />
                 </div>
             
             <div class="mb-3">

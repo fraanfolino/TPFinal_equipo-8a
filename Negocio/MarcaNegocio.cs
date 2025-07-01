@@ -150,5 +150,33 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
+
+        public List<Marca> listarMarcas2()
+        {
+            AccesoBD datos = new AccesoBD();
+            List<Marca> lista = new List<Marca>();
+
+            try
+            {
+                datos.setearProcedimiento("sp_ListarMarcas");
+                datos.ejecutarLectura();
+
+                while (datos.Lectorbd.Read())
+                {
+                    Marca marca = new Marca();
+                    marca.Id = Convert.ToInt32(datos.Lectorbd["id"]);
+                    marca.Nombre = datos.Lectorbd["nombre"].ToString();
+                    lista.Add(marca);
+                }
+            }
+            catch (Exception ex) { throw ex; }
+            finally { datos.cerrarConexion(); }
+
+            return lista;
+        }
+
+
+
+
     }
 }

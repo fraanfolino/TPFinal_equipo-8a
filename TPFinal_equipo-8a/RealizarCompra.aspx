@@ -31,6 +31,9 @@
      
      
         <div class="mb-3">
+            <asp:Label ID="lblErrorStock" runat="server" ForeColor="Red" Visible="false" />
+
+
           <asp:Label ID="lblFormaPagoTitulo" runat="server" Text="Forma de pago:" CssClass="form-label d-block fw-bold" />
           <asp:DropDownList 
             ID="ddlFormaPago" runat="server"

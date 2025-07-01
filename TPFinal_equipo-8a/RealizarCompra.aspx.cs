@@ -84,7 +84,19 @@ namespace TPFinal_equipo_8a
             List<ItemCarrito> carrito = negocio.ObtenerCarrito(idUsuario);
 
 
-            
+
+            foreach (var item in carrito)
+            {
+                int stock = negocio.ObtenerStock(item.Producto.Id, item.Producto.Talle.Id);
+                if (item.Cantidad > stock)
+                {
+                    lblErrorStock.Text = $"No hay stock suficiente de \"{item.Producto.Nombre}\". No contamos con la cantidad de: {item.Cantidad}, pero tenemos: {stock}.";
+                    lblErrorStock.Visible = true;
+                    return;
+                }
+            }
+
+
             decimal subtotal = carrito.Sum(i => i.Producto.Precio * i.Cantidad);
 
             string metodoValorText = ddlFormaPago.SelectedItem.Text;

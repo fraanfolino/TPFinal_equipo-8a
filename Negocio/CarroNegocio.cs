@@ -406,6 +406,32 @@ namespace Negocio
         }
 
 
+        public int ObtenerStock(int productoId, int talleId)
+        {
+            AccesoBD datos = new AccesoBD();
+            try
+            {
+                datos.setearProcedimiento("sp_ObtenerStockPorId");
+                datos.setearParametro("@producto_id", productoId);
+                datos.setearParametro("@talle_id", talleId);
+                datos.ejecutarLectura();
+
+                if (datos.Lectorbd.Read())
+                    return Convert.ToInt32(datos.Lectorbd["cantidad"]);
+
+                return 0;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+
         public void SumarCantidadBD(int idCarrito, int idProducto, int idTalle)
         {
             AccesoBD db = new AccesoBD();

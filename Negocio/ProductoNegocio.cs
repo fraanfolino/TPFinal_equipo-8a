@@ -79,17 +79,17 @@ namespace Negocio
 
             return producto;
         }
-        public List<Producto> FiltrarProductosPorMarca(string marca)
+        public List<Producto> FiltrarProductosPorMarca(int marca)
         {
             AccesoBD datos = new AccesoBD();
             List<Producto> listaProductos = new List<Producto>();
             try
             {
                 datos.setearProcedimiento("sp_FiltrarProductosPorMarca");
-                datos.limpiarParametros(); 
+                datos.limpiarParametros();
 
-                
-                if (!string.IsNullOrEmpty(marca) && marca != "0")
+
+                if (marca != 0)
                     datos.setearParametro("@marca", marca);
                 else
                     datos.setearParametro("@marca", DBNull.Value);

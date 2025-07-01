@@ -64,15 +64,15 @@ namespace TPFinal_equipo_8a
 
         protected void btnFiltrarMarca_Click(object sender, EventArgs e)
         {
-            string marca = ddlMarca.SelectedValue; 
             ProductoNegocio productoNegocio = new ProductoNegocio();
+            int idMarca = Convert.ToInt32(ddlMarca.SelectedValue);
 
-            
-            List<Producto> productosFiltrados = productoNegocio.FiltrarProductosPorMarca(marca);
+            List<Producto> productosFiltrados = productoNegocio.FiltrarProductosPorMarca(idMarca);
 
             rptProductos.DataSource = productosFiltrados;
             rptProductos.DataBind();
-        }
 
+        }
     }
+
 }

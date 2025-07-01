@@ -411,7 +411,7 @@ namespace Negocio
             AccesoBD datos = new AccesoBD();
             try
             {
-                datos.setearProcedimiento("sp_ObtenerStockPorId");
+                datos.setearProcedimiento("sp_ObtenerStock");
                 datos.setearParametro("@producto_id", productoId);
                 datos.setearParametro("@talle_id", talleId);
                 datos.ejecutarLectura();

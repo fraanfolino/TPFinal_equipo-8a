@@ -90,6 +90,8 @@
               </p>
               <a href="Catalogo.aspx" class="btn btn-primary rounded-pill mt-2">
                 Volver al catálogo
+
+                          <asp:Label ID="lblDebug" runat="server" Visible="true" CssClass="text-muted" />
               </a>
             </div>
           </div>

@@ -48,6 +48,8 @@ namespace TPFinal_equipo_8a
             ddlMarca.DataValueField = "Id";
             ddlMarca.DataBind();
 
+            ddlMarca.Items.Insert(0, new ListItem("Todas", "0"));
+
 
         }
 
@@ -67,7 +69,18 @@ namespace TPFinal_equipo_8a
             ProductoNegocio productoNegocio = new ProductoNegocio();
             int idMarca = Convert.ToInt32(ddlMarca.SelectedValue);
 
-            List<Producto> productosFiltrados = productoNegocio.FiltrarProductosPorMarca(idMarca);
+            List<Producto> productosFiltrados;
+
+            if (idMarca == 0)
+            {
+               
+                productosFiltrados = productoNegocio.ListarProductosEnStock();
+            }
+            else
+            {
+                
+                productosFiltrados = productoNegocio.FiltrarProductosPorMarca(idMarca);
+            }
 
             rptProductos.DataSource = productosFiltrados;
             rptProductos.DataBind();

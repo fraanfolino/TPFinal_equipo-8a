@@ -112,6 +112,30 @@ namespace TPFinal_equipo_8a
            
             int idPedido = negocio.RegistrarPedido(idUsuario, totalConAjuste);
 
+
+            List<string> productosInvalidos = new List<string>();
+
+            foreach (var item in carrito)
+            {
+                Producto producto = item.Producto;
+
+                if (!producto.Activo ||
+                    producto.Marca == null || !producto.Marca.Activo ||
+                    producto.Categoria == null || !producto.Categoria.Activo)
+                {
+                    productosInvalidos.Add(producto.Nombre);
+                }
+            }
+
+            if (productosInvalidos.Count > 0)
+            {
+                string nombres = string.Join(", ", productosInvalidos);
+                lblError.Text = $"No se puede realizar la compra. Los siguientes productos fueron dados de baja o no están disponibles: {nombres}";
+                lblError.Visible = true;
+                return;
+            }
+
+
             foreach (var item in carrito)
                 negocio.RegistrarDetallePedido(idPedido, item);
 

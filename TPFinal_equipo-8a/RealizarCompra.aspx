@@ -32,6 +32,7 @@
      
         <div class="mb-3">
             <asp:Label ID="lblErrorStock" runat="server" ForeColor="Red" Visible="false" />
+           <asp:Label ID="lblError" runat="server" CssClass="alert alert-danger" Visible="false"></asp:Label>
 
 
           <asp:Label ID="lblFormaPagoTitulo" runat="server" Text="Forma de pago:" CssClass="form-label d-block fw-bold" />

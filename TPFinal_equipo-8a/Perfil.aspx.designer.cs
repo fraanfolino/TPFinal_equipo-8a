@@ -78,6 +78,15 @@ namespace TPFinal_equipo_8a
         protected global::System.Web.UI.WebControls.CustomValidator CustomValidator3;
 
         /// <summary>
+        /// Control panelCambioClave.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel panelCambioClave;
+
+        /// <summary>
         /// Control lblClaveActual.
         /// </summary>
         /// <remarks>
@@ -87,13 +96,13 @@ namespace TPFinal_equipo_8a
         protected global::System.Web.UI.WebControls.Label lblClaveActual;
 
         /// <summary>
-        /// Control ClaveActual.
+        /// Control txtClaveActual.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox ClaveActual;
+        protected global::System.Web.UI.WebControls.TextBox txtClaveActual;
 
         /// <summary>
         /// Control CustomValidator1.
@@ -105,40 +114,22 @@ namespace TPFinal_equipo_8a
         protected global::System.Web.UI.WebControls.CustomValidator CustomValidator1;
 
         /// <summary>
-        /// Control NuevaClave.
+        /// Control txtNuevaClave.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox NuevaClave;
+        protected global::System.Web.UI.WebControls.TextBox txtNuevaClave;
 
         /// <summary>
-        /// Control NuevaClave2.
+        /// Control txtNuevaClave2.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox NuevaClave2;
-
-        /// <summary>
-        /// Control FileUploadControl.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload FileUploadControl;
-
-        /// <summary>
-        /// Control imgNuevoPerfil.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlImage imgNuevoPerfil;
+        protected global::System.Web.UI.WebControls.TextBox txtNuevaClave2;
 
         /// <summary>
         /// Control btnGuardar.
@@ -157,5 +148,32 @@ namespace TPFinal_equipo_8a
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button Cambiarclavebtn;
+
+        /// <summary>
+        /// Control alertDiv.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl alertDiv;
+
+        /// <summary>
+        /// Control txtUrlImagenPerfil.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtUrlImagenPerfil;
+
+        /// <summary>
+        /// Control imgNuevoPerfil.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlImage imgNuevoPerfil;
     }
 }

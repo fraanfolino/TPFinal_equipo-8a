@@ -1,6 +1,8 @@
 ﻿using Dominio;
+using Negocio;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -10,49 +12,121 @@ namespace TPFinal_equipo_8a
 {
     public partial class Perfil : System.Web.UI.Page
     {
-        public bool cambiarclave = false;
-        public bool banderaedicionadmin = false;
-        public bool confirmareliminacionuser = false;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            Usuario usuario = new Usuario();
-            usuario.Nombre = "nico";
-            usuario.Apellido = "Calcagno";
-            usuario.Email = "calcagno.nico@gmail.com";
-
-
-            Session.Add("usuario", usuario);
-
-
-
             if (!IsPostBack)
             {
-                Session.Add("cambiarclave", cambiarclave);
-
-                if (Session["usuario"] == null)
-                {
-                    Response.Redirect("Catalogo.aspx");
-                }
-                else
-                {
-                    Usuario user = (Usuario)Session["usuario"];
-                    txtNombre.Text = user.Nombre;
-                    txtApellido.Text = user.Apellido;
-                    txtEmail.Text = user.Email;
-                    txtFechaNacimiento.Text = user.FechaNacimiento.ToString("yyyy-MM-dd");
-                }
+                Usuario usuario = (Usuario)Session["usuario"];
+                txtEmail.Text = usuario.Email;
+                txtNombre.Text = usuario.Nombre;
+                txtApellido.Text = usuario.Apellido;
+                txtUrlImagenPerfil.Text = usuario.ImagenPerfil;
+                imgNuevoPerfil.Src = usuario.ImagenPerfil;
+                txtFechaNacimiento.Text = usuario.FechaNacimiento.ToString("yyyy-MM-dd");
             }
         }
 
 
+
+        protected void Cambiarclavebtn_Click(object sender, EventArgs e)
+        {
+            panelCambioClave.Visible = !panelCambioClave.Visible;
+        }
+
+        protected void btnGuardar_Click(object sender, EventArgs e)
+        {
+            alertDiv.Attributes["class"] = "alert alert-secondary w-100 py-1 px-2";
+            alertDiv.InnerHtml = "";
+
+            Page.Validate();
+            if (!Page.IsValid)
+                return;
+
+            if(ChequearCambios())
+            {
+                alertDiv.Attributes["class"] = "alert alert-primary w-100 py-1 px-2";
+                alertDiv.InnerHtml = "No hubo Modificaciones";
+                return;
+            }
+
+            try
+            {
+                Usuario usuario = new Usuario();
+                usuario.Email = txtEmail.Text;
+                usuario.Nombre = txtNombre.Text;
+                usuario.Apellido = txtApellido.Text;
+                usuario.ImagenPerfil = txtUrlImagenPerfil.Text;
+                usuario.FechaNacimiento = DateTime.Parse(txtFechaNacimiento.Text);
+                usuario.Pass = ((Usuario)Session["usuario"]).Pass;
+
+                UsuarioNegocio usuarioNegocio = new UsuarioNegocio();
+                usuarioNegocio.ActualizarDatos(usuario);
+
+                if (panelCambioClave.Visible)
+                {
+                    usuarioNegocio.CambiarClave(usuario.Id, txtNuevaClave.Text);
+                    usuario.Pass = txtNuevaClave.Text;
+                }
+
+                usuarioNegocio.Login(usuario);
+                Session.Add("usuario", usuario);
+
+                alertDiv.Attributes["class"] = "alert alert-success w-100 py-1 px-2";
+                alertDiv.InnerHtml = "Usuario Modificado correctamente";
+            }
+            catch (SqlException ex)
+            {
+                alertDiv.Attributes["class"] = "alert alert-danger w-100 py-1 px-2";
+                alertDiv.InnerHtml = ex.Message.ToString();
+            }
+        }
+
+        protected void txtUrlImagenPerfil_TextChanged(object sender, EventArgs e)
+        {
+            imgNuevoPerfil.Src = txtUrlImagenPerfil.Text;
+        }
+
+        private bool ChequearCambios()
+        {
+            Usuario user = (Usuario)Session["usuario"];
+
+            if (txtEmail.Text == user.Email &&
+                txtNombre.Text == user.Nombre &&
+                txtApellido.Text == user.Apellido &&
+                txtFechaNacimiento.Text == user.FechaNacimiento.ToString("yyyy-MM-dd") &&
+                txtUrlImagenPerfil.Text == user.ImagenPerfil)
+            {
+                if (panelCambioClave.Visible)
+                {
+                    if (txtNuevaClave.Text == user.Pass)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+                return true;
+            }
+            return false;
+        }
+
+
+        protected void controlclave_ServerValidate(object sender, ServerValidateEventArgs e)
+        {
+
+            if (e.Value == txtNuevaClave.Text)
+                e.IsValid = true;
+            else
+                e.IsValid = false;
+        }
+
         protected void controlclaveactual_ServerValidate(object sender, ServerValidateEventArgs e)
         {
-                Usuario user = (Usuario)Session["usuario"];
-                if (ClaveActual.Text == user.Pass)
-                    e.IsValid = true;
-                else
-                    e.IsValid = false;
+            Usuario user = (Usuario)Session["usuario"];
+            if (txtClaveActual.Text == user.Pass)
+                e.IsValid = true;
+            else
+                e.IsValid = false;
         }
 
         protected void CustomValidator3_ServerValidate(object source, ServerValidateEventArgs args)
@@ -73,92 +147,5 @@ namespace TPFinal_equipo_8a
                 else { args.IsValid = false; }
             }
         }
-
-        protected void Cambiarclavebtn_Click(object sender, EventArgs e)
-        {
-            if (!(bool)Session["cambiarclave"])
-            {
-                Session.Add("cambiarclave", true);
-                cambiarclave = (bool)Session["cambiarclave"];
-            }
-            else
-            {
-                Session.Add("cambiarclave", false);
-                cambiarclave = (bool)Session["cambiarclave"];
-            }
-        }
-
-        protected void btnGuardar_Click(object sender, EventArgs e)
-        { }
-            //{
-        //    try
-        //    {
-        //        //Esto tiene que estar si o si para que nos valide todos los campos antes de continuar
-        //        Page.Validate();
-        //        if (!Page.IsValid)
-        //            return;
-
-        //        UsuarioNegocio negocio = new UsuarioNegocio();
-        //        Usuario user = (Usuario)Session["usuario"];
-        //        Usuario useredit = new Usuario();
-
-        //        string iduseredicionId = Request.QueryString["idusuarioedicion"] != null ? Request.QueryString["idusuarioedicion"].ToString() : "";
-        //        //actualizarclave
-        //        if (iduseredicionId != "" && Seguridad.esAdmin(user))
-        //        {
-        //            useredit = (Usuario)Session["useredicion"];
-        //        }
-        //        else
-        //        {
-        //            useredit = (Usuario)Session["usuario"];
-        //        }
-
-
-        //        //Escribir img si se cargó algo.
-        //        if (FileUploadControl.PostedFile.FileName != "" & FileUploadControl.PostedFile.FileName != null)
-        //        {
-        //            string ruta = Server.MapPath("./Images/");
-        //            FileUploadControl.PostedFile.SaveAs(ruta + "perfil-" + useredit.Id + ".jpg");
-        //            //useredit.ImagenPerfil = "perfil-" + useredit.Id + ".jpg";
-
-        //        }
-
-
-        //        useredit.Nombre = txtNombre.Text;
-        //        useredit.Apellido = txtApellido.Text;
-        //        useredit.FechaNacimiento = DateTime.Parse(txtFechaNacimiento.Text);
-        //        useredit.Email = txtEmail.Text;
-
-        //        //guardar datos perfil
-        //        negocio.actualizar(useredit);
-
-        //        //actualizarclave
-        //        if ((bool)Session["cambiarclave"] & NuevaClave.Text == NuevaClave2.Text)
-        //        {
-        //            negocio.actualizarclave(NuevaClave2.Text, useredit);
-        //        }
-        //        else
-        //        {
-        //        }
-
-        //        limpiarsession();
-
-        //        if (user.Id == useredit.Id)
-        //        {
-        //            Response.Redirect("Main.aspx", false);
-        //        }
-        //        else
-        //        {
-        //            Response.Redirect("Usuarios.aspx", false);
-        //        }
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Session.Add("error", ex.ToString());
-        //    }
-        //}
-
-
     }
 }

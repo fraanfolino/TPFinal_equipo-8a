@@ -15,8 +15,7 @@ integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jI
 
 
 
-        <asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Conditional">
-        <ContentTemplate>
+
 
 
 <style>
@@ -29,7 +28,8 @@ integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jI
     }
 </style>
 
-
+<asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Conditional">
+<ContentTemplate>
  <div class="row">
 
 
@@ -37,15 +37,26 @@ integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jI
 <div class="col-md-12">
   <div class="row align-items-end">
 
-    <div class="col-md-9">
+    <div class="col-md-12">
         <div class="mb-2">
+
+    <div class="row">
+        <div class="col-10">
             <label class="form-label text-muted">Buscar</label>
-            <asp:TextBox ID="txtNombreMarca" runat="server" CssClass="form-control" Style="width: 100%; max-width: none;" />
+            <asp:TextBox ID="txtFiltro" runat="server" CssClass="form-control" Style="width: 100%; max-width: none;" OnTextChanged="txtFiltro_TextChanged" AutoPostBack="true" />
+         </div>
+
+         <div class="col-2">
+                   <label class="form-label text-muted">Criterio</label>
+                    <asp:DropDownList runat="server" AutoPostBack="true" CssClass="form-control" id="CriterioFRapido" DataTextField="Seleccione" OnSelectedIndexChanged="CriterioFRapido_SelectedIndexChanged">
+                    <asp:ListItem Text="Nombre" />
+                    <asp:ListItem Text="Categoria" />
+                    <asp:ListItem Text="Marca" />
+                    </asp:DropDownList>
+          </div>
+        </div>
         </div>
     </div>
-
-
-
 
 
   </div>

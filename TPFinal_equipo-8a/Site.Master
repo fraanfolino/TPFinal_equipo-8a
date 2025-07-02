@@ -15,7 +15,6 @@
 
     <webopt:BundleReference runat="server" Path="~/Content/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-
 </head>
 <body>
     <form runat="server">
@@ -49,42 +48,41 @@
                 <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/Catalogo">Catalogo</a></li>
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/CargarProductos">Cargar Stock</a></li>
+<%--                        <li class="nav-item"><a class="nav-link" runat="server" href="~/CargarProductos">Cargar Stock</a></li>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/Producto">Agregar Productos</a></li>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/GestionarMC">Gestionar MCT</a></li>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/ListaProductos">Lista</a></li>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/About">Acerca de</a></li>
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/Contact">Contacto</a></li>
+                        <li class="nav-item"><a class="nav-link" runat="server" href="~/Contact">Contacto</a></li>--%>
                     </ul>
                 </div>
-
+<asp:UpdatePanel runat="server" ID="updLogin" UpdateMode="Conditional">
+    <ContentTemplate>
                 <div class="d-flex">
+
                     <%if (Negocio.Seguridad.sesionActiva(Session["usuario"]))
                       {%>
                             <div class="dropdown">
-                            <asp:Image ID="Image1" 
-                                       role="button" 
-                                       data-bs-toggle="dropdown" 
-                                       aria-expanded="false" 
-                                       ImageUrl="~/Images/user.png" 
-                                       Style="height: 40px; width: 40px; border-radius: 50%;" runat="server" />
+                            <asp:Image ID="imgUser" role="button" data-bs-toggle="dropdown" aria-expanded="false" ImageUrl="~/Images/user.png" Style="height: 40px; width: 40px; border-radius: 50%; object-fit: cover; object-position: center; display: block; border: 1px solid gray;" runat="server" />
                             <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="Perfil">Mi Perfil</a></li>
+                            
 
                             <%if (banderaadmin)
                               {%>
-                                 <li><a class="dropdown-item" href="Producto">Agregar Productos</a></li>
-                                 <li><a class="dropdown-item" href="CargarProductos">Cargar Stock</a></li>
-                                <li><a class="dropdown-item" href="GestionarMC">Cargar Stock</a></li>
-                            <%}%>
+                               <li><a class="dropdown-item" href="ListaProductos">Gestionar Productos</a></li>
+                               <li><a class="dropdown-item" href="Producto">Agregar Productos</a></li>
+                               <li><a class="dropdown-item" href="CargarProductos">Cargar Stock</a></li>
+                               <li><a class="dropdown-item" href="GestionarMC">Opciones</a></li>
 
-                         <asp:Button Text="Salir" ID="Button2" class="dropdown-item" OnClick="btnSalir_Click" runat="server" CausesValidation="false" UseSubmitBehavior="false" />
+                            <%}%>
+                            <li><a class="dropdown-item" href="Perfil">Mi Perfil</a></li>
+                            <asp:Button Text="Salir" ID="Button2" class="dropdown-item" OnClick="btnSalir_Click" runat="server" CausesValidation="false" UseSubmitBehavior="false" />
                          </ul>
                     <%}
                       else
                       {%>
                             <div class="dropdown">
-                                <asp:Image ID="imgAvatar" role="button" data-bs-toggle="dropdown" aria-expanded="false" ImageUrl="/Images/user.png" 
+                                <asp:Image ID="imgAvatar" ClientIDMode="Static"  role="button" data-bs-toggle="dropdown" aria-expanded="false" ImageUrl="/Images/user.png" 
                                     Style="height: 40px; width: 40px; border-radius: 50%;" runat="server" />
                                 <ul class="dropdown-menu dropdown-menu-end p-3" style="min-width: 320px;">
                                     <li class="mt-2">
@@ -100,6 +98,11 @@
                                     </li>
                                     <li class="mt-2">
                                         <a href="RecuperarClave.aspx" class="text-primary text-decoration-underline">Olvidé mi contraseña</a>
+                                         <div class="d-flex gap-2 mt-2">
+                                            <div id="alertDiv" runat="server" class="alert alert-secondary w-100 py-1 px-2" role="alert" style="padding-top: 2px; padding-bottom: 2px;">
+                                            </div>     
+                                        </div>
+                                        
                                     </li>
                                     <li class="mt-2">
                                         <div class="d-flex gap-2">
@@ -116,6 +119,12 @@
                 </div>
             </div>
         </nav>
+    </ContentTemplate>
+    <Triggers>
+        <asp:AsyncPostBackTrigger ControlID="btnIniciar" EventName="Click" />
+    </Triggers>
+</asp:UpdatePanel>
+
 
         <div class="container body-content">
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
@@ -129,5 +138,19 @@
     <asp:PlaceHolder runat="server">
         <%: Scripts.Render("~/Scripts/bootstrap.js") %>
     </asp:PlaceHolder>
+
+        <script type="text/javascript">
+            //ESTO es pal popper q se abra en caso de rrror sino se cerraba (la peor)
+            Sys.WebForms.PageRequestManager.getInstance().add_endRequest(function () {
+                var alert = document.getElementById("alertDiv");
+                if (alert && alert.innerText.trim() !== "") {
+                    var avatar = document.getElementById("imgAvatar");
+                    if (avatar) {
+                        var dropdown = bootstrap.Dropdown.getOrCreateInstance(avatar);
+                        dropdown.show();
+                    }
+                }
+            });
+        </script>
 </body>
 </html>

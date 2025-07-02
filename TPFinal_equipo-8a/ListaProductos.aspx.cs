@@ -20,7 +20,6 @@ namespace TPFinal_equipo_8a
             }
         }
 
-
         private void  CargarLista ()
         {        
             ProductoNegocio productoNegocio = new ProductoNegocio();
@@ -28,15 +27,6 @@ namespace TPFinal_equipo_8a
             dgvlistaProductos.DataSource = Session["listaProductos"];
             dgvlistaProductos.DataBind();
         }
-
-
-
-
-
-
-
-
-
 
         protected void dgvlistaProductos_Sorting(object sender, GridViewSortEventArgs e)
         {
@@ -79,10 +69,6 @@ namespace TPFinal_equipo_8a
                     break;
 
                 default:
-                    //if (listaordenada.SequenceEqual(listaordenada.OrderBy(x => x.GetType().GetProperty(sortexp).GetValue(x, null))))
-                    //    listaordenada = listaordenada.OrderByDescending(x => x.GetType().GetProperty(sortexp).GetValue(x, null)).ToList();
-                    //else
-                    //    listaordenada = listaordenada.OrderBy(x => x.GetType().GetProperty(sortexp).GetValue(x, null)).ToList();
                     break;
             }
 
@@ -106,17 +92,6 @@ namespace TPFinal_equipo_8a
             dgvlistaProductos.DataBind();
         }
 
-
-
-
-
-
-
-
-
-
-
-
         protected void Cantidadxpagina_TextChanged(object sender, EventArgs e)
         {
             CargarCantidadxPagina();
@@ -131,7 +106,6 @@ namespace TPFinal_equipo_8a
                 dgvlistaProductos.PageSize = a;
                 dgvlistaProductos.DataSource = Session["listaProductos"];
                 dgvlistaProductos.PageIndex = 0;
-                //Session.Add("cantxpagina", a);
                 dgvlistaProductos.DataBind();
             }
             else
@@ -143,7 +117,42 @@ namespace TPFinal_equipo_8a
             }
         }
 
+        protected void txtFiltro_TextChanged(object sender, EventArgs e)
+        {
+            List<Producto> lista = (List<Producto>)Session["listaProductos"];
+            List<Producto> listaFiltrada = new List<Producto>();
 
+            if (txtFiltro.Text == "")
+            {
+                CargarLista();
+            }
 
+            else
+            {
+                switch (CriterioFRapido.SelectedIndex)
+                {
+                    case 0:
+                        listaFiltrada = lista.FindAll(x => x.Nombre.ToUpper().Contains(txtFiltro.Text.ToUpper()));
+                        break;
+                    case 1:
+                        listaFiltrada = lista.FindAll(x => x.Categoria.Nombre.ToUpper().Contains(txtFiltro.Text.ToUpper()));
+                        break;
+                    case 2:
+                        listaFiltrada = lista.FindAll(x => x.Marca.Nombre.ToUpper().Contains(txtFiltro.Text.ToUpper()));
+                        break;
+                    default:
+                        break;
+                }
+
+                dgvlistaProductos.DataSource = listaFiltrada;
+                Session.Add("listaProductos", listaFiltrada);
+                dgvlistaProductos.DataBind();
+            }
+        }
+
+        protected void CriterioFRapido_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            CargarLista();
+        }
     }
 }

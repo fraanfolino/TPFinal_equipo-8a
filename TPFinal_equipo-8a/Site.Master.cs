@@ -14,31 +14,25 @@ namespace TPFinal_equipo_8a
     public partial class SiteMaster : MasterPage
     {
         public bool banderaadmin = true;
-        //public bool sesion;
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Seguridad.sesionActiva(Session["usuario"]))
             {
                 Usuario user = (Usuario)Session["usuario"];
-                if (!string.IsNullOrEmpty(user.ImagenPerfil) || File.Exists("~/Images/" + user.ImagenPerfil))
+                if (!string.IsNullOrEmpty(user.ImagenPerfil))
                 {
-                    imgAvatar.ImageUrl = "~/Images/" + user.ImagenPerfil;
+                    imgUser.ImageUrl = user.ImagenPerfil;
                 }
-                else
-                {
-                    imgAvatar.ImageUrl = "~/Images/user.png";
-                }
+
                 if (Seguridad.esAdmin(user))
                 { banderaadmin = true; }
             }
             else
             {
-                
-
                 if (Page is Perfil)
                 {
-                    Response.Redirect("Default.aspx", false);
+                    Response.Redirect("Catalogo.aspx", false);
                 }
             }
         }
@@ -74,7 +68,8 @@ namespace TPFinal_equipo_8a
             }
             else
             {
-                // ver dp el error de user
+                alertDiv.Attributes["class"] = "alert alert-danger w-100 py-1 px-2";
+                alertDiv.InnerHtml = "Datos inválidos" ;
             }
 
         }

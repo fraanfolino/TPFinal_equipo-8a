@@ -33,6 +33,7 @@
         <div class="mb-3">
             <asp:Label ID="lblErrorStock" runat="server" ForeColor="Red" Visible="false" />
            <asp:Label ID="lblError" runat="server" CssClass="alert alert-danger" Visible="false"></asp:Label>
+            <asp:Button ID="btnRevisarCarrito" runat="server" Text="Volver al carrito" CssClass="btn btn-warning" OnClick="btnRevisarCarrito_Click" />
 
 
           <asp:Label ID="lblFormaPagoTitulo" runat="server" Text="Forma de pago:" CssClass="form-label d-block fw-bold" />
@@ -44,6 +45,9 @@
         </div>
         <asp:Label ID="lblTotalFinalTitulo" runat="server" Text="Total con ajuste:" CssClass="fw-bold d-block mb-1" />
         <asp:Label ID="lblTotalFinal" runat="server" CssClass="fw-bold fs-5 d-block" />
+
+
+
      
 
       

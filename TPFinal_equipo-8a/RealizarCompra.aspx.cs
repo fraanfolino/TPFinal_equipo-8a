@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
+
 namespace TPFinal_equipo_8a
 {
     public partial class RealizarCompra : System.Web.UI.Page
@@ -70,6 +71,11 @@ namespace TPFinal_equipo_8a
            
         }
 
+        protected void btnRevisarCarrito_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Carro.aspx"); 
+        }
+
 
         protected void btnConfirmar_Click(object sender, EventArgs e)
         {
@@ -113,20 +119,21 @@ namespace TPFinal_equipo_8a
             int idPedido = negocio.RegistrarPedido(idUsuario, totalConAjuste);
 
 
+           
+
             List<string> productosInvalidos = new List<string>();
 
             foreach (var item in carrito)
             {
-                Producto producto = item.Producto;
+                Producto p = item.Producto;
 
-                if (!producto.Activo ||
-                    producto.Marca == null || !producto.Marca.Activo ||
-                    producto.Categoria == null || !producto.Categoria.Activo)
+                if (!p.Activo || p.Marca == null || !p.Marca.Activo || p.Categoria == null || !p.Categoria.Activo)
                 {
-                    productosInvalidos.Add(producto.Nombre);
+                    productosInvalidos.Add(p.Nombre);
                 }
             }
 
+          
             if (productosInvalidos.Count > 0)
             {
                 string nombres = string.Join(", ", productosInvalidos);

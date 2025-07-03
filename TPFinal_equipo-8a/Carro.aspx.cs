@@ -24,7 +24,7 @@ namespace TPFinal_equipo_8a
             }
             else
             {
-                Response.Redirect("Catalogo.aspx", false);
+                Response.Redirect("Catalogo.aspx", false) ;
             }
 
             string accion = Request.QueryString["accion"];

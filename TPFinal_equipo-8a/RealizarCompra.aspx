@@ -17,12 +17,24 @@
     
       <asp:Repeater ID="rptItems" runat="server">
         <ItemTemplate>
-          <div class="border rounded p-3 mb-3 shadow-sm">
+          <div class="border border-secondary rounded p-3 mb-4 bg-white shadow-sm">
+
+               <asp:Image 
+      runat="server" 
+      ImageUrl='<%# ((Dominio.ItemCarrito)Container.DataItem).Producto.ImagenUrl.FirstOrDefault() ?? "~/img/no-disponible.png" %>' 
+      CssClass="img-thumbnail me-3"
+      Width="100" Height="100" />
             <asp:Label runat="server" Text='<%# Eval("Producto.Nombre") %>' CssClass="fw-bold d-block" />
             <asp:Label runat="server" Text='<%# "Talle: " + Eval("Producto.Talle.Etiqueta") %>' CssClass="d-block" />
             <asp:Label runat="server" Text='<%# "Precio unitario: $" + Eval("Producto.Precio", "{0:N2}") %>' CssClass="d-block" />
             <asp:Label runat="server" Text='<%# "Cantidad: " + Eval("Cantidad") %>' CssClass="d-block" />
-            <asp:Label runat="server" Text='<%# "Subtotal: $" + ((Dominio.ItemCarrito)Container.DataItem).Precio().ToString("N2") %>' CssClass="fw-bold d-block text-end" />
+           <div class="bg-light p-2 rounded d-flex justify-content-between align-items-center mt-2">
+           <asp:Label runat="server" Text="Subtotal:" CssClass="fw-semibold" />
+           <asp:Label 
+               runat="server" 
+    Text='<%# "$" + ((Dominio.ItemCarrito)Container.DataItem).Precio().ToString("N2") %>' 
+    CssClass="fw-bold text-success" />
+</div>
           </div>
         </ItemTemplate>
       </asp:Repeater>

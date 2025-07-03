@@ -108,14 +108,14 @@
         <asp:TextBox ID="txtUrlImagenPerfil" ClientIDMode="Static" runat="server" CssClass="form-control" AutoPostBack="true" OnTextChanged="txtUrlImagenPerfil_TextChanged" Style="width: 100%; max-width: none;"/>
          </div>
      
-     <img src="~/Images/error.jpeg" id="imgNuevoPerfil" onerror="imgError(this)" CssClass="img-fluid mb-3" runat="server" style="max-height: 200px;"  ClientIDMode="Static"/>
+     <img src="~/Images/error.jpeg" id="imgNuevoPerfil" onerror="imgErrorPerfil(this)" CssClass="img-fluid mb-3" runat="server" style="max-height: 200px;"  ClientIDMode="Static"/>
 
         </div>
     </div>
 </ContentTemplate>
 </asp:UpdatePanel>
         <script type="text/javascript">
-            function imgError(me) {
+            function imgErrorPerfil(me) {
                 var alterNativeImg = "/Images/error.png";
                 if (alterNativeImg != me.src)
                     me.src = alterNativeImg;

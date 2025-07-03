@@ -15,18 +15,13 @@ namespace TPFinal_equipo_8a
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (IsPostBack && Request["__EVENTTARGET"] == "productoSeleccionado")
-            {
-                string idProducto = Request.Form[productoSeleccionado.UniqueID];
-
-                if (!string.IsNullOrEmpty(idProducto))
-                {
-                    MostrarTalles();
-                }
-            }
-
             if (!IsPostBack)
             {
+                if (!Seguridad.SesionAdmin(Session["usuario"]))
+                {
+                    Response.Redirect("Catalogo.aspx", false);
+                }
+
                 exitoMensaje.Visible = false;
                 errorMensaje.Visible = false;
 
@@ -44,6 +39,16 @@ namespace TPFinal_equipo_8a
                 MostrarStock();
                 exitoMensaje.Visible = false;
                 errorMensaje.Visible = false;
+            }
+
+            if (IsPostBack && Request["__EVENTTARGET"] == "productoSeleccionado")
+            {
+                string idProducto = Request.Form[productoSeleccionado.UniqueID];
+
+                if (!string.IsNullOrEmpty(idProducto))
+                {
+                    MostrarTalles();
+                }
             }
         }
 

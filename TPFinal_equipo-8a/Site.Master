@@ -63,7 +63,7 @@
                                     <asp:Image ID="imgCarro" role="button" aria-expanded="false" ImageUrl="~/Images/carrito.png" Style="height: 30px; width: 30px; cursor: pointer;" runat="server" /></a>
                             <%}%>
                             <div class="dropdown">
-                            <asp:Image ID="imgUser" role="button" data-bs-toggle="dropdown" aria-expanded="false" ImageUrl="~/Images/user.png" Style="height: 40px; width: 40px; border-radius: 50%; object-fit: cover; object-position: center; display: block; border: 1px solid gray;" runat="server" />
+                            <asp:Image ID="imgUser" onerror="imgError(this)"  role="button" data-bs-toggle="dropdown" aria-expanded="false" ImageUrl="~/Images/user.png" Style="height: 40px; width: 40px; border-radius: 50%; object-fit: cover; object-position: center; display: block; border: 1px solid gray;" runat="server" />
                             <ul class="dropdown-menu dropdown-menu-end">
                             <%if (banderaadmin)
                               {%>
@@ -149,6 +149,13 @@
                     }
                 }
             });
+
+            function imgError(me) {
+                var alterNativeImg = "/Images/user.png";
+                if (alterNativeImg != me.src)
+                    me.src = alterNativeImg;
+            }
+
         </script>
 </body>
 </html>

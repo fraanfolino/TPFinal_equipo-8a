@@ -13,7 +13,10 @@ namespace TPFinal_equipo_8a
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (!Seguridad.sesionActiva(Session["usuario"]))
+            {
+                Response.Redirect("Catalogo.aspx", false);
+            }
         }
 
         protected void btnRegistrarse_Click(object sender, EventArgs e)

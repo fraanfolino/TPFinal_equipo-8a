@@ -24,5 +24,14 @@ namespace Negocio
             return usuario != null ? usuario.Admin : false;
         }
 
+        public static bool SesionAdmin(object user)
+        {
+            if (sesionActiva(user) && esAdmin(user))
+            {
+                return true;
+            }
+            return false;
+        }
+
     }
 }

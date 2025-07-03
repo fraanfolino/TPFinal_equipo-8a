@@ -1,77 +1,77 @@
 ﻿<%@ Page Title="Catálogo" Language="C#" MasterPageFile="~/Site.Master"
     AutoEventWireup="true" CodeBehind="Catalogo.aspx.cs" Inherits="TPFinal_equipo_8a.Catalogo" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-  <div class="container mt-5">
-    <div class="row">
+                                    <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+                                      <div class="container mt-5">
+                                        <div class="row">
 
     
-     <div class="col-md-3">
+                                         <div class="col-md-3">
 
-  <!-- Card 1: Búsqueda por texto -->
-  <div class="card mb-4">
-    <div class="card-header">Buscar producto</div>
-    <div class="card-body">
-      <asp:TextBox 
-        ID="txtBusqueda" runat="server" CssClass="form-control"
-        AutoPostBack="true" OnTextChanged="txtBusqueda_TextChanged"
-        placeholder="Escribe para buscar…" />
-    </div>
-  </div>
-
-  <!-- Card 2: Filtrar por marca -->
-  <div class="card mb-4">
-    <div class="card-header">Filtrar por marca</div>
-    <div class="card-body">
-
-      <asp:DropDownList 
-        ID="ddlMarca" runat="server" CssClass="form-select" />
-
-      <div class="d-grid mt-3">
-        <asp:Button 
-          ID="btnFiltrarMarca" runat="server" 
-          Text="Aplicar" CssClass="btn btn-primary" 
-          OnClick="btnFiltrarMarca_Click" />
-      </div>
-
-    </div>
-  </div>
+                                     
+                                      <div class="card mb-4">
+                                        <div class="card-header">Buscar producto</div>
+                                        <div class="card-body">
+                                          <asp:TextBox 
+                                            ID="txtBusqueda" runat="server" CssClass="form-control"
+                                            AutoPostBack="true" OnTextChanged="txtBusqueda_TextChanged"
+                                            placeholder="Escribe para buscar…" />
+                                        </div>
+                                      </div>
 
 
-         <!-- Card 3: Filtrar por precio -->
-<div class="card mb-4">
-  <div class="card-header">Filtrar por precio</div>
-  <div class="card-body">
+                                      <div class="card mb-4">
+                                        <div class="card-header">Filtrar por marca</div>
+                                        <div class="card-body">
 
-    <label for="txtPrecioMin">Precio mínimo</label>
-    <asp:TextBox
-      ID="txtPrecioMin"
-       TextMode="Number"
-      runat="server"
-      CssClass="form-control"
-      placeholder="0.00" />
+                                          <asp:DropDownList 
+                                            ID="ddlMarca" runat="server" CssClass="form-select" />
 
-    <label class="mt-2" for="txtPrecioMax">Precio máximo</label>
-    <asp:TextBox
-      ID="txtPrecioMax"
-       TextMode="Number"
-      runat="server"
-      CssClass="form-control"
-      placeholder="9999.99" />
+                                          <div class="d-grid mt-3">
+                                            <asp:Button 
+                                              ID="btnFiltrarMarca" runat="server" 
+                                              Text="Aplicar" CssClass="btn btn-primary" 
+                                              OnClick="btnFiltrarMarca_Click" />
+                                          </div>
 
-    <div class="d-grid mt-3">
-      <asp:Button
-        ID="btnFiltrarPrecio"
-        runat="server"
-        Text="Aplicar precio"
-        CssClass="btn btn-primary"
-        OnClick="btnFiltrarPrecio_Click" />
-    </div>
+                                        </div>
+                                      </div>
 
-  </div>
-</div>
 
-</div>
+         
+                                    <div class="card mb-4">
+                                      <div class="card-header">Filtrar por precio</div>
+                                      <div class="card-body">
+
+                                        <label for="txtPrecioMin">Precio mínimo</label>
+                                        <asp:TextBox
+                                          ID="txtPrecioMin"
+                                           TextMode="Number"
+                                          runat="server"
+                                          CssClass="form-control"
+                                          placeholder="0.00" />
+
+                                        <label class="mt-2" for="txtPrecioMax">Precio máximo</label>
+                                        <asp:TextBox
+                                          ID="txtPrecioMax"
+                                           TextMode="Number"
+                                          runat="server"
+                                          CssClass="form-control"
+                                          placeholder="9999.99" />
+
+                                        <div class="d-grid mt-3">
+                                          <asp:Button
+                                            ID="btnFiltrarPrecio"
+                                            runat="server"
+                                            Text="Aplicar precio"
+                                            CssClass="btn btn-primary"
+                                            OnClick="btnFiltrarPrecio_Click" />
+                                        </div>
+
+                                      </div>
+                                    </div>
+
+                                    </div>
 
      
       <div class="col-md-9">
@@ -106,7 +106,7 @@
                     </button>
                   </div>
 
-                  <!-- Detalles del producto -->
+                  
                   <div class="card-body">
                     <h5 class="card-title"><%# Eval("Nombre") %></h5>
                     <p class="card-text"><%# Eval("Descripcion") %></p>

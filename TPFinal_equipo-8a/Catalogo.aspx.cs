@@ -99,6 +99,32 @@ namespace TPFinal_equipo_8a
             if (hasMax)
                 lista = lista.Where(p => p.Precio <= max).ToList();
 
+
+           
+
+
+            if (hasMax && max > 9999999.99m)
+            {
+                max = 9999999.99m;
+                lblError.Text = "El precio máximo no puede superar $9.999.999,99.";
+                lblError.Visible = true;
+            }
+
+
+            if (hasMin && hasMax && min > max)
+            {
+                lblError.Text = "El precio mínimo no puede ser mayor al máximo.";
+                lblError.Visible = true;
+                return;
+            }
+
+            if ((hasMin && min < 0) || (hasMax && max < 0))
+            {
+                lblError.Text = "No se permiten valores negativos en los precios.";
+                lblError.Visible = true;
+                return;
+            }
+
             rptProductos.DataSource = lista;
             rptProductos.DataBind();
         }

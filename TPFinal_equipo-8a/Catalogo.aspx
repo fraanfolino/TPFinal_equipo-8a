@@ -39,37 +39,44 @@
 
 
          
-                                    <div class="card mb-4">
-                                      <div class="card-header">Filtrar por precio</div>
-                                      <div class="card-body">
+                                                       <div class="card mb-4">
+  <div class="card-header">Filtrar por precio</div>
+  <div class="card-body">
+  
+    <label for="txtPrecioMin">Precio mínimo</label>
+    <asp:TextBox
+      ID="txtPrecioMin"
+      TextMode="Number"
+      runat="server"
+      CssClass="form-control"
+      placeholder="0.00" />
 
-                                        <label for="txtPrecioMin">Precio mínimo</label>
-                                        <asp:TextBox
-                                          ID="txtPrecioMin"
-                                           TextMode="Number"
-                                          runat="server"
-                                          CssClass="form-control"
-                                          placeholder="0.00" />
+    <label class="mt-2" for="txtPrecioMax">Precio máximo</label>
+    <asp:TextBox
+      ID="txtPrecioMax"
+      TextMode="Number"
+      runat="server"
+      CssClass="form-control"
+      placeholder="9999999.99" />
 
-                                        <label class="mt-2" for="txtPrecioMax">Precio máximo</label>
-                                        <asp:TextBox
-                                          ID="txtPrecioMax"
-                                           TextMode="Number"
-                                          runat="server"
-                                          CssClass="form-control"
-                                          placeholder="9999.99" />
+    
+    <asp:Label
+      ID="lblError"
+      runat="server"
+      CssClass="alert alert-danger mt-3 d-block"
+      Visible="false" />
 
-                                        <div class="d-grid mt-3">
-                                          <asp:Button
-                                            ID="btnFiltrarPrecio"
-                                            runat="server"
-                                            Text="Aplicar precio"
-                                            CssClass="btn btn-primary"
-                                            OnClick="btnFiltrarPrecio_Click" />
-                                        </div>
+    <div class="d-grid mt-3">
+      <asp:Button
+        ID="btnFiltrarPrecio"
+        runat="server"
+        Text="Aplicar precio"
+        CssClass="btn btn-primary"
+        OnClick="btnFiltrarPrecio_Click" />
+    </div>
 
-                                      </div>
-                                    </div>
+  </div>
+</div>
 
                                     </div>
 

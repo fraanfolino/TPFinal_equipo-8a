@@ -38,19 +38,25 @@ namespace TPFinal_equipo_8a
                 nuevoUsuario.Nombre = txtNombre.Text;
                 nuevoUsuario.Pass = txtPassword.Text;
                 nuevoUsuario.Id = usuarioNegocio.insertarUsuario(nuevoUsuario);
-                Session.Add("usuario", nuevoUsuario);
-                Response.Redirect("Catalogo.aspx", false);
+
+                if (usuarioNegocio.Login(nuevoUsuario))
+                {
+                    Session.Add("usuario", nuevoUsuario);
+                    Response.Redirect("Perfil.aspx", false);
+                }
+                else
+                {
+                    alertDiv.Attributes["class"] = "alert alert-danger w-100 py-1 px-2";
+                    alertDiv.InnerHtml = "Datos inválidos";
+                }
+
+                Response.Redirect("Perfil.aspx", false);
             }
             catch (Exception ex)
             {
-
+                alertDiv.Attributes["class"] = "alert alert-primary w-100 py-1 px-2";
+                alertDiv.InnerHtml = "Ocurrio un error: " + ex;
             }
-        }
-
-        protected void Validaemailexistente_ServerValidate(object source, ServerValidateEventArgs args)
-        {
-            UsuarioNegocio usuarionegocio = new UsuarioNegocio();
-            args.IsValid = (usuarionegocio.ChequearEmailUsuario(args.Value));
         }
     }
 }

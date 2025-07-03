@@ -181,7 +181,15 @@ namespace Negocio
                 datos.setearParametro("@Email", emailUser);
                 datos.ejecutarLectura();
 
-                return datos.Lectorbd.Read();
+                if(datos.Lectorbd.Read())
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+                    
             }
             catch (Exception ex)
             {

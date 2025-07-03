@@ -42,15 +42,6 @@ namespace TPFinal_equipo_8a
         protected global::System.Web.UI.WebControls.TextBox txtRegistroEmail;
 
         /// <summary>
-        /// Control Validaemailexistente.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CustomValidator Validaemailexistente;
-
-        /// <summary>
         /// Control txtNombre.
         /// </summary>
         /// <remarks>

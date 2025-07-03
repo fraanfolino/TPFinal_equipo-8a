@@ -17,9 +17,9 @@
         <label for="floatingEmail" cssclass="form-control">Ingrese E-Mail
         <asp:RegularExpressionValidator ControlToValidate="txtRegistroEmail" ErrorMessage="Campo Inválido" runat="server" ValidationExpression="^[\w-\.]+@([\w-]+\.)+[\w-]{2,6}$"  ForeColor="Red" 
         Type="Integer" Enabled="True" Display="Dynamic"/>
-        <asp:CustomValidator runat="server" id="Validaemailexistente" ControlToValidate="txtRegistroEmail" 
+<%--        <asp:CustomValidator runat="server" id="Validaemailexistente" ControlToValidate="txtRegistroEmail" 
         onservervalidate="Validaemailexistente_ServerValidate"   
-        ErrorMessage="El usuario ya existe" ForeColor="red"/>
+        ErrorMessage="El usuario ya existe" ForeColor="red"/>--%>
         </label>
        </div>
         </div>

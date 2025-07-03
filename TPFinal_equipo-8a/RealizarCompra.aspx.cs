@@ -20,6 +20,11 @@ namespace TPFinal_equipo_8a
                 return;
             }
 
+            if (Seguridad.sesionActiva(Session["usuario"]) && Seguridad.esAdmin(Session["usuario"]))
+            {
+                Response.Redirect("Catalogo.aspx", false);
+            }
+
             if (!IsPostBack)
             {
                 cargarCarrito();

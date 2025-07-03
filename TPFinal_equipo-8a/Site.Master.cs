@@ -13,8 +13,6 @@ namespace TPFinal_equipo_8a
 {
     public partial class SiteMaster : MasterPage
     {
-        public bool banderaadmin = true;
-
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Seguridad.sesionActiva(Session["usuario"]))
@@ -24,17 +22,8 @@ namespace TPFinal_equipo_8a
                 {
                     imgUser.ImageUrl = user.ImagenPerfil;
                 }
+            }
 
-                if (Seguridad.esAdmin(user))
-                { banderaadmin = true; }
-            }
-            else
-            {
-                if (Page is Perfil)
-                {
-                    Response.Redirect("Catalogo.aspx", false);
-                }
-            }
         }
 
         protected void btnSalir_Click(object sender, EventArgs e)

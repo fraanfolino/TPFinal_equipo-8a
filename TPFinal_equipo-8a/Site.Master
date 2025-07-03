@@ -50,6 +50,12 @@
                 <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/Catalogo">Catalogo</a></li>
+                        <%if (Negocio.Seguridad.SesionAdmin(Session["usuario"]))
+                       {%>
+                        <li class="nav-item"><a class="nav-link" runat="server" href="~/ListaProductos">Gestionar Productos</a></li>
+                        <li class="nav-item"><a class="nav-link" runat="server" href="~/GestionarMC">Opciones</a></li>
+                        <%}%>
+
                     </ul>
                 </div>
 
@@ -57,15 +63,15 @@
 
                     <%if (Negocio.Seguridad.sesionActiva(Session["usuario"]))
                       {%>
-                            <%if (banderaadmin)
+                            <%if (!Negocio.Seguridad.esAdmin(Session["usuario"]))
                             {%>
                                 <a href="Carro.aspx">
-                                    <asp:Image ID="imgCarro" role="button" aria-expanded="false" ImageUrl="~/Images/carrito.png" Style="height: 30px; width: 30px; cursor: pointer;" runat="server" /></a>
+                                <asp:Image ID="imgCarro" role="button" aria-expanded="false" ImageUrl="~/Images/carrito.png" Style="height: 30px; width: 30px; cursor: pointer;" runat="server" /></a>
                             <%}%>
                             <div class="dropdown">
                             <asp:Image ID="imgUser" onerror="imgError(this)"  role="button" data-bs-toggle="dropdown" aria-expanded="false" ImageUrl="~/Images/user.png" Style="height: 40px; width: 40px; border-radius: 50%; object-fit: cover; object-position: center; display: block; border: 1px solid gray;" runat="server" />
                             <ul class="dropdown-menu dropdown-menu-end">
-                            <%if (banderaadmin)
+                            <%if (Negocio.Seguridad.esAdmin(Session["usuario"]))
                               {%>
                                <li><a class="dropdown-item" href="ListaProductos">Gestionar Productos</a></li>
                                <li><a class="dropdown-item" href="GestionarMC">Opciones</a></li>

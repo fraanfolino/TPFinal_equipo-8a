@@ -13,7 +13,7 @@ namespace TPFinal_equipo_8a
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!Seguridad.SesionAdmin(Session["usuario"]))
+            if (Seguridad.sesionActiva(Session["usuario"]) && Seguridad.esAdmin(Session["usuario"]))
             {
                 Response.Redirect("Catalogo.aspx", false);
             }

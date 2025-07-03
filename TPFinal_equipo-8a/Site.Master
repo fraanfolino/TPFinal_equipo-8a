@@ -87,11 +87,11 @@
                                     </li>
                                     <li class="mt-2">
                                         <asp:Label Text="E-mail" runat="server" />
-                                        <asp:TextBox runat="server" CssClass="form-control" ID="txtMail" Style="width: 100%;" />
+                                        <asp:TextBox runat="server" autocomplete="on" CssClass="form-control" ID="txtMail" Style="width: 100%;" />
                                     </li>
                                     <li class="mt-2">
                                         <asp:Label Text="Contraseña" runat="server" />
-                                        <asp:TextBox runat="server" CssClass="form-control" ID="txtPass" TextMode="Password" Style="width: 100%;" />
+                                        <asp:TextBox runat="server" autocomplete="on" CssClass="form-control" ID="txtPass" TextMode="Password" Style="width: 100%;" />
                                     </li>
                                     <li class="mt-2">
                                         <a href="RecuperarClave.aspx" class="text-primary text-decoration-underline">Olvidé mi contraseña</a>
@@ -104,7 +104,8 @@
                                     <li class="mt-2">
                                         <div class="d-flex gap-2">
                                             <asp:Button runat="server" ID="btnIniciar" Text="Iniciar Sesión" CssClass="btn btn-primary" OnClick="btnIniciar_Click" Style="flex:1;" />
-                                            <asp:Button runat="server" ID="btnRegistro" Text="Registrarse" CssClass="btn btn-secondary" Style="flex:1;" />
+                                            <%--<asp:Button runat="server" ID="btnRegistro" Text="Registrarse" CssClass="btn btn-secondary" Style="flex:1;" />--%>
+                                            <a href="Registro.aspx" class="btn btn-secondary" style="flex:1;">Registrarse</a>
                                         </div>
                                     </li>
                                 </ul>

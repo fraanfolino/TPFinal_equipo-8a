@@ -88,9 +88,6 @@ namespace Negocio
             }
         }
 
-
-
-
         public Usuario ObtenerUsuario(int id)
         {
             AccesoBD datos = new AccesoBD();
@@ -130,8 +127,6 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
-
-
 
         public void ActualizarDatos(Usuario user)
         {
@@ -176,5 +171,51 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
+
+        public bool ChequearEmailUsuario(string emailUser)
+        {
+            AccesoBD datos = new AccesoBD();
+            try
+            {
+                datos.setearProcedimiento("sp_ExisteEmailUsuario");
+                datos.setearParametro("@Email", emailUser);
+                datos.ejecutarLectura();
+
+                return datos.Lectorbd.Read();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+
+        public int insertarUsuario(Usuario nuevo)
+        {
+            AccesoBD datos = new AccesoBD();
+
+            try
+            {
+                datos.setearProcedimiento("sp_AgregarUsuario");
+                datos.setearParametro("@Email", nuevo.Email);
+                datos.setearParametro("@Pass", nuevo.Pass);
+                datos.setearParametro("@Nombre", nuevo.Nombre);
+                int idNuevoUsuario = datos.ejecutarAccionconreturn();
+                return idNuevoUsuario;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
     }
 }

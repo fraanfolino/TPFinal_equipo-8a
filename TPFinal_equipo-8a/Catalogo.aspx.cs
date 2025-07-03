@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Dominio;
@@ -15,30 +14,12 @@ namespace TPFinal_equipo_8a
         {
             if (!IsPostBack)
             {
-
-                ProductoNegocio productoNegocio = new ProductoNegocio();
-                List<Producto> productos = productoNegocio.ListarProductosEnStock();
-
-                rptProductos.DataSource = productos;
-                rptProductos.DataBind();
-
                 CargarMarcas();
-            }
-
-
-        }
-        public void rptProductos_ItemDataBound(object sender, RepeaterItemEventArgs e)
-        {
-            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
-            {
-                Producto producto = (Producto)e.Item.DataItem;
-                Repeater rptImagenes = (Repeater)e.Item.FindControl("rptImagenes");
-                rptImagenes.DataSource = producto.ImagenUrl;
-                rptImagenes.DataBind();
+                ListarTodos();
             }
         }
 
-        public void CargarMarcas()
+        private void CargarMarcas()
         {
             MarcaNegocio negocio = new MarcaNegocio();
             List<Dominio.Marca> marcas = negocio.listarMarcas2();
@@ -49,43 +30,109 @@ namespace TPFinal_equipo_8a
             ddlMarca.DataBind();
 
             ddlMarca.Items.Insert(0, new ListItem("Todas", "0"));
-
-
         }
 
-
-
-        public string ObtenerPrimeraImagen(object imagenesObj)
+        private void ListarTodos()
         {
-            var lista = imagenesObj as List<string>;
-            if (lista != null && lista.Count > 0)
-                return lista[0];
+            ProductoNegocio negocio = new ProductoNegocio();
+            List<Producto> productos = negocio.ListarProductosEnStock();
 
-            return "~/img/no-disponible.png"; // Ruta relativa a una imagen por defecto
+            rptProductos.DataSource = productos;
+            rptProductos.DataBind();
+
+            Session["productosCatalogo"] = productos;
+        }
+
+        protected void txtBusqueda_TextChanged(object sender, EventArgs e)
+        {
+            string termino = txtBusqueda.Text.ToLower();
+            ProductoNegocio negocio = new ProductoNegocio();
+
+            List<Producto> lista = negocio.ListarProductosEnStock()
+                                          .Where(p => p.Nombre.ToLower().Contains(termino))
+                                          .ToList();
+
+            rptProductos.DataSource = lista;
+            rptProductos.DataBind();
         }
 
         protected void btnFiltrarMarca_Click(object sender, EventArgs e)
         {
-            ProductoNegocio productoNegocio = new ProductoNegocio();
             int idMarca = Convert.ToInt32(ddlMarca.SelectedValue);
-
-            List<Producto> productosFiltrados;
+            ProductoNegocio negocio = new ProductoNegocio();
+            List<Producto> lista;
 
             if (idMarca == 0)
-            {
-               
-                productosFiltrados = productoNegocio.ListarProductosEnStock();
-            }
+                lista = negocio.ListarProductosEnStock();
             else
+                lista = negocio.FiltrarProductosPorMarca(idMarca);
+
+            rptProductos.DataSource = lista;
+            rptProductos.DataBind();
+        }
+
+        protected void rptProductos_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            if (e.Item.ItemType != ListItemType.Item && e.Item.ItemType != ListItemType.AlternatingItem)
+                return;
+
+            Producto producto = (Producto)e.Item.DataItem;
+            Repeater rptImagenes = (Repeater)e.Item.FindControl("rptImagenes");
+
+            rptImagenes.DataSource = producto.ImagenUrl;
+            rptImagenes.DataBind();
+        }
+
+        protected void btnFiltrarPrecio_Click(object sender, EventArgs e)
+        {
+            decimal min;
+            decimal max;
+            bool hasMin = decimal.TryParse(txtPrecioMin.Text, out min);
+            bool hasMax = decimal.TryParse(txtPrecioMax.Text, out max);
+
+            ProductoNegocio negocio = new ProductoNegocio();
+            List<Producto> lista = negocio.ListarProductosEnStock();
+
+            if (hasMin)
+                lista = lista.Where(p => p.Precio >= min).ToList();
+
+            if (hasMax)
+                lista = lista.Where(p => p.Precio <= max).ToList();
+
+
+           
+
+
+            if (hasMax && max > 9999999.99m)
             {
-                
-                productosFiltrados = productoNegocio.FiltrarProductosPorMarca(idMarca);
+                max = 9999999.99m;
+                lblError.Text = "El precio máximo no puede superar $9.999.999,99.";
+                lblError.Visible = true;
             }
 
-            rptProductos.DataSource = productosFiltrados;
-            rptProductos.DataBind();
 
+            if (hasMin && hasMax && min > max)
+            {
+                lblError.Text = "El precio mínimo no puede ser mayor al máximo.";
+                lblError.Visible = true;
+                return;
+            }
+
+            if ((hasMin && min < 0) || (hasMax && max < 0))
+            {
+                lblError.Text = "No se permiten valores negativos en los precios.";
+                lblError.Visible = true;
+                return;
+            }
+
+            rptProductos.DataSource = lista;
+            rptProductos.DataBind();
+        }
+
+        public string ObtenerPrimeraImagen(object imagenesObj)
+        {
+            List<string> lista = imagenesObj as List<string>;
+            return (lista != null && lista.Count > 0) ? lista[0] : "~/img/no-disponible.png";
         }
     }
-
 }

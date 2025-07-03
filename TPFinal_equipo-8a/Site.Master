@@ -7,7 +7,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%: Page.Title %> - Mi aplicación ASP.NET</title>
+    <title><%: Page.Title %> - E-Commerce</title>
 
     <asp:PlaceHolder runat="server">
         <%: Scripts.Render("~/bundles/modernizr") %>
@@ -37,10 +37,12 @@
             </Scripts>
         </asp:ScriptManager>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-
+<asp:UpdatePanel runat="server" ID="updLogin" UpdateMode="Conditional">
+    <ContentTemplate>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
             <div class="container">
-                <a class="navbar-brand" runat="server" href="~/">Nombre de la aplicación</a>
+                <asp:Image ID="Image1" role="button" aria-expanded="false" ImageUrl="~/Images/ecommerce.png" Style="height: 38px; width: 38px; cursor: pointer;" runat="server" />
+                <a class="navbar-brand" runat="server" href="~/Catalogo">&nbsp;&nbsp;E-Commerce</a>
                 <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Alternar navegación" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -48,36 +50,31 @@
                 <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/Catalogo">Catalogo</a></li>
-<%--                        <li class="nav-item"><a class="nav-link" runat="server" href="~/CargarProductos">Cargar Stock</a></li>
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/Producto">Agregar Productos</a></li>
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/GestionarMC">Gestionar MCT</a></li>
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/ListaProductos">Lista</a></li>
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/About">Acerca de</a></li>
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/Contact">Contacto</a></li>--%>
                     </ul>
                 </div>
-<asp:UpdatePanel runat="server" ID="updLogin" UpdateMode="Conditional">
-    <ContentTemplate>
-                <div class="d-flex">
+
+                <div style="display: flex; align-items: center; gap: 10px;">
 
                     <%if (Negocio.Seguridad.sesionActiva(Session["usuario"]))
                       {%>
+                            <%if (banderaadmin)
+                            {%>
+                                <a href="Carro.aspx">
+                                    <asp:Image ID="imgCarro" role="button" aria-expanded="false" ImageUrl="~/Images/carrito.png" Style="height: 30px; width: 30px; cursor: pointer;" runat="server" /></a>
+                            <%}%>
                             <div class="dropdown">
                             <asp:Image ID="imgUser" role="button" data-bs-toggle="dropdown" aria-expanded="false" ImageUrl="~/Images/user.png" Style="height: 40px; width: 40px; border-radius: 50%; object-fit: cover; object-position: center; display: block; border: 1px solid gray;" runat="server" />
                             <ul class="dropdown-menu dropdown-menu-end">
-                            
-
                             <%if (banderaadmin)
                               {%>
                                <li><a class="dropdown-item" href="ListaProductos">Gestionar Productos</a></li>
-                               <li><a class="dropdown-item" href="Producto">Agregar Productos</a></li>
-                               <li><a class="dropdown-item" href="CargarProductos">Cargar Stock</a></li>
                                <li><a class="dropdown-item" href="GestionarMC">Opciones</a></li>
-
                             <%}%>
                             <li><a class="dropdown-item" href="Perfil">Mi Perfil</a></li>
                             <asp:Button Text="Salir" ID="Button2" class="dropdown-item" OnClick="btnSalir_Click" runat="server" CausesValidation="false" UseSubmitBehavior="false" />
                          </ul>
+                                 </div>
+                     </div>
                     <%}
                       else
                       {%>
@@ -131,7 +128,7 @@
             </asp:ContentPlaceHolder>
             <hr />
             <footer>
-                <p>Mi aplicación ASP.NET</p>
+                <p>E-Commerce ASP.NET 2025</p>
             </footer>
         </div>
     </form>

@@ -43,11 +43,16 @@
     <asp:Label ID="lblTalles" runat="server" Text="Talles disponibles:"  CssClass="form-label fw-bold text-primary d-block mb-2"></asp:Label>
     <asp:DropDownList ID="ddlTalles" runat="server" CssClass="form-select form-select-lg mb-4" />
 
+                    <%if (Negocio.Seguridad.sesionActiva(Session["usuario"]))
+                      {%>
+                            <%if (banderaadmin)
+                            {%>
+                                     <asp:Button ID="AgregarCarro" runat="server" Text="Agregar al carrito"
+                                        CssClass="btn btn-success btn-lg px-5 shadow-sm"
+                                         OnClick="btnAgregarCarro_Click" />
+                            <%}%>
 
-    <asp:Button ID="AgregarCarro" runat="server" Text="Agregar al carrito"
-        CssClass="btn btn-success btn-lg px-5 shadow-sm"
-        OnClick="btnAgregarCarro_Click" />
-
+                     <%}%>
 </div>
     </div>
   </div>

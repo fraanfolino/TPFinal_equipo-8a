@@ -8,12 +8,19 @@ using System.Web.UI.WebControls;
 
 namespace TPFinal_equipo_8a
 {
+    
+
     public partial class DetalleProducto : Page
     {
+        public bool banderaadmin = true;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
+
+
+
                 int idProducto;
                 if (int.TryParse(Request.QueryString["Id"], out idProducto))
                 {

@@ -106,6 +106,8 @@
     <Content Include="Categoria.aspx" />
     <Content Include="Confirmacion.aspx" />
     <Content Include="GestionarMC.aspx" />
+    <Content Include="Images\carrito.png" />
+    <Content Include="Images\ecommerce.png" />
     <Content Include="ListaProductos.aspx" />
     <Content Include="Marca.aspx" />
     <Content Include="Producto.aspx" />

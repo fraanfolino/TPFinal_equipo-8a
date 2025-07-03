@@ -1,12 +1,13 @@
-﻿using System;
+﻿using Dominio;
+using Negocio;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Dominio;
-using Negocio;
 
 namespace TPFinal_equipo_8a
 {
@@ -53,9 +54,12 @@ namespace TPFinal_equipo_8a
             List<string> listaCategorias = new List<string>();
             listaCategorias.Add("Todas");
 
-            foreach (var marca in categoriaNegocio.ListarCategorias())
+            foreach (var categoria in categoriaNegocio.ListarCategorias())
             {
-                listaCategorias.Add(marca.Nombre);
+                if (categoria.Activo)
+                {
+                    listaCategorias.Add(categoria.Nombre);
+                }
             }
             return listaCategorias;
         }
@@ -68,7 +72,11 @@ namespace TPFinal_equipo_8a
 
             foreach (var marca in marcaNegocio.ListarMarcas())
             {
-                listaMarcas.Add(marca.Nombre);
+                if (marca.Activo)
+                {
+                    listaMarcas.Add(marca.Nombre);
+                }
+                
             }
             return listaMarcas;
         }

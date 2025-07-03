@@ -5,17 +5,9 @@
 integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">    
 
-
-
-
     <h2>
     <asp:Label ID="Titulo" runat="server" Text="Productos" />
 </h2>
-
-
-
-
-
 
 
 <style>
@@ -94,11 +86,18 @@ integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jI
                     <span class='<%# (bool)Eval("Activo") ? "text-success bi bi-check-circle-fill" : "text-danger bi bi-x-circle-fill" %>'></span>
                 </ItemTemplate>
             </asp:TemplateField>
-
-
-
             <asp:CommandField HeaderText="✏️"          ShowSelectButton="true" SelectText="📝​" ItemStyle-Width="2%" />
-            
+               
+                
+<asp:TemplateField HeaderText="➕" ItemStyle-Width="2%">
+    <ItemTemplate>
+        <%# (bool)Eval("Activo") 
+            ? $"<a href='CargarProductos.aspx?id={Eval("Id")}' class='bi bi-plus-circle-fill text-primary'></a>" 
+            : "<span class='text-danger bi bi-x-circle-fill'></span>" %>
+    </ItemTemplate>
+</asp:TemplateField>
+
+
             </Columns>
 
     </asp:GridView>
@@ -108,6 +107,7 @@ integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jI
     <div class="col-12 d-flex justify-content-between align-items-end">
         <div>
             <a href="Producto.aspx" class="btn btn-secondary w-250">Agregar</a>
+            <a href="CargarProductos.aspx" class="btn btn-secondary w-250">Cargar Stock</a>
         </div>
         <div class="d-flex align-items-center">
             <asp:Label Text="Cantidad por página" runat="server" CssClass="form-label mb-0 me-2" />

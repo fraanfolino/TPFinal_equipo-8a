@@ -53,8 +53,7 @@ namespace TPFinal_equipo_8a
         }
         private void CargarCarrito()
         {
-            if (!IsPostBack)
-            {
+            
                 int idUsuario = ((Usuario)Session["usuario"]).Id;
                 CarroNegocio negocio = new CarroNegocio();
 
@@ -64,7 +63,7 @@ namespace TPFinal_equipo_8a
                 rptCarrito.DataSource = items;
                 rptCarrito.DataBind();
 
-            }
+            
         }
 
 

@@ -5,6 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
+using System.Net;
+using System.Net.Mail;
+
 using System.Web.UI.WebControls;
 
 
@@ -33,7 +36,23 @@ namespace TPFinal_equipo_8a
         }
 
 
-       
+        public void EnviarMailConfirmacion(string destinatario, string nombreUsuario, decimal totalCompra)
+        {
+            MailMessage mail = new MailMessage();
+            mail.From = new MailAddress("no-reply@tutienda.com", "Tu Tienda");
+            mail.To.Add(destinatario);
+            mail.Subject = "Compra confirmada";
+            mail.Body = $"Hola {nombreUsuario},\n\nTu compra fue confirmada exitosamente.\nTotal: ${totalCompra:N2}\n\nGracias por elegirnos.";
+            mail.IsBodyHtml = false;
+
+            SmtpClient smtp = new SmtpClient("sandbox.smtp.mailtrap.io", 587);
+            smtp.Credentials = new NetworkCredential("1cac0fdebd3b40", "220142903b501a");
+
+
+            smtp.EnableSsl = true;
+
+            smtp.Send(mail);
+        }
 
         private void cargarCarrito()
         {
@@ -157,7 +176,10 @@ namespace TPFinal_equipo_8a
 
 
             negocio.vaciarCarrito(idUsuario);
-           
+
+            Usuario usuario = (Usuario)Session["usuario"];
+            EnviarMailConfirmacion(usuario.Email, usuario.Nombre, totalConAjuste);
+
             Response.Redirect("Confirmacion.aspx?pedidoId=" + idPedido + "&metodo=" + metodoValorText);
         }
 

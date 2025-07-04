@@ -39,16 +39,15 @@ namespace TPFinal_equipo_8a
         public void EnviarMailConfirmacion(string destinatario, string nombreUsuario, decimal totalCompra)
         {
             MailMessage mail = new MailMessage();
-            mail.From = new MailAddress("no-reply@tutienda.com", "Tu Tienda");
-            mail.To.Add(destinatario);
+            mail.From = new MailAddress("no-reply@demomailtrap.co", "Tu Tienda");
+            mail.To.Add("fraanfolino@gmail.com");
             mail.Subject = "Compra confirmada";
             mail.Body = $"Hola {nombreUsuario},\n\nTu compra fue confirmada exitosamente.\nTotal: ${totalCompra:N2}\n\nGracias por elegirnos.";
             mail.IsBodyHtml = false;
 
-            SmtpClient smtp = new SmtpClient("sandbox.smtp.mailtrap.io", 587);
-            smtp.Credentials = new NetworkCredential("1cac0fdebd3b40", "220142903b501a");
-
-
+            SmtpClient smtp = new SmtpClient("live.smtp.mailtrap.io", 587);
+            smtp.Credentials = new NetworkCredential("api","6866d9e9511f1f683a64c5e187e5030e"); 
+            smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
             smtp.EnableSsl = true;
 
             smtp.Send(mail);

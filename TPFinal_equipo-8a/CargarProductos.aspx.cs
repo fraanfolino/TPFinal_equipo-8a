@@ -153,16 +153,27 @@ namespace TPFinal_equipo_8a
                     marca = null;
 
                 List<Producto> productos = productoNegocio.ListarProductos(marca, categoria);
+                
+                productoSeleccionado.Items.Clear();
 
-                if (productoSeleccionado.Items.Count > 0)
-                { productoSeleccionado.Items.Clear(); }
-
-                foreach (var item in productos)
+                if (productos.Count == 0)
                 {
-                    productoSeleccionado.Items.Add(new ListItem(item.Nombre, item.Id.ToString()));
+                    productoSeleccionado.Items.Add(new ListItem("— Sin productos —", ""));
+                }
+                else
+                {
+                    foreach (var item in productos)
+                    {
+                        productoSeleccionado.Items.Add(
+                            new ListItem(item.Nombre, item.Id.ToString())
+                        );
+                    }
                 }
 
-                productoSeleccionado.Items.Add(new ListItem("ss", "Prueba"));
+                if (productos.Count == 0)
+                {
+                    productoSeleccionado.Items.Add(new ListItem("— Sin productos —", ""));
+                }
 
             }
             catch (Exception ex)
@@ -179,7 +190,9 @@ namespace TPFinal_equipo_8a
 
         public void MostrarStock()
         {
-            int idProdu = int.Parse(productoSeleccionado.Value);
+            if (!int.TryParse(idProducto.Text, out int idProdu))
+                return;
+
             ProductoNegocio productoNegocio = new ProductoNegocio();
             Producto produ = productoNegocio.ObtenerProducto(idProdu);
 

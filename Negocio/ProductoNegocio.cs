@@ -316,7 +316,7 @@ namespace Negocio
             return tabla;
         }
 
-        public int AgregarStock(int cantidad, string nombre, List<string> talles)
+        public int AgregarStock(int cantidad, int idProdu, List<string> talles)
         {
             AccesoBD datos = new AccesoBD();
             try
@@ -327,7 +327,7 @@ namespace Negocio
 
                 foreach (var talle in talles)
                 {
-                    datos.setearParametro("@NombreProducto", nombre);
+                    datos.setearParametro("@ProductoID", idProdu);
                     datos.setearParametro("@EtiquetaTalle", talle);
                     datos.setearParametro("@CantidadAgregar", cantidad);
                     datos.ejecutarMasAcciones();
@@ -355,7 +355,7 @@ namespace Negocio
         }
 
 
-        public int DescontarStock(int cantidad, string nombre, List<string> talles)
+        public int DescontarStock(int cantidad, int IdProdu, List<string> talles)
         {
             AccesoBD datos = new AccesoBD();
             try
@@ -366,7 +366,7 @@ namespace Negocio
 
                 foreach (var talle in talles)
                 {
-                    datos.setearParametro("@NombreProducto", nombre);
+                    datos.setearParametro("@ProductoID", IdProdu);
                     datos.setearParametro("@EtiquetaTalle", talle);
                     datos.setearParametro("@CantidadDescontar", cantidad);
                     datos.ejecutarMasAcciones();
@@ -540,6 +540,67 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
+
+
+
+
+        public bool ChequearMarcaActiva(int id)
+        {
+            AccesoBD datos = new AccesoBD();
+            bool activo = false;
+
+            try
+            {
+                datos.setearProcedimiento("chequearMarcaActiva");
+                datos.setearParametro("@id", id);
+                datos.ejecutarLectura();
+
+                while (datos.Lectorbd.Read())
+                {
+                    activo = Convert.ToBoolean(datos.Lectorbd["MarcaActiva"]);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+
+            return activo;
+        }
+
+        public bool ChequearCategoriaActiva(int id)
+        {
+            AccesoBD datos = new AccesoBD();
+            bool activo = false;
+
+            try
+            {
+                datos.setearProcedimiento("chequearCategoriaActiva");
+                datos.setearParametro("@id", id);
+                datos.ejecutarLectura();
+                
+                while (datos.Lectorbd.Read())
+                {
+                    activo = Convert.ToBoolean(datos.Lectorbd["CategoriaActiva"]);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+
+            return activo;
+        }
+
+
 
     }
 }

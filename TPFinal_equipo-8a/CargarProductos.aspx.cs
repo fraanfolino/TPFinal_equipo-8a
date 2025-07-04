@@ -1,4 +1,5 @@
 ﻿using Dominio;
+using Microsoft.Ajax.Utilities;
 using Negocio;
 using System;
 using System.Collections.Generic;
@@ -33,6 +34,18 @@ namespace TPFinal_equipo_8a
 
                 ActualizarListaProductos();
                 txtCantidad.Attributes["min"] = "1";
+
+                if (Request.QueryString["id"] != null && int.TryParse(Request.QueryString["id"], out int index))
+                {
+                    idProducto.Text = index.ToString();
+                    Seleccionar(index);
+                    return;
+                }
+                else
+                {
+                    //MostrarStock();
+                    //MostrarTalles(Convert.ToInt32(productoSeleccionado.Value));
+                }
             }
             else
             {
@@ -43,13 +56,41 @@ namespace TPFinal_equipo_8a
 
             if (IsPostBack && Request["__EVENTTARGET"] == "productoSeleccionado")
             {
-                string idProducto = Request.Form[productoSeleccionado.UniqueID];
+                string idProduStr = Request.Form[productoSeleccionado.UniqueID];
 
-                if (!string.IsNullOrEmpty(idProducto))
-                {
-                    MostrarTalles();
-                }
+                if (!int.TryParse(idProduStr, out int idProdu))
+                    return;
+
+                MostrarTalles(idProdu);
+                idProducto.Text = idProdu.ToString();
+
             }
+        }
+
+        private void Seleccionar(int id)
+        {
+            ProductoNegocio pNegocio = new ProductoNegocio();
+            Producto produ = pNegocio.ObtenerProducto(id);
+
+            if (produ == null)
+            {
+                return;
+            }
+            ddlCategoria.SelectedValue = produ.Categoria.Nombre;
+            ddlMarca.SelectedValue = produ.Marca.Nombre;
+
+            foreach (ListItem lItem in productoSeleccionado.Items)
+            {
+                lItem.Selected = false;
+            }
+
+            var item = productoSeleccionado.Items.FindByText(produ.Nombre);
+            if (item != null)
+                item.Selected = true;
+
+            CargarTalles(produ.Id);
+            MostrarTalles(produ.Id);
+            MostrarStock();
         }
 
         public List<string> CargarCategorias()
@@ -86,10 +127,10 @@ namespace TPFinal_equipo_8a
             return listaMarcas;
         }
 
-        public List<Dominio.Talle> CargarTalles(string producto)
+        public List<Dominio.Talle> CargarTalles(int idProdu)
         {
             TalleNegocio talleNegocio = new TalleNegocio();
-            return talleNegocio.ListarTalles(producto);
+            return talleNegocio.ListarTalles(idProdu);
         }
 
         protected void ddlCategoria_SelectedIndexChanged(object sender, EventArgs e)
@@ -99,28 +140,36 @@ namespace TPFinal_equipo_8a
 
         private void ActualizarListaProductos()
         {
-            ProductoNegocio productoNegocio = new ProductoNegocio();
-
-            string categoria = ddlCategoria.SelectedValue.ToString();
-            string marca = ddlMarca.SelectedValue.ToString();
-
-            if (categoria == "Todas")
-                categoria = null;
-            if (marca == "Todas")
-                marca = null;
-
-            List<Producto> productos = productoNegocio.ListarProductos(marca, categoria);
-
-            if (productoSeleccionado.Items.Count > 0)
-            { productoSeleccionado.Items.Clear(); }
-
-            foreach (var item in productos)
+            try
             {
-                productoSeleccionado.Items.Add(item.Nombre);
+                ProductoNegocio productoNegocio = new ProductoNegocio();
+
+                string categoria = ddlCategoria.SelectedValue.ToString();
+                string marca = ddlMarca.SelectedValue.ToString();
+
+                if (categoria == "Todas")
+                    categoria = null;
+                if (marca == "Todas")
+                    marca = null;
+
+                List<Producto> productos = productoNegocio.ListarProductos(marca, categoria);
+
+                if (productoSeleccionado.Items.Count > 0)
+                { productoSeleccionado.Items.Clear(); }
+
+                foreach (var item in productos)
+                {
+                    productoSeleccionado.Items.Add(new ListItem(item.Nombre, item.Id.ToString()));
+                }
+
+                productoSeleccionado.Items.Add(new ListItem("ss", "Prueba"));
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
 
-            MostrarStock();
-            MostrarTalles();
         }
 
         protected void ddlMarca_SelectedIndexChanged(object sender, EventArgs e)
@@ -130,9 +179,9 @@ namespace TPFinal_equipo_8a
 
         public void MostrarStock()
         {
+            int idProdu = int.Parse(productoSeleccionado.Value);
             ProductoNegocio productoNegocio = new ProductoNegocio();
-
-            int idProdu = productoNegocio.ObtenerIdConNombre(productoSeleccionado.Value);
+            Producto produ = productoNegocio.ObtenerProducto(idProdu);
 
             if (idProdu == -1)
             { return; }
@@ -140,26 +189,22 @@ namespace TPFinal_equipo_8a
             DataTable tablaStock = productoNegocio.ListarStock(idProdu);
             MostrarImagenes(idProdu);
 
+            TablaStock.DataSource = null;
+            TablaStock.DataBind();
+
             if (tablaStock.Rows.Count > 0)
             {
-//                var codigo = tablaStock.Rows[0]["Id"];
-                
-                lblNombre.Text = "  " + productoSeleccionado.Value;
+                lblNombre.Text = "  " + produ.Nombre;
                 TablaStock.DataSource = tablaStock;
                 TablaStock.DataBind();
             }
-            else
-            {
-                TablaStock.DataSource = null;
-                TablaStock.DataBind();
-            }
             
-            lblNombre.Text = "  " + productoSeleccionado.Value;
+            lblNombre.Text = "  " + produ.Nombre + "(" + produ.Id + ")";
         }
 
-        private void MostrarTalles()
+        private void MostrarTalles(int idProdu)
         {
-            ddlTalles2.DataSource = CargarTalles(productoSeleccionado.Value);
+            ddlTalles2.DataSource = CargarTalles(idProdu);
             ddlTalles2.DataTextField = "etiqueta";
             ddlTalles2.DataBind();
         }
@@ -210,7 +255,7 @@ namespace TPFinal_equipo_8a
             try
             {
                 int cantidad = int.Parse(txtCantidad.Text);
-                int resultado = productoNegocio.AgregarStock(cantidad, productoSeleccionado.Value, talles);
+                int resultado = productoNegocio.AgregarStock(cantidad, Convert.ToInt32(productoSeleccionado.Value), talles);
 
                 if (resultado == 1)
                 {
@@ -254,7 +299,7 @@ namespace TPFinal_equipo_8a
             try
             {
                 int cantidad = int.Parse(txtCantidad.Text);
-                int resultado = productoNegocio.DescontarStock(cantidad, productoSeleccionado.Value, talles);
+                int resultado = productoNegocio.DescontarStock(cantidad, Convert.ToInt32(productoSeleccionado.Value), talles);
 
                 if (resultado == 1)
                 {
@@ -279,6 +324,66 @@ namespace TPFinal_equipo_8a
                 errorMensaje.Text = ex.ToString();
                 throw;
             }
+        }
+
+        protected void btnVolver_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void idProducto_TextChanged(object sender, EventArgs e)
+        {
+            if (!int.TryParse(idProducto.Text, out int id))
+                return;
+
+            ProductoNegocio pNegocio = new ProductoNegocio();
+            Producto produ = pNegocio.ObtenerProducto(Convert.ToInt32(idProducto.Text));
+
+            if (produ == null)
+            {
+                ddlMarca.SelectedIndex = 0;
+                ddlCategoria.SelectedIndex = 0;
+
+                return;
+            }
+
+            if (!produ.Activo)
+            {
+                ddlMarca.SelectedIndex = 0;
+                ddlCategoria.SelectedIndex = 0;
+                return;
+            }
+
+            if (!pNegocio.ChequearCategoriaActiva(produ.Categoria.Id))
+            {
+                ddlMarca.SelectedIndex = 0;
+                ddlCategoria.SelectedIndex = 0;
+                return;
+            }
+
+            if (!pNegocio.ChequearMarcaActiva(produ.Marca.Id))
+            {
+                ddlMarca.SelectedIndex = 0;
+                ddlCategoria.SelectedIndex = 0;
+                return;
+            }
+
+            ddlCategoria.SelectedValue = produ.Categoria.Nombre;
+            ddlMarca.SelectedValue = produ.Marca.Nombre;
+
+            foreach (ListItem lItem in productoSeleccionado.Items)
+            {
+                lItem.Selected = false;
+            }
+
+            var item = productoSeleccionado.Items.FindByText(produ.Nombre);
+            if (item != null)
+                item.Selected = true;
+
+            CargarTalles(produ.Id);
+            MostrarTalles(produ.Id);
+            MostrarStock();
+
         }
     }
 }

@@ -20,11 +20,13 @@ namespace TPFinal_equipo_8a
                 if (Seguridad.esAdmin(Session["usuario"]))
                 {
                     Response.Redirect("Catalogo.aspx", false);
+                    return;
                 }
             }
             else
             {
                 Response.Redirect("Catalogo.aspx", false) ;
+                return;
             }
 
             string accion = Request.QueryString["accion"];

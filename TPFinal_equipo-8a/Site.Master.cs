@@ -30,6 +30,7 @@ namespace TPFinal_equipo_8a
         {
             Session.Clear();
             imgAvatar.ImageUrl = "~/Images/user.png";
+            Response.Redirect("Catalogo.aspx", false);
         }
 
         protected void btnAvatar_Click(object sender, EventArgs e)

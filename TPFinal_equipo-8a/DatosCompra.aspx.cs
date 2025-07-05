@@ -24,7 +24,7 @@ namespace TPFinal_equipo_8a
             string modalidad = ddlEntrega.SelectedValue;
             string direccion;
 
-            if(modalidad == "Retiro")
+            if (modalidad == "Retiro")
             {
                 direccion = ddlSucursal.SelectedItem.Text;
             }
@@ -32,6 +32,7 @@ namespace TPFinal_equipo_8a
             {
                 direccion = lblDireccionEnvioTitulo.Text;
             }
+
 
             CarroNegocio negocio = new CarroNegocio();
 
@@ -41,8 +42,17 @@ namespace TPFinal_equipo_8a
             decimal total = items.Sum(i => i.Producto.Precio * i.Cantidad);
             decimal totalConAjuste = total * (1 + porc / 100);
 
+            int idPedido = negocio.registrarPedidoV2(
+                idUsuario, txtNombre.Text.Trim(), txtEmail.Text.Trim(), txtTelefono.Text.Trim(), modalidad, direccion, ddlPago.SelectedValue, totalConAjuste);
+
+            foreach (var item in items)
+            {
+                negocio.registrarDetallePedidoV2(idPedido, item);
+            }
+            negocio.vaciarCarrito(idUsuario);
 
 
+            Response.Redirect("Catalogo.aspx");
 
         }
 

@@ -243,6 +243,67 @@ namespace Negocio
         }*/
 
 
+        public int registrarPedidoV2(
+     int idUsuario,
+     string nombreCliente,
+     string email,
+     string telefono,
+     string modalidad,
+     string direccion,
+     string formaPago,
+     decimal total)
+        {
+            AccesoBD db = new AccesoBD();
+            int idPedido = 0;
+
+            try
+            {
+                db.limpiarParametros();
+                db.setearProcedimiento("sp_RegistrarPedidoV2");
+                db.setearParametro("@cliente_id", idUsuario);
+                db.setearParametro("@nombre_cliente", nombreCliente);
+                db.setearParametro("@email", email);
+                db.setearParametro("@telefono", telefono);
+                db.setearParametro("@modalidad", modalidad);
+                db.setearParametro("@direccion", direccion);
+                db.setearParametro("@forma_pago", formaPago);
+                db.setearParametro("@total", total);
+
+                db.ejecutarLectura();
+
+                if (db.Lectorbd.Read())
+                    idPedido = Convert.ToInt32(db.Lectorbd["idPedido"]);
+            }
+            finally
+            {
+                db.cerrarConexion();
+            }
+
+            return idPedido;
+        }
+
+
+        public void registrarDetallePedidoV2(int idPedido, ItemCarrito item)
+        {
+            AccesoBD db = new AccesoBD();
+            try
+            {
+                db.limpiarParametros();
+                db.setearProcedimiento("sp_RegistrarDetallePedidoV2");
+                db.setearParametro("@pedido_id", idPedido);
+                db.setearParametro("@nombre_producto", item.Producto.Nombre);
+                db.setearParametro("@talle_etiqueta", item.Producto.Talle.Etiqueta);
+                db.setearParametro("@cantidad", item.Cantidad);
+                db.setearParametro("@precio_unitario", item.Producto.Precio);
+                db.ejecutarAccion();
+            }
+            finally
+            {
+                db.cerrarConexion();
+            }
+        }
+
+
 
 
         public List<ItemCarrito> ObtenerDetallesPedido(int pedidoId)

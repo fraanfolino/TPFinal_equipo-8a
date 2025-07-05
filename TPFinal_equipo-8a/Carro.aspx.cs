@@ -71,7 +71,7 @@ namespace TPFinal_equipo_8a
 
         protected void btnContinuarCompra_Click(object sender, EventArgs e)
         {
-            Response.Redirect("RealizarCompra.aspx");
+            Response.Redirect("DatosCompra.aspx");
         }
     }
 }

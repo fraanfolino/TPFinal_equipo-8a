@@ -11,7 +11,7 @@
       runat="server"  
       CssClass="container mt-5"  
       Style="max-width:600px;">
-    
+
     <asp:Label  
         ID="lblTitulo"  
         runat="server"  
@@ -23,7 +23,7 @@
         runat="server"  
         CssClass="text-danger mb-3 d-block" />
 
-    
+   
     <asp:Panel runat="server" CssClass="row mb-3">
       <asp:Label  
           ID="lblNombreTitulo"  
@@ -38,7 +38,7 @@
       </asp:Panel>
     </asp:Panel>
 
-  
+   
     <asp:Panel runat="server" CssClass="row mb-3">
       <asp:Label  
           ID="lblEmailTitulo"  
@@ -53,7 +53,6 @@
       </asp:Panel>
     </asp:Panel>
 
-    
     <asp:Panel runat="server" CssClass="row mb-3">
       <asp:Label  
           ID="lblTelefonoTitulo"  
@@ -68,7 +67,7 @@
       </asp:Panel>
     </asp:Panel>
 
-    
+
     <asp:Panel runat="server" CssClass="row mb-3">
       <asp:Label  
           ID="lblEntregaTitulo"  
@@ -89,7 +88,7 @@
       </asp:Panel>
     </asp:Panel>
 
-    
+   
     <asp:Panel  
         ID="pnlRetiro"  
         runat="server"  
@@ -112,13 +111,29 @@
       </asp:Panel>
     </asp:Panel>
 
-   
     <asp:Panel  
         ID="pnlEnvio"  
         runat="server"  
         Visible="false"  
-        CssClass="alert alert-info mb-3">
-      Nos pondremos en contacto para coordinar el envío.
+        CssClass="mb-3">
+      
+      <asp:Panel runat="server" CssClass="row mb-2">
+        <asp:Label  
+            ID="lblDireccionEnvioTitulo"  
+            runat="server"  
+            Text="Dirección de envío:"  
+            CssClass="col-sm-2 col-form-label" />
+        <asp:Panel runat="server" CssClass="col-sm-10">
+          <asp:TextBox  
+              ID="txtDireccionEnvio"  
+              runat="server"  
+              CssClass="form-control" />
+        </asp:Panel>
+      </asp:Panel>
+
+      <div class="alert alert-info">
+        Nos pondremos en contacto para coordinar el envío.
+      </div>
     </asp:Panel>
 
    
@@ -138,7 +153,7 @@
       </asp:Panel>
     </asp:Panel>
 
-    
+  
     <asp:Panel runat="server" CssClass="row mb-4">
       <asp:Label  
           ID="lblTotalFinalTitulo"  
@@ -153,6 +168,7 @@
       </asp:Panel>
     </asp:Panel>
 
+ 
     <asp:Panel runat="server" CssClass="d-flex justify-content-end">
       <asp:Button  
           ID="btnRealizarCompra"  

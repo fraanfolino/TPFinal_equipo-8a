@@ -14,7 +14,7 @@ namespace Negocio
             List<ItemCarrito> carrito = new List<ItemCarrito>();
             int idCarro;
 
-            // 🛒 Obtener el ID del carrito
+            // Obtener el ID del carrito
             AccesoBD a1 = new AccesoBD();
             a1.setearProcedimiento("sp_ObtenerOCrearCarrito");
             a1.setearParametro("@idUsuario", idUsuario);
@@ -23,7 +23,7 @@ namespace Negocio
             idCarro = Convert.ToInt32(a1.Lectorbd["idCarro"]);
             a1.cerrarConexion();
 
-            // 🧱 Cargar ítems con datos completos
+            //  Cargar ítems con datos completos
             AccesoBD a2 = new AccesoBD();
             a2.setearProcedimiento("sp_ObtenerItemsCarrito");
             a2.setearParametro("@idCarrito", idCarro);

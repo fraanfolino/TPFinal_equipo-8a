@@ -19,7 +19,31 @@ namespace TPFinal_equipo_8a
 
         protected void btnRealizarCompra_Click(object sender, EventArgs e)
         {
-            Response.Redirect("Catalogo.aspx");
+            int idUsuario = ((Usuario)Session["usuario"]).Id;
+
+            string modalidad = ddlEntrega.SelectedValue;
+            string direccion;
+
+            if(modalidad == "Retiro")
+            {
+                direccion = ddlSucursal.SelectedItem.Text;
+            }
+            else
+            {
+                direccion = lblDireccionEnvioTitulo.Text;
+            }
+
+            CarroNegocio negocio = new CarroNegocio();
+
+            List<ItemCarrito> items = negocio.ObtenerCarrito(idUsuario);
+
+            decimal porc = Convert.ToDecimal(ddlPago.SelectedValue);
+            decimal total = items.Sum(i => i.Producto.Precio * i.Cantidad);
+            decimal totalConAjuste = total * (1 + porc / 100);
+
+
+
+
         }
 
         private void CargarFormasDePago()
@@ -35,7 +59,7 @@ namespace TPFinal_equipo_8a
         {
           
             int idUsuario = ((Usuario)Session["usuario"]).Id;
-            var items = new CarroNegocio().ObtenerCarrito(idUsuario);
+            List<ItemCarrito> items = new CarroNegocio().ObtenerCarrito(idUsuario);
 
             decimal subtotal = items.Sum(i => i.Precio());
             decimal porc = Convert.ToDecimal(ddlPago.SelectedValue);

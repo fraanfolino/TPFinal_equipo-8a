@@ -42,6 +42,15 @@ namespace TPFinal_equipo_8a
         protected global::System.Web.UI.WebControls.ValidationSummary valSummary;
 
         /// <summary>
+        /// Control lblNombreTitulo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblNombreTitulo;
+
+        /// <summary>
         /// Control txtNombre.
         /// </summary>
         /// <remarks>
@@ -49,6 +58,15 @@ namespace TPFinal_equipo_8a
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtNombre;
+
+        /// <summary>
+        /// Control lblEmailTitulo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblEmailTitulo;
 
         /// <summary>
         /// Control txtEmail.
@@ -60,6 +78,15 @@ namespace TPFinal_equipo_8a
         protected global::System.Web.UI.WebControls.TextBox txtEmail;
 
         /// <summary>
+        /// Control lblTelefonoTitulo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTelefonoTitulo;
+
+        /// <summary>
         /// Control txtTelefono.
         /// </summary>
         /// <remarks>
@@ -67,6 +94,15 @@ namespace TPFinal_equipo_8a
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtTelefono;
+
+        /// <summary>
+        /// Control lblEntregaTitulo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblEntregaTitulo;
 
         /// <summary>
         /// Control ddlEntrega.
@@ -87,6 +123,15 @@ namespace TPFinal_equipo_8a
         protected global::System.Web.UI.WebControls.Panel pnlRetiro;
 
         /// <summary>
+        /// Control lblSucursalTitulo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSucursalTitulo;
+
+        /// <summary>
         /// Control ddlSucursal.
         /// </summary>
         /// <remarks>
@@ -105,6 +150,15 @@ namespace TPFinal_equipo_8a
         protected global::System.Web.UI.WebControls.Panel pnlEnvio;
 
         /// <summary>
+        /// Control lblFormaPagoTitulo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblFormaPagoTitulo;
+
+        /// <summary>
         /// Control ddlPago.
         /// </summary>
         /// <remarks>
@@ -112,6 +166,24 @@ namespace TPFinal_equipo_8a
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlPago;
+
+        /// <summary>
+        /// Control lblTotalFinalTitulo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTotalFinalTitulo;
+
+        /// <summary>
+        /// Control lblTotalFinal.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTotalFinal;
 
         /// <summary>
         /// Control btnRealizarCompra.

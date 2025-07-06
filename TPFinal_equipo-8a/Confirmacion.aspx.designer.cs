@@ -15,6 +15,15 @@ namespace TPFinal_equipo_8a
     {
 
         /// <summary>
+        /// Control lblClienteTitulo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblClienteTitulo;
+
+        /// <summary>
         /// Control lblCliente.
         /// </summary>
         /// <remarks>
@@ -22,6 +31,15 @@ namespace TPFinal_equipo_8a
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblCliente;
+
+        /// <summary>
+        /// Control lblPagoTitulo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPagoTitulo;
 
         /// <summary>
         /// Control lblPago.
@@ -33,6 +51,15 @@ namespace TPFinal_equipo_8a
         protected global::System.Web.UI.WebControls.Label lblPago;
 
         /// <summary>
+        /// Control lblEstadoTitulo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblEstadoTitulo;
+
+        /// <summary>
         /// Control lblEstado.
         /// </summary>
         /// <remarks>
@@ -42,6 +69,15 @@ namespace TPFinal_equipo_8a
         protected global::System.Web.UI.WebControls.Label lblEstado;
 
         /// <summary>
+        /// Control lblFechaTitulo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblFechaTitulo;
+
+        /// <summary>
         /// Control lblFecha.
         /// </summary>
         /// <remarks>
@@ -49,6 +85,15 @@ namespace TPFinal_equipo_8a
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblFecha;
+
+        /// <summary>
+        /// Control lblTotalTitulo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTotalTitulo;
 
         /// <summary>
         /// Control lblTotal.
@@ -67,14 +112,5 @@ namespace TPFinal_equipo_8a
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Repeater repDetalles;
-
-        /// <summary>
-        /// Control lnkVolver.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink lnkVolver;
     }
 }

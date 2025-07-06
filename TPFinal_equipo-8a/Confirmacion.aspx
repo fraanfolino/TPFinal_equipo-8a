@@ -2,47 +2,49 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
 
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Confirmación del Pedido</h4>
+        </div>
+        <div class="card-body">
+            <div class="mb-3">
+                <asp:Label ID="lblCliente" runat="server" CssClass="form-control" />
+            </div>
+            <div class="mb-3">
+                <asp:Label ID="lblPago" runat="server" CssClass="form-control" />
+            </div>
+            <div class="mb-3">
+                <asp:Label ID="lblEstado" runat="server" CssClass="form-control" />
+            </div>
+            <div class="mb-3">
+                <asp:Label ID="lblFecha" runat="server" CssClass="form-control" />
+            </div>
+            <div class="mb-3">
+                <asp:Label ID="lblTotal" runat="server" CssClass="form-control text-success font-weight-bold" />
+            </div>
+        </div>
+    </div>
 
-     <asp:Panel ID="pnlConfirmacion" runat="server" style="max-width: 600px; margin: 0 auto; padding: 30px; border: 1px solid #ccc; border-radius: 10px; background-color: #fefefe;">
-        <asp:Label ID="lblTitulo" runat="server" Text="¡Gracias por tu compra!" CssClass="titulo" />
-
+    <div class="mt-4">
         <asp:Repeater ID="repDetalles" runat="server">
             <ItemTemplate>
-                <asp:Panel runat="server" style="margin-bottom: 20px;">
-                    <asp:Label runat="server" Text="Producto: " />
-                    <asp:Label runat="server" Text='<%# Eval("Producto.Nombre") %>' /><br />
-
-                    <asp:Label runat="server" Text="Talle: " />
-                    <asp:Label runat="server" Text='<%# Eval("Producto.Talle.Etiqueta") %>' /><br />
-
-                    <asp:Label runat="server" Text="Cantidad: " />
-                    <asp:Label runat="server" Text='<%# Eval("Cantidad") %>' /><br />
-
-                    <asp:Label runat="server" Text="Precio unitario: " />
-                    <asp:Label runat="server" Text='<%# String.Format("{0:C2}", Eval("Producto.Precio")) %>' /><br />
-
-                    <asp:Label runat="server" Text="Subtotal: " />
-                    <asp:Label runat="server" Text='<%# String.Format("{0:C2}", (Convert.ToDecimal(Eval("Producto.Precio")) * Convert.ToInt32(Eval("Cantidad")))) %>' />
-
-
-      
-
-                </asp:Panel>
-
+                <div class="card mb-3 border shadow-sm">
+                    <div class="card-body">
+                        <asp:Label runat="server" Text='<%# Eval("NombreProducto") %>' CssClass="d-block mb-2 form-control" />
+                        <asp:Label runat="server" Text='<%# Eval("TalleEtiqueta") %>' CssClass="d-block mb-2 form-control" />
+                        <asp:Label runat="server" Text='<%# Eval("Cantidad") %>' CssClass="d-block mb-2 form-control" />
+                        <asp:Label runat="server" Text='<%# Eval("PrecioUnitario", "{0:C2}") %>' CssClass="d-block mb-2 form-control" />
+                       
+                    </div>
+                </div>
             </ItemTemplate>
         </asp:Repeater>
+    </div>
 
-
-
-                  <asp:Label ID="lblFechaTitulo" runat="server" Text="Fecha del pedido: " />
-                  <asp:Label ID="lblFecha" runat="server"  />
-
-
-                 <asp:Label ID="lblMetodoPagoTitulo" runat="server" Text="Método de pago: " />
-                 <asp:Label ID="lblMetodoPago" runat="server" />
-
-                <asp:Label ID="lblTotalTitulo" runat="server" Text="Total: " />
-                <asp:Label ID="lblTotal" runat="server" Font-Bold="true" Font-Size="Large" />
-        </asp:Panel>
+    <div class="text-center mt-4">
+        <asp:HyperLink ID="lnkVolver" runat="server" CssClass="btn btn-outline-primary" NavigateUrl="Catalogo.aspx" Text="Volver al Catálogo" />
+    </div>
+</div>
 
 </asp:Content>

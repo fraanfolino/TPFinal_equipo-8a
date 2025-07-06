@@ -30,7 +30,7 @@ namespace TPFinal_equipo_8a
             }
             else
             {
-                direccion = lblDireccionEnvioTitulo.Text;
+                direccion = txtDireccionEnvio.Text;
             }
 
 
@@ -43,7 +43,7 @@ namespace TPFinal_equipo_8a
             decimal totalConAjuste = total * (1 + porc / 100);
 
             int idPedido = negocio.registrarPedidoV2(
-                idUsuario, txtNombre.Text.Trim(), txtEmail.Text.Trim(), txtTelefono.Text.Trim(), modalidad, direccion, ddlPago.SelectedValue, totalConAjuste);
+                idUsuario, txtNombre.Text.Trim(), txtEmail.Text.Trim(), txtTelefono.Text.Trim(), modalidad, direccion, ddlPago.SelectedItem.Text, totalConAjuste);
 
             foreach (var item in items)
             {
@@ -52,7 +52,7 @@ namespace TPFinal_equipo_8a
             negocio.vaciarCarrito(idUsuario);
 
 
-            Response.Redirect("Catalogo.aspx");
+            Response.Redirect("Confirmacion.aspx?pedidoId=" + idPedido);
 
         }
 

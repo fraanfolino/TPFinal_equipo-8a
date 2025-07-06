@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Dominio;
+using System.Web.UI.WebControls.WebParts;
 
 namespace TPFinal_equipo_8a
 {
@@ -20,37 +21,35 @@ namespace TPFinal_equipo_8a
 
             if (!IsPostBack && int.TryParse(Request.QueryString["pedidoId"], out int idPedido))
             {
-                CargarDetalles(idPedido);
-                CargarTotal(idPedido);
+                CarroNegocio negocio = new CarroNegocio();
+
+                Pedido pedido = new Pedido();
+
+                pedido = negocio.ObtenerPedidoCompleto(idPedido);
+
+                lblCliente.Text = pedido.NombreCliente;
+                lblPago.Text = pedido.FormaPago;
+                lblTotal.Text = pedido.Total.ToString("C");
+                lblEstado.Text = pedido.Estado;
+                lblFecha.Text = pedido.FechaCreacion.ToString("dd/MM/yyyy");
+
+
+                repDetalles.DataSource = pedido.Items;
+                repDetalles.DataBind();
+
+
+
+
+
+
+
             }
 
         }
 
-        private void CargarDetalles(int idPedido)
-        {
-            CarroNegocio negocio = new CarroNegocio();
-            List<ItemCarrito> detalles = negocio.ObtenerDetallesPedido(idPedido);
+     
 
-            repDetalles.DataSource = detalles;
-            repDetalles.DataBind();
-
-            string metodo = Request.QueryString["metodo"];
-            lblMetodoPago.Text = metodo;
-
-
-            DateTime fecha = negocio.ObtenerFechaPedido(idPedido);
-            lblFecha.Text = fecha.ToString("dd/MM/yyyy");
-
-
-
-
-        }
-
-        private void CargarTotal(int idPedido)
-        {
-            CarroNegocio negocio = new CarroNegocio();
-            decimal total = negocio.ObtenerTotalPedido(idPedido); 
-            lblTotal.Text = total.ToString("C2");
-        }
+      
+        
     }
 }

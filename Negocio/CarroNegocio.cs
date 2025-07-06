@@ -243,6 +243,53 @@ namespace Negocio
         }*/
 
 
+        public Pedido ObtenerPedidoCompleto(int idPedido)
+        {
+            var pedido = new Pedido();
+            var db = new AccesoBD();
+
+            try
+            {
+                db.limpiarParametros();
+                db.setearProcedimiento("sp_ObtenerPedidoExtendido");
+                db.setearParametro("@pedido_id", idPedido);
+                db.ejecutarLectura();
+
+                while (db.Lectorbd.Read())
+                {
+                  
+                    if (pedido.IdPedido == 0)
+                    {
+                        pedido.IdPedido = Convert.ToInt32(db.Lectorbd["PedidoId"]);
+                        pedido.NombreCliente = db.Lectorbd["NombreCliente"].ToString();
+                        pedido.ModalidadEntrega = db.Lectorbd["ModalidadEntrega"].ToString();
+                        pedido.Direccion = db.Lectorbd["Direccion"].ToString();
+                        pedido.FormaPago = db.Lectorbd["FormaPago"].ToString();
+                        pedido.Total = Convert.ToDecimal(db.Lectorbd["Total"]);
+                        pedido.Estado = db.Lectorbd["EstadoPedido"].ToString();
+                        pedido.FechaCreacion = Convert.ToDateTime(db.Lectorbd["FechaPedido"]);
+                    }
+
+                   
+                    DetallePedido item = new DetallePedido
+                    {
+                        NombreProducto = db.Lectorbd["NombreProducto"].ToString(),
+                        TalleEtiqueta = db.Lectorbd["TalleEtiqueta"].ToString(),
+                        Cantidad = Convert.ToInt32(db.Lectorbd["Cantidad"]),
+                        PrecioUnitario = Convert.ToDecimal(db.Lectorbd["PrecioUnitario"])
+                    };
+
+                    pedido.Items.Add(item);
+                }
+
+                return pedido;
+            }
+            finally
+            {
+                db.cerrarConexion();
+            }
+        }
+
         public int registrarPedidoV2(
      int idUsuario,
      string nombreCliente,

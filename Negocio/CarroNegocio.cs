@@ -304,6 +304,9 @@ namespace Negocio
         }
 
 
+        
+
+
 
 
         public List<ItemCarrito> ObtenerDetallesPedido(int pedidoId)

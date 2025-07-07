@@ -108,6 +108,13 @@ namespace TPFinal_equipo_8a
             try
             {
                 CategoriaNegocio negocio = new CategoriaNegocio();
+                if (ddlTipoTalle.SelectedValue == "")
+                {
+                    alertDiv.Attributes["class"] = "alert alert-primary w-100 py-1 px-2";
+                    alertDiv.InnerHtml = "Debe seleccionar un tipo de talle";
+                    return;
+                }
+
                 negocio.InsertarCategoria(int.Parse(ddlTipoTalle.SelectedValue), txtNombreCategoria.Text);
                 alertDiv.Attributes["class"] = "alert alert-success w-100 py-1 px-2";
                 alertDiv.InnerHtml = "Categoria Agregada correctamente";

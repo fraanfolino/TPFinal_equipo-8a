@@ -65,6 +65,9 @@ namespace TPFinal_equipo_8a
                 usuario.FechaNacimiento = DateTime.Parse(txtFechaNacimiento.Text);
                 usuario.Pass = ((Usuario)Session["usuario"]).Pass;
 
+                usuario.Id = ((Usuario)Session["usuario"]).Id;
+
+
                 UsuarioNegocio usuarioNegocio = new UsuarioNegocio();
                 usuarioNegocio.ActualizarDatos(usuario);
 

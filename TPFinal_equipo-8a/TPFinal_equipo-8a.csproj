@@ -112,6 +112,7 @@
     <Content Include="Images\ecommerce.png" />
     <Content Include="ListaProductos.aspx" />
     <Content Include="Marca.aspx" />
+    <Content Include="MisPedidos.aspx" />
     <Content Include="Producto.aspx" />
     <Content Include="CargarProductos.aspx" />
     <Content Include="Carro.aspx" />
@@ -255,6 +256,13 @@
     </Compile>
     <Compile Include="Marca.aspx.designer.cs">
       <DependentUpon>Marca.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MisPedidos.aspx.cs">
+      <DependentUpon>MisPedidos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MisPedidos.aspx.designer.cs">
+      <DependentUpon>MisPedidos.aspx</DependentUpon>
     </Compile>
     <Compile Include="Producto.aspx.cs">
       <DependentUpon>Producto.aspx</DependentUpon>

@@ -77,7 +77,16 @@
                               {%>
                                <li><a class="dropdown-item" href="ListaProductos">Gestionar Productos</a></li>
                                <li><a class="dropdown-item" href="GestionarMC">Opciones</a></li>
-                            <%}%>
+                            <%}
+                                else%>
+                                   <%{%>
+
+                                <li><a class="dropdown-item" href="MisPedidos">Mis Pedidos</a></li>
+
+                                   <%}%>
+
+
+
                             <li><a class="dropdown-item" href="Perfil">Mi Perfil</a></li>
                             <asp:Button Text="Salir" ID="Button2" class="dropdown-item" OnClick="btnSalir_Click" runat="server" CausesValidation="false" UseSubmitBehavior="false" />
                          </ul>

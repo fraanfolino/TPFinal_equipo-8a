@@ -13,8 +13,16 @@ namespace TPFinal_equipo_8a
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+            if (!Seguridad.sesionActiva(Session["usuario"]) || Seguridad.esAdmin(Session["usuario"]))
+            {
+                Response.Redirect("Catalogo.aspx", false);
+            }
+
+            if (!IsPostBack) 
+            {
                 CargarFormasDePago();
+                CargarDatosUser();
+            }
         }
 
         protected void btnRealizarCompra_Click(object sender, EventArgs e)
@@ -63,6 +71,13 @@ namespace TPFinal_equipo_8a
             ddlPago.Items.Add(new ListItem("Mercado Pago (+5%)", "5"));
             ddlPago.Items.Add(new ListItem("Tarjeta de Crédito (+10%)", "10"));
             ddlPago.Items.Add(new ListItem("Transferencia (-3%)", "-3"));
+        }
+
+        private void CargarDatosUser()
+        {
+            Usuario usuario = Session["usuario"] as Usuario;
+            txtNombre.Text = usuario.Nombre + " " + usuario.Apellido;
+            txtEmail.Text = usuario.Email;
         }
 
         protected void ddlPago_SelectedIndexChanged(object sender, EventArgs e)

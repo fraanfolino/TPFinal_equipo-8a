@@ -49,7 +49,6 @@ namespace TPFinal_equipo_8a
             }
             else
             {
-                //MostrarStock();
                 exitoMensaje.Visible = false;
                 errorMensaje.Visible = false;
             }
@@ -64,10 +63,8 @@ namespace TPFinal_equipo_8a
                 if (!int.TryParse(idProduStr, out int idProdu))
                     return;
 
-                idProducto.Text = idProdu.ToString();
-                MostrarTalles(idProdu);
-                MostrarImagenes(idProdu);
-
+                ActualizarDatos(idProdu);
+                return;
             }
         }
 
@@ -163,26 +160,52 @@ namespace TPFinal_equipo_8a
                 {
                     productoSeleccionado.Items.Add(new ListItem("— Sin productos —", ""));
                     idProducto.Text = "";
+                    LimpiarTablaImg();
                 }
                 else
                 {
+                    productoSeleccionado.Items.Add(new ListItem("— Seleccione —", ""));
                     foreach (var item in productos)
                     {
+                        
                         productoSeleccionado.Items.Add(
                             new ListItem(item.Nombre, item.Id.ToString())
                         );
                     }
+
                     if (productoSeleccionado.Items.Count > 0)
                     {
-                        idProducto.Text = productoSeleccionado.Items[0].Value;
+
+                        if (ddlCategoria.SelectedItem.Text == "Todas" || ddlMarca.SelectedItem.Text == "Todas")
+                        {
+
+                            idProducto.Text = "";
+
+                            
+                            LimpiarTablaImg();
+
+
+                        }
+                        else
+                        {
+                            idProducto.Text = productoSeleccionado.Items[0].Value;
+                            if (!int.TryParse(productoSeleccionado.Items[0].Value, out int idP))
+                                return;
+
+                            ActualizarDatos(idP);
+                        }
+                        
+
+
                     }
-                    
+
                 }
 
                 if (productos.Count == 0)
                 {
                     productoSeleccionado.Items.Add(new ListItem("— Sin productos —", ""));
                     idProducto.Text = "";
+                    LimpiarTablaImg();
                 }
 
             }
@@ -190,6 +213,28 @@ namespace TPFinal_equipo_8a
             {
                 throw ex;
             }
+
+        }
+
+
+        private void LimpiarTablaImg()
+        {
+            lblNombre.Text = "";
+
+            rptImagenes.DataSource = new List<string>();
+            rptImagenes.DataBind();
+
+            rptIndicadores.DataSource = new List<string>();
+            rptIndicadores.DataBind();
+
+            TablaStock.DataSource = null;
+            TablaStock.DataBind();
+
+            TablaStock.DataSource = CrearTablaVaciaStock();
+            TablaStock.DataBind();
+
+            ddlTalles2.DataSource = new List<string>();
+            ddlTalles2.DataBind();
 
         }
 
@@ -225,7 +270,7 @@ namespace TPFinal_equipo_8a
                 productoSeleccionado.Items.Clear();
                 productoSeleccionado.Items.Add(new ListItem("— Producto no encontrado —", ""));
 
-                return; 
+                return;
             }
 
             if (idProdu == -1)
@@ -341,6 +386,13 @@ namespace TPFinal_equipo_8a
 
         protected void btnEliminar_Click(object sender, EventArgs e)
         {
+
+
+            if (productoSeleccionado.Value == "")
+            {
+                return;
+            }
+
             List<string> talles = new List<string>();
 
             foreach (ListItem item in ddlTalles2.Items)
@@ -444,6 +496,54 @@ namespace TPFinal_equipo_8a
             MostrarStock();
 
         }
+
+        private void ActualizarDatos(int id)
+        {
+            ProductoNegocio pNegocio = new ProductoNegocio();
+            Producto produ = pNegocio.ObtenerProducto(id);
+            idProducto.Text = id.ToString();
+
+            if (produ == null ||
+                !produ.Activo ||
+                !pNegocio.ChequearCategoriaActiva(produ.Categoria.Id) ||
+                !pNegocio.ChequearMarcaActiva(produ.Marca.Id)
+                )
+            {
+                ddlMarca.SelectedIndex = 0;
+                ddlCategoria.SelectedIndex = 0;
+                ActualizarListaProductos();
+
+                if (productoSeleccionado.Items.Count == 0)
+                {
+                    productoSeleccionado.Items.Add(new ListItem("— Sin productos —", ""));
+                    idProducto.Text = "";
+                    return;
+                }
+
+                if (!int.TryParse(productoSeleccionado.Items[0].Value, out int idP))
+                    return;
+
+                CargarTalles(idP);
+                MostrarTalles(idP);
+                MostrarStock();
+
+                Producto produc = pNegocio.ObtenerProducto(idP);
+                ddlCategoria.SelectedValue = produc.Categoria.Nombre;
+                ddlMarca.SelectedValue = produc.Marca.Nombre;
+
+                return;
+            }
+
+            ddlCategoria.SelectedValue = produ.Categoria.Nombre;
+            ddlMarca.SelectedValue = produ.Marca.Nombre;
+
+            CargarTalles(produ.Id);
+            MostrarTalles(produ.Id);
+            MostrarStock();
+
+        }
+
+
 
         public DataTable CrearTablaVaciaStock()
         {

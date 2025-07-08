@@ -26,10 +26,14 @@
             <asp:Label runat="server" Text='<%# "Total: " + Eval("Total", "{0:C2}") %>' CssClass="text-success fw-bold d-block mb-2" />
 
            
-            <asp:Label runat="server" Text='<%# Eval("Estado") %>'
-                       CssClass='<%# Eval("Estado").ToString()=="Pendiente" ? "badge bg-warning text-dark mb-2"
-                                     : Eval("Estado").ToString()=="Confirmado" ? "badge bg-success mb-2"
-                                     : "badge bg-danger mb-2" %>' />
+<asp:Label runat="server" 
+           Text='<%# Eval("Estado") %>' 
+           CssClass='<%# 
+               Eval("Estado").ToString() == "Pendiente" ? "badge bg-warning text-dark mb-2" :
+               Eval("Estado").ToString() == "Confirmado" ? "badge bg-success mb-2" :
+               Eval("Estado").ToString() == "Enviado" ? "badge bg-primary mb-2" :
+               Eval("Estado").ToString() == "Entregado" ? "badge bg-success mb-2" :
+               "badge bg-secondary mb-2" %>' />
 
             
             <asp:Repeater ID="repItems" runat="server" DataSource='<%# Eval("Items") %>'>
@@ -41,21 +45,37 @@
                 </asp:Panel>
               </ItemTemplate>
             </asp:Repeater>
+                                          <asp:Panel runat="server" CssClass="mt-3">
 
-                                                                <asp:Panel runat="server" CssClass="mt-3">
                                           <asp:Button runat="server"
                                                       CommandName="Confirmar"
                                                       CommandArgument='<%# Eval("IdPedido") %>'
                                                       CssClass="btn btn-success me-2"
                                                       Text="Confirmar"
                                                       Visible='<%# Eval("Estado").ToString()=="Pendiente" %>' />
+                                              
+
+
+                                          <asp:Button runat="server"
+                                                      CommandName="Enviado"
+                                                      CommandArgument='<%# Eval("IdPedido") %>'
+                                                      CssClass="btn btn-secondary"
+                                                      Text="Confirmar Envio"
+                                                      Visible='<%# Eval("Estado").ToString()=="Confirmado" %>' />
+
+                                          <asp:Button runat="server"
+                                                      CommandName="ConfirmarEntrega"
+                                                      CommandArgument='<%# Eval("IdPedido") %>'
+                                                      CssClass="btn btn-success"
+                                                      Text="Confirmar Entrega"
+                                                      Visible='<%# Eval("Estado").ToString()=="Enviado" %>' />
 
                                           <asp:Button runat="server"
                                                       CommandName="Cancelar"
                                                       CommandArgument='<%# Eval("IdPedido") %>'
                                                       CssClass="btn btn-danger"
                                                       Text="Cancelar"
-                                                      Visible='<%# Eval("Estado").ToString()=="Pendiente" %>' />
+                                                      Visible='<%# Eval("Estado").ToString() != "Cancelado" && Eval("Estado").ToString() != "Entregado" %>' />
                                         </asp:Panel>
           </asp:Panel>
         </asp:Panel>

@@ -53,9 +53,6 @@ namespace TPFinal_equipo_8a
                 errorMensaje.Visible = false;
             }
 
-
-            string LALA = Request["__EVENTTARGET"];
-
             if (IsPostBack && Request["__EVENTTARGET"] == productoSeleccionado.UniqueID)
             {
                 string idProduStr = Request.Form[productoSeleccionado.UniqueID];
@@ -175,16 +172,10 @@ namespace TPFinal_equipo_8a
 
                     if (productoSeleccionado.Items.Count > 0)
                     {
-
                         if (ddlCategoria.SelectedItem.Text == "Todas" || ddlMarca.SelectedItem.Text == "Todas")
                         {
-
                             idProducto.Text = "";
-
-                            
                             LimpiarTablaImg();
-
-
                         }
                         else
                         {
@@ -194,11 +185,7 @@ namespace TPFinal_equipo_8a
 
                             ActualizarDatos(idP);
                         }
-                        
-
-
                     }
-
                 }
 
                 if (productos.Count == 0)

@@ -49,7 +49,9 @@
                                                       CommandArgument='<%# Eval("IdPedido") %>'
                                                       CssClass="btn btn-danger"
                                                       Text="Cancelar"
-                                                      Visible='<%# Eval("Estado").ToString() != "Cancelado" && Eval("Estado").ToString() != "Entregado" %>' />
+                                                      Visible='<%# Eval("Estado").ToString() != "Cancelado" 
+                                                                && Eval("Estado").ToString() != "Entregado" 
+                                                                && Eval("Estado").ToString() != "Enviado" %>'/>
                                         </asp:Panel>
           </asp:Panel>
         </asp:Panel>

@@ -53,9 +53,8 @@
                         <%if (Negocio.Seguridad.SesionAdmin(Session["usuario"]))
                        {%>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/ListaProductos">Gestionar Productos</a></li>
+                        <li class="nav-item"><a class="nav-link" runat="server" href="~/GestionarPedidos">Gestionar Pedidos</a></li>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/GestionarMC">Opciones</a></li>
-                         <li class="nav-item"><a class="nav-link" runat="server" href="~/GestionarPedidos">Gestionar Pedidos</a></li>
-      
                         <%}%>
 
                     </ul>
@@ -75,7 +74,9 @@
                             <ul class="dropdown-menu dropdown-menu-end">
                             <%if (Negocio.Seguridad.esAdmin(Session["usuario"]))
                               {%>
+
                                <li><a class="dropdown-item" href="ListaProductos">Gestionar Productos</a></li>
+                               <li><a class="dropdown-item" href="GestionarPedidos">Gestionar Pedidos</a></li>
                                <li><a class="dropdown-item" href="GestionarMC">Opciones</a></li>
                             <%}
                                 else%>

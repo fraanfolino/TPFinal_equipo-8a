@@ -42,21 +42,21 @@
               </ItemTemplate>
             </asp:Repeater>
 
-                               <asp:Panel runat="server" CssClass="mt-3">
-                          <asp:Button runat="server"
-                                      CommandName="Confirmar"
-                                      CommandArgument='<%# Eval("IdPedido") %>'
-                                      CssClass="btn btn-success me-2"
-                                      Text="Confirmar"
-                                      Visible='<%# Eval("Estado").ToString()=="Pendiente" %>' />
+                                                                <asp:Panel runat="server" CssClass="mt-3">
+                                          <asp:Button runat="server"
+                                                      CommandName="Confirmar"
+                                                      CommandArgument='<%# Eval("IdPedido") %>'
+                                                      CssClass="btn btn-success me-2"
+                                                      Text="Confirmar"
+                                                      Visible='<%# Eval("Estado").ToString()=="Pendiente" %>' />
 
-                          <asp:Button runat="server"
-                                      CommandName="Cancelar"
-                                      CommandArgument='<%# Eval("IdPedido") %>'
-                                      CssClass="btn btn-danger"
-                                      Text="Cancelar"
-                                      Visible='<%# Eval("Estado").ToString()=="Pendiente" %>' />
-                        </asp:Panel>
+                                          <asp:Button runat="server"
+                                                      CommandName="Cancelar"
+                                                      CommandArgument='<%# Eval("IdPedido") %>'
+                                                      CssClass="btn btn-danger"
+                                                      Text="Cancelar"
+                                                      Visible='<%# Eval("Estado").ToString()=="Pendiente" %>' />
+                                        </asp:Panel>
           </asp:Panel>
         </asp:Panel>
       </ItemTemplate>

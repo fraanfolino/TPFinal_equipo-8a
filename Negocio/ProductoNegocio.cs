@@ -79,6 +79,7 @@ namespace Negocio
 
             return producto;
         }
+
         public List<Producto> FiltrarProductosPorMarca(int marca)
         {
             AccesoBD datos = new AccesoBD();
@@ -141,6 +142,7 @@ namespace Negocio
 
             return listaProductos;
         }
+
         public List<Producto> ListarProductosEnStock()
         {
             AccesoBD datos = new AccesoBD();
@@ -246,11 +248,6 @@ namespace Negocio
             return listaProductos;
         }
 
-
-
-
-
-
         public List<Producto> ListarProductosSinImagenes()
         {
             AccesoBD datos = new AccesoBD();
@@ -292,9 +289,6 @@ namespace Negocio
 
             return listaProductos;
         }
-
-
-
 
         public DataTable ListarStock(int id)
         {
@@ -354,7 +348,6 @@ namespace Negocio
             }
         }
 
-
         public int DescontarStock(int cantidad, int IdProdu, List<string> talles)
         {
             AccesoBD datos = new AccesoBD();
@@ -393,7 +386,6 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
-
 
         public void AgregarProducto(Producto produ)
         {
@@ -469,8 +461,6 @@ namespace Negocio
             }
         }
 
-
-
         public int ObtenerIdConNombre(string nombreProducto)
         {
             AccesoBD datos = new AccesoBD();
@@ -498,8 +488,6 @@ namespace Negocio
 
             return idProducto;
         }
-
-
 
         public void BajaProducto(int id)
         {
@@ -540,9 +528,6 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
-
-
-
 
         public bool ChequearMarcaActiva(int id)
         {
@@ -599,8 +584,5 @@ namespace Negocio
 
             return activo;
         }
-
-
-
     }
 }

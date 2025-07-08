@@ -342,6 +342,9 @@ namespace Negocio
                 db.setearParametro("@talle_etiqueta", item.Producto.Talle.Etiqueta);
                 db.setearParametro("@cantidad", item.Cantidad);
                 db.setearParametro("@precio_unitario", item.Producto.Precio);
+                db.setearParametro("idtalle", item.Producto.Talle.Id);
+                db.setearParametro("idproducto", item.Producto.Id);
+
                 db.ejecutarAccion();
             }
             finally

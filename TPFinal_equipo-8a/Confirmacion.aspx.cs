@@ -22,34 +22,16 @@ namespace TPFinal_equipo_8a
             if (!IsPostBack && int.TryParse(Request.QueryString["pedidoId"], out int idPedido))
             {
                 CarroNegocio negocio = new CarroNegocio();
-
                 Pedido pedido = new Pedido();
-
                 pedido = negocio.ObtenerPedidoCompleto(idPedido);
-
                 lblCliente.Text = pedido.NombreCliente;
                 lblPago.Text = pedido.FormaPago;
                 lblTotal.Text = pedido.Total.ToString("C");
                 lblEstado.Text = pedido.Estado;
                 lblFecha.Text = pedido.FechaCreacion.ToString("dd/MM/yyyy");
-
-
                 repDetalles.DataSource = pedido.Items;
                 repDetalles.DataBind();
-
-
-
-
-
-
-
             }
-
         }
-
-     
-
-      
-        
     }
 }

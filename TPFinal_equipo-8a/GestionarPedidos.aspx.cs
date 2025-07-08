@@ -61,6 +61,7 @@ namespace TPFinal_equipo_8a
             {
                 PedidosNegocio pedidosNegocio = new PedidosNegocio();
                 pedidosNegocio.ConfirmarPedido(idPedido);
+                pedidosNegocio.DescontarStock(idPedido);
             }
             catch (Exception ex)
             {
@@ -74,6 +75,7 @@ namespace TPFinal_equipo_8a
             {
                 PedidosNegocio pedidosNegocio = new PedidosNegocio();
                 pedidosNegocio.CancelarPedido(idPedido);
+                pedidosNegocio.DevolverStock(idPedido);
             }
             catch (Exception ex)
             {

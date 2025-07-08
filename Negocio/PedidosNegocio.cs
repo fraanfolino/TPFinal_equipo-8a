@@ -65,7 +65,6 @@ namespace Negocio
             }
         }
 
-
         public List<Pedido> ObtenerPedidosUsuario(int idUser)
         {
 
@@ -119,9 +118,6 @@ namespace Negocio
                 db.cerrarConexion();
             }
         }
-
-
-
 
         public void ConfirmarPedido(int idPedido)
         {
@@ -187,6 +183,45 @@ namespace Negocio
             {
                 datos.setearProcedimiento("sp_ConfirmarEntrega");
                 datos.setearParametro("@id", idPedido);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+
+        public void DevolverStock(int idPedido)
+        {
+            AccesoBD datos = new AccesoBD();
+            try
+            {
+                datos.setearProcedimiento("sp_DevolverStockPorPedido");
+                datos.setearParametro("@idPedido", idPedido);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public void DescontarStock(int idPedido)
+        {
+            AccesoBD datos = new AccesoBD();
+            try
+            {
+                datos.setearProcedimiento("sp_DescontarStockPorPedido");
+                datos.setearParametro("@idPedido", idPedido);
                 datos.ejecutarAccion();
             }
             catch (Exception ex)

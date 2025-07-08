@@ -43,25 +43,13 @@ namespace TPFinal_equipo_8a
             cargarPedidosUser();
         }
 
-        private void ConfirmarPedido(int idPedido)
-        {
-            try
-            {
-                PedidosNegocio pedidosNegocio = new PedidosNegocio();
-                pedidosNegocio.ConfirmarPedido(idPedido);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
         private void CancelarPedido(int idPedido)
         {
             try
             {
                 PedidosNegocio pedidosNegocio = new PedidosNegocio();
                 pedidosNegocio.CancelarPedido(idPedido);
+                pedidosNegocio.DevolverStock(idPedido);
             }
             catch (Exception ex)
             {

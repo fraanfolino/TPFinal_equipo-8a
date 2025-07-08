@@ -38,18 +38,34 @@ namespace TPFinal_equipo_8a
             if (e.CommandName == "Cancelar")
             {
                 int idPedido = Convert.ToInt32(e.CommandArgument);
-                CancelarPedido(idPedido);
+
+                HiddenField hfEstado = (HiddenField)e.Item.FindControl("hfEstado");
+                string estado = hfEstado?.Value;
+
+                if (estado == "Confirmado")
+                {
+                    CancelarPedido(idPedido, true);
+                }
+                else
+                {
+                    CancelarPedido(idPedido, false);
+                }
             }
             cargarPedidosUser();
         }
 
-        private void CancelarPedido(int idPedido)
+
+
+        private void CancelarPedido(int idPedido, bool descontarStock)
         {
             try
             {
                 PedidosNegocio pedidosNegocio = new PedidosNegocio();
                 pedidosNegocio.CancelarPedido(idPedido);
-                pedidosNegocio.DevolverStock(idPedido);
+                if (descontarStock)
+                {
+                    pedidosNegocio.DevolverStock(idPedido);
+                }
             }
             catch (Exception ex)
             {

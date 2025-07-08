@@ -42,7 +42,7 @@
               </ItemTemplate>
             </asp:Repeater>
                                           <asp:Panel runat="server" CssClass="mt-3">
-
+                                            <asp:HiddenField ID="hfEstado" runat="server" Value='<%# Eval("Estado") %>' />
 
                                           <asp:Button runat="server"
                                                       CommandName="Cancelar"

@@ -54,6 +54,8 @@
                        {%>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/ListaProductos">Gestionar Productos</a></li>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/GestionarMC">Opciones</a></li>
+                         <li class="nav-item"><a class="nav-link" runat="server" href="~/GestionarPedidos">Gestionar Pedidos</a></li>
+      
                         <%}%>
 
                     </ul>

@@ -245,8 +245,8 @@ namespace Negocio
 
         public Pedido ObtenerPedidoCompleto(int idPedido)
         {
-            var pedido = new Pedido();
-            var db = new AccesoBD();
+            Pedido pedido = new Pedido();
+            AccesoBD db = new AccesoBD();
 
             try
             {

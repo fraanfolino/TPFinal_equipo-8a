@@ -107,6 +107,7 @@
     <Content Include="Confirmacion.aspx" />
     <Content Include="DatosCompra.aspx" />
     <Content Include="GestionarMC.aspx" />
+    <Content Include="GestionarPedidos.aspx" />
     <Content Include="Images\carrito.png" />
     <Content Include="Images\ecommerce.png" />
     <Content Include="ListaProductos.aspx" />
@@ -233,6 +234,13 @@
     </Compile>
     <Compile Include="GestionarMC.aspx.designer.cs">
       <DependentUpon>GestionarMC.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="GestionarPedidos.aspx.cs">
+      <DependentUpon>GestionarPedidos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GestionarPedidos.aspx.designer.cs">
+      <DependentUpon>GestionarPedidos.aspx</DependentUpon>
     </Compile>
     <Compile Include="ListaProductos.aspx.cs">
       <DependentUpon>ListaProductos.aspx</DependentUpon>

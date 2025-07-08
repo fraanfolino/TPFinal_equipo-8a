@@ -126,13 +126,35 @@ namespace TPFinal_equipo_8a
 
 
 
-        
 
 
+        protected void chkEstado_CheckedChanged(object sender, EventArgs e)
+        {
+            PedidosNegocio negocio = new PedidosNegocio();
+            List<Pedido> todos = negocio.ObtenerPedidos();
 
+            List<string> estadosSeleccionados = new List<string>();
 
+            if (chkPendiente.Checked) estadosSeleccionados.Add("Pendiente");
+            if (chkConfirmado.Checked) estadosSeleccionados.Add("Confirmado");
+            if (chkEnviado.Checked) estadosSeleccionados.Add("Enviado");
+            if (chkEntregado.Checked) estadosSeleccionados.Add("Entregado");
+            if (chkCancelado.Checked) estadosSeleccionados.Add("Cancelado");
 
+            List<Pedido> resultado;
 
+            if (estadosSeleccionados.Count > 0)
+            {
+                resultado = todos.Where(p => estadosSeleccionados.Contains(p.Estado)).ToList();
+            }
+            else
+            {
+                resultado = todos;
+            }
+
+            repPedidos.DataSource = resultado;
+            repPedidos.DataBind();
+        }
 
 
 

@@ -129,6 +129,9 @@ namespace TPFinal_equipo_8a
             rptProductos.DataBind();
         }
 
+
+
+
         public string ObtenerPrimeraImagen(object imagenesObj)
         {
             List<string> lista = imagenesObj as List<string>;

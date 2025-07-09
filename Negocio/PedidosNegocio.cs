@@ -3,9 +3,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
+using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+
 
 
 namespace Negocio
@@ -112,6 +115,55 @@ namespace Negocio
                 }
 
                 return pedidos;
+            }
+            finally
+            {
+                db.cerrarConexion();
+            }
+        }
+
+
+        public Pedido ObtenerPedidoPorId(int idPedido)
+        {
+            Pedido pedido = null;
+            AccesoBD db = new AccesoBD();
+
+            try
+            {
+                db.setearProcedimiento("sp_ObtenerPedidoPorId");
+                db.setearParametro("@idPedido", idPedido);
+                db.ejecutarLectura();
+
+                while (db.Lectorbd.Read())
+                {
+                    if (pedido == null)
+                    {
+                        pedido = new Pedido
+                        {
+                            IdPedido = idPedido,
+                            NombreCliente = db.Lectorbd["NombreCliente"].ToString(),
+                            ModalidadEntrega = db.Lectorbd["ModalidadEntrega"].ToString(),
+                            Direccion = db.Lectorbd["Direccion"].ToString(),
+                            FormaPago = db.Lectorbd["FormaPago"].ToString(),
+                            Total = Convert.ToDecimal(db.Lectorbd["Total"]),
+                            Estado = db.Lectorbd["EstadoPedido"].ToString(),
+                            FechaCreacion = Convert.ToDateTime(db.Lectorbd["FechaPedido"]),
+                            Items = new List<DetallePedido>()
+                        };
+                    }
+
+                    DetallePedido item = new DetallePedido
+                    {
+                        NombreProducto = db.Lectorbd["NombreProducto"].ToString(),
+                        TalleEtiqueta = db.Lectorbd["TalleEtiqueta"].ToString(),
+                        Cantidad = Convert.ToInt32(db.Lectorbd["Cantidad"]),
+                        PrecioUnitario = Convert.ToDecimal(db.Lectorbd["PrecioUnitario"])
+                    };
+
+                    pedido.Items.Add(item);
+                }
+
+                return pedido;
             }
             finally
             {
@@ -233,6 +285,9 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
+
+
+        
 
     }
 }

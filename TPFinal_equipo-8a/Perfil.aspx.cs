@@ -84,10 +84,6 @@ namespace TPFinal_equipo_8a
                     usuario.Pass = txtNuevaClave.Text;
                 }
 
-
-
-
-
                 usuarioNegocio.Login(usuario);
                 Session.Add("usuario", usuario);
 

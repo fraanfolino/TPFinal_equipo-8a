@@ -32,15 +32,50 @@
                "badge bg-secondary mb-2" %>' />
 
             
-            <asp:Repeater ID="repItems" runat="server" DataSource='<%# Eval("Items") %>'>
-              <ItemTemplate>
-                <asp:Panel runat="server" CssClass="border-bottom py-2">
+          <%--  <asp:Repeater ID="repItems" runat="server" DataSource='<%# Eval("Items") %>'>--%>
+            <%--  <ItemTemplate>--%>
+<%--                <asp:Panel runat="server" CssClass="border-bottom py-2">
                   <asp:Label runat="server" Text='<%# "Producto: " + Eval("NombreProducto") %>' CssClass="fw-bold d-block" />
                   <asp:Label runat="server" Text='<%# "Talle: " + Eval("TalleEtiqueta") %>' CssClass="d-block" />
                   <asp:Label runat="server" Text='<%# "Cantidad: " + Eval("Cantidad") %>' CssClass="d-block" />
                 </asp:Panel>
-              </ItemTemplate>
-            </asp:Repeater>
+              </ItemTemplate>--%>
+
+
+<%--                  <ItemTemplate>
+                <asp:Panel runat="server" CssClass="border-bottom py-2">
+  <div class="d-flex flex-wrap">
+    <span class="me-3"><strong>Producto:</strong> <%# Eval("NombreProducto") %></span>
+    <span class="me-3"><strong>Talle:</strong> <%# Eval("TalleEtiqueta") %></span>
+    <span class="me-3"><strong>Cantidad:</strong> <%# Eval("Cantidad") %></span>
+  </div>
+</asp:Panel>
+</ItemTemplate>--%>
+
+                  <ItemTemplate>
+                <table class="table table-sm table-bordered mb-3">
+  <thead class="table-light">
+    <tr>
+      <th>Producto</th>
+      <th>Talle</th>
+      <th>Cantidad</th>
+    </tr>
+  </thead>
+  <tbody>
+    <asp:Repeater ID="Repeater1" runat="server" DataSource='<%# Eval("Items") %>'>
+      <ItemTemplate>
+        <tr>
+          <td><%# Eval("NombreProducto") %></td>
+          <td><%# Eval("TalleEtiqueta") %></td>
+          <td><%# Eval("Cantidad") %></td>
+        </tr>
+      </ItemTemplate>
+    </asp:Repeater>
+  </tbody>
+</table>
+</ItemTemplate>
+
+  <%--          </asp:Repeater>--%>
                                           <asp:Panel runat="server" CssClass="mt-3">
                                             <asp:HiddenField ID="hfEstado" runat="server" Value='<%# Eval("Estado") %>' />
 

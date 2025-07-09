@@ -172,6 +172,42 @@ namespace Negocio
             }
         }
 
+
+
+        public void CambiarEmail(int userId, string nuevoEmail)
+        {
+            AccesoBD datos = new AccesoBD();
+            try
+            {
+                datos.setearProcedimiento("sp_ModificarEmailUsuario");
+                datos.setearParametro("@IdUsuario", userId);
+                datos.setearParametro("@NuevoEmail", nuevoEmail);
+                datos.ejecutarAccion();
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         public bool ChequearEmailUsuario(string emailUser)
         {
             AccesoBD datos = new AccesoBD();

@@ -63,12 +63,19 @@ namespace TPFinal_equipo_8a
                 usuario.Apellido = txtApellido.Text;
                 usuario.ImagenPerfil = txtUrlImagenPerfil.Text;
                 usuario.FechaNacimiento = DateTime.Parse(txtFechaNacimiento.Text);
-                usuario.Pass = ((Usuario)Session["usuario"]).Pass;
 
-                usuario.Id = ((Usuario)Session["usuario"]).Id;
+                Usuario user = (Usuario)Session["usuario"];
 
+                usuario.Pass = user.Pass;
+                usuario.Id = user.Id;
 
                 UsuarioNegocio usuarioNegocio = new UsuarioNegocio();
+
+                if (txtEmail.Text != user.Email)
+                {
+                    usuarioNegocio.CambiarEmail(usuario.Id, txtEmail.Text);
+                }
+
                 usuarioNegocio.ActualizarDatos(usuario);
 
                 if (panelCambioClave.Visible)
@@ -76,6 +83,10 @@ namespace TPFinal_equipo_8a
                     usuarioNegocio.CambiarClave(usuario.Id, txtNuevaClave.Text);
                     usuario.Pass = txtNuevaClave.Text;
                 }
+
+
+
+
 
                 usuarioNegocio.Login(usuario);
                 Session.Add("usuario", usuario);

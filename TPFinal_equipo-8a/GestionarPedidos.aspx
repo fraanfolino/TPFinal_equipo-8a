@@ -10,54 +10,47 @@
   <asp:Panel runat="server" CssClass="container mt-4">
     <asp:Label runat="server" Text="Gestión de Pedidos" CssClass="h2 mb-4 d-block" />
 
-                                                    <asp:Panel runat="server" CssClass="mb-3">
-                                  <div class="form-check mb-1">
-                                    <asp:CheckBox ID="chkPendiente" runat="server"
-                                                  AutoPostBack="true"
-                                                  OnCheckedChanged="chkEstado_CheckedChanged"
-                                                  Text=""
-                                                  CssClass="form-check-input" />
-                                    <label class="form-check-label" for="chkPendiente">Pendiente</label>
-                                  </div>
+     
+      
+                           <div class="row">
+    
+    <div class="col-md-3">
+      <asp:Panel ID="PanelFiltros" runat="server" CssClass="bg-light border rounded p-3 mb-4">
+        <asp:Label ID="Label1" runat="server" Text="Buscar por nombre de cliente:" CssClass="fw-bold d-block mb-2" />
+        <asp:TextBox ID="TextBox1" runat="server" 
+             AutoPostBack="true" 
+             OnTextChanged="TextBox1_TextChanged" />
 
-                                  <div class="form-check mb-1">
-                                    <asp:CheckBox ID="chkConfirmado" runat="server"
-                                                  AutoPostBack="true"
-                                                  OnCheckedChanged="chkEstado_CheckedChanged"
-                                                  Text=""
-                                                  CssClass="form-check-input" />
-                                    <label class="form-check-label" for="chkConfirmado">Confirmado</label>
-                                  </div>
-
-                                  <div class="form-check mb-1">
-                                    <asp:CheckBox ID="chkEnviado" runat="server"
-                                                  AutoPostBack="true"
-                                                  OnCheckedChanged="chkEstado_CheckedChanged"
-                                                  Text=""
-                                                  CssClass="form-check-input" />
-                                    <label class="form-check-label" for="chkEnviado">Enviado</label>
-                                  </div>
-
-                                  <div class="form-check mb-1">
-                                    <asp:CheckBox ID="chkEntregado" runat="server"
-                                                  AutoPostBack="true"
-                                                  OnCheckedChanged="chkEstado_CheckedChanged"
-                                                  Text=""
-                                                  CssClass="form-check-input" />
-                                    <label class="form-check-label" for="chkEntregado">Entregado</label>
-                                  </div>
-
-                                  <div class="form-check mb-1">
-                                    <asp:CheckBox ID="chkCancelado" runat="server"
-                                                  AutoPostBack="true"
-                                                  OnCheckedChanged="chkEstado_CheckedChanged"
-                                                  Text=""
-                                                  CssClass="form-check-input" />
-                                    <label class="form-check-label" for="chkCancelado">Cancelado</label>
-                                  </div>
-                                </asp:Panel>
+        <asp:Label runat="server" Text="Filtrar por estado:" CssClass="fw-bold d-block mb-2" />
+        <div class="form-check mb-2">
+          <asp:CheckBox ID="chkPendiente" runat="server" CssClass="form-check-input"
+                        AutoPostBack="true" OnCheckedChanged="chkEstado_CheckedChanged" />
+          <label class="form-check-label" for="chkPendiente">Pendiente</label>
+        </div>
+        <div class="form-check mb-2">
+          <asp:CheckBox ID="chkConfirmado" runat="server" CssClass="form-check-input"
+                        AutoPostBack="true" OnCheckedChanged="chkEstado_CheckedChanged" />
+          <label class="form-check-label" for="chkConfirmado">Confirmado</label>
+        </div>
+        <div class="form-check mb-2">
+          <asp:CheckBox ID="chkEnviado" runat="server" CssClass="form-check-input"
+                        AutoPostBack="true" OnCheckedChanged="chkEstado_CheckedChanged" />
+          <label class="form-check-label" for="chkEnviado">Enviado</label>
+        </div>
+        <div class="form-check mb-2">
+          <asp:CheckBox ID="chkEntregado" runat="server" CssClass="form-check-input"
+                        AutoPostBack="true" OnCheckedChanged="chkEstado_CheckedChanged" />
+          <label class="form-check-label" for="chkEntregado">Entregado</label>
+        </div>
+        <div class="form-check mb-2">
+          <asp:CheckBox ID="chkCancelado" runat="server" CssClass="form-check-input"
+                        AutoPostBack="true" OnCheckedChanged="chkEstado_CheckedChanged" />
+          <label class="form-check-label" for="chkCancelado">Cancelado</label>
+        </div>
+      </asp:Panel>
+    </div>
    
-   
+    <div class="col-md-9">
     <asp:Repeater ID="repPedidos" runat="server" OnItemCommand="repPedidos_ItemCommand">
       <ItemTemplate>
         <asp:Panel runat="server" CssClass="card mb-3 shadow-sm">
@@ -128,6 +121,10 @@
         </asp:Panel>
       </ItemTemplate>
     </asp:Repeater>
+
+        </div>
+
+      </div>
   </asp:Panel>
 
 </asp:Content>

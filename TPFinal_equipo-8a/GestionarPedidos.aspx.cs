@@ -158,10 +158,6 @@ namespace TPFinal_equipo_8a
 
 
 
-
-
-
-
         private void cargarPedidos()
         {
             PedidosNegocio negocio = new PedidosNegocio();
@@ -170,9 +166,18 @@ namespace TPFinal_equipo_8a
             repPedidos.DataBind();
         }
 
+        protected void TextBox1_TextChanged(object sender, EventArgs e)
+        {
+            PedidosNegocio pedidosNegocio = new PedidosNegocio();
+            List<Pedido> pedidos = pedidosNegocio.ObtenerPedidos();
 
+            string filtro = TextBox1.Text.ToLower();
 
+            List<Pedido> filtrado = pedidos.Where(p => p.NombreCliente.ToLower().Contains(filtro)).ToList();
+                           
 
-
+            repPedidos.DataSource = filtrado;
+            repPedidos.DataBind();
+        }
     }
 }

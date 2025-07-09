@@ -29,6 +29,20 @@ namespace TPFinal_equipo_8a
 
         protected void btnRealizarCompra_Click(object sender, EventArgs e)
         {
+
+
+            if (string.IsNullOrWhiteSpace(txtNombre.Text) ||
+               string.IsNullOrWhiteSpace(txtEmail.Text) ||
+               string.IsNullOrWhiteSpace(txtTelefono.Text) ||
+               string.IsNullOrEmpty(ddlEntrega.SelectedValue) ||
+               (ddlEntrega.SelectedValue == "Envio" && string.IsNullOrWhiteSpace(txtDireccionEnvio.Text)) ||
+               string.IsNullOrEmpty(ddlPago.SelectedValue))
+            {
+                lblError.Text = "Por favor, complete todos los campos antes de continuar.";
+                lblError.Visible = true;
+                return;
+            }
+
             int idUsuario = ((Usuario)Session["usuario"]).Id;
 
             string modalidad = ddlEntrega.SelectedValue;

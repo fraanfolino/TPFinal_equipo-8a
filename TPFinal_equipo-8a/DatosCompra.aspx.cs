@@ -3,6 +3,8 @@ using Negocio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
+using System.Net;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -59,7 +61,17 @@ namespace TPFinal_equipo_8a
             }
             negocio.vaciarCarrito(idUsuario);
 
-
+            PedidosNegocio pedidosNeg = new PedidosNegocio();
+            Pedido pedido = pedidosNeg.ObtenerPedidoPorId(idPedido);
+            if (pedido != null)
+            {
+                
+                EnviarMailPagoConfirmado(
+                    txtEmail.Text.Trim(),   
+                    pedido.NombreCliente,
+                    pedido.Total
+                );
+            }
             Response.Redirect("Confirmacion.aspx?pedidoId=" + idPedido);
 
         }
@@ -101,6 +113,28 @@ namespace TPFinal_equipo_8a
             bool esEnvio = ddlEntrega.SelectedValue == "Envio";
             pnlEnvio.Visible = esEnvio;
             pnlRetiro.Visible = !esEnvio;
+        }
+
+
+        public void EnviarMailPagoConfirmado(string destinatarioCliente, string nombreUsuario, decimal totalCompra)
+        {
+            var mail = new MailMessage();
+            mail.From = new MailAddress("no-reply@demomailtrap.co", "Tu Tienda (Admin)");
+
+            
+            
+            
+            mail.To.Add("fraanfolino@gmail.com");
+
+            mail.Subject = "Pago recibido ✔";
+            mail.Body = $"Hola {nombreUsuario}, recibimos tu pago de ${totalCompra:N2}. ¡Gracias!";
+            mail.IsBodyHtml = false;
+
+            var smtp = new SmtpClient("live.smtp.mailtrap.io", 587);
+            smtp.Credentials = new NetworkCredential("api", "6866d9e9511f1f683a64c5e187e5030e");
+            smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+            smtp.EnableSsl = true;
+            smtp.Send(mail);
         }
     }
 }

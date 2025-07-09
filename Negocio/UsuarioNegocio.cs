@@ -135,7 +135,6 @@ namespace Negocio
             {
                 datos.setearProcedimiento("sp_ActualizarUsuario");
                 datos.setearParametro("@Id", user.Id);
-                //datos.setearParametro("@email", user.Email);
                 datos.setearParametro("@nombre", user.Nombre);
                 datos.setearParametro("@apellido", user.Apellido);
                 datos.setearParametro("@urlImagenPerfil", user.ImagenPerfil);

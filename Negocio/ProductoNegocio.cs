@@ -43,14 +43,12 @@ namespace Negocio
                         continue;
                     }
 
-                 
                     producto = new Producto();
                     producto.Id = idProdBD;
                     producto.Nombre = datos.Lectorbd["Nombre"].ToString();
                     producto.Descripcion = datos.Lectorbd["Descripcion"].ToString();
                     producto.Precio = Convert.ToDecimal(datos.Lectorbd["Precio"]);
                     producto.Activo = Convert.ToBoolean(datos.Lectorbd["Activo"]);
-
 
                     producto.Categoria = new Categoria();
                     producto.Categoria.Id = Convert.ToInt32(datos.Lectorbd["IdCategoria"]);

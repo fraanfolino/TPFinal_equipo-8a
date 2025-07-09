@@ -43,12 +43,9 @@ namespace TPFinal_equipo_8a
                 }
                 else
                 {
-
-
                     MostrarStock();
                     if (productoSeleccionado.Value != "")
                     { MostrarTalles(Convert.ToInt32(productoSeleccionado.Value)); }
-                    
                 }
             }
             else

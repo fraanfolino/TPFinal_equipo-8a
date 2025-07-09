@@ -110,6 +110,7 @@
     <Content Include="GestionarPedidos.aspx" />
     <Content Include="Images\carrito.png" />
     <Content Include="Images\ecommerce.png" />
+    <Content Include="Images\faviconutn.png" />
     <Content Include="ListaProductos.aspx" />
     <Content Include="Marca.aspx" />
     <Content Include="MisPedidos.aspx" />

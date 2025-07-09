@@ -4,7 +4,7 @@
 
 
   <asp:Panel runat="server" CssClass="container mt-4">
-    <asp:Label runat="server" Text="Gestión de Pedidos" CssClass="h2 mb-4 d-block" />
+    <asp:Label runat="server" Text="Mis Pedidos" CssClass="h2 mb-4 d-block" />
 
     
    

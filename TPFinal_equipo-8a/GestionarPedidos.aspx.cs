@@ -157,6 +157,23 @@ namespace TPFinal_equipo_8a
         }
 
 
+        protected void txtIdPedido_TextChanged(object sender, EventArgs e)
+        {
+            PedidosNegocio negocio = new PedidosNegocio();
+            List<Pedido> todos = negocio.ObtenerPedidos();
+            List<Pedido> filtrados = new List<Pedido>();
+
+            int idBuscado;
+            int.TryParse(txtIdPedido.Text, out idBuscado);
+
+            filtrados = todos.Where(p => idBuscado == p.IdPedido).ToList();
+
+            repPedidos.DataSource = filtrados;
+            repPedidos.DataBind();
+
+            lblSinResultadosPorId.Visible = filtrados.Count == 0;
+        }
+
 
         private void cargarPedidos()
         {

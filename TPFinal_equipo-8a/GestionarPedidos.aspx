@@ -16,7 +16,28 @@
     
     <div class="col-md-3">
       <asp:Panel ID="PanelFiltros" runat="server" CssClass="bg-light border rounded p-3 mb-4">
-        <asp:Label ID="Label1" runat="server" Text="Buscar por nombre de cliente:" CssClass="fw-bold d-block mb-2" />
+       
+          
+          
+          
+          <asp:Label ID="lblBuscarPorId" runat="server"
+           Text="Buscar por ID de pedido:"
+           CssClass="fw-bold d-block mb-2" />
+
+<asp:TextBox ID="txtIdPedido" runat="server"
+             Type="Number"
+             AutoPostBack="true"
+             OnTextChanged="txtIdPedido_TextChanged"
+             CssClass="form-control mb-2" />
+
+<asp:Label ID="lblSinResultadosPorId" runat="server"
+           Text="No se encontró ningún pedido con ese ID."
+           CssClass="text-danger fw-bold mt-2"
+           Visible="false" />
+          
+          
+          
+          <asp:Label ID="Label1" runat="server" Text="Buscar por nombre de cliente:" CssClass="fw-bold d-block mb-2" />
         <asp:TextBox ID="TextBox1" runat="server" 
              AutoPostBack="true" 
              OnTextChanged="TextBox1_TextChanged" />

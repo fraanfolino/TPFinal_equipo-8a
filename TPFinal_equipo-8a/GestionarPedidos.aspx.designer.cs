@@ -24,6 +24,33 @@ namespace TPFinal_equipo_8a
         protected global::System.Web.UI.WebControls.Panel PanelFiltros;
 
         /// <summary>
+        /// Control lblBuscarPorId.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblBuscarPorId;
+
+        /// <summary>
+        /// Control txtIdPedido.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtIdPedido;
+
+        /// <summary>
+        /// Control lblSinResultadosPorId.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSinResultadosPorId;
+
+        /// <summary>
         /// Control Label1.
         /// </summary>
         /// <remarks>
@@ -33,7 +60,7 @@ namespace TPFinal_equipo_8a
         protected global::System.Web.UI.WebControls.Label Label1;
 
         /// <summary>
-        /// Control  TextBox1.
+        /// Control TextBox1.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.

@@ -168,6 +168,11 @@
       </asp:Panel>
     </asp:Panel>
 
+      <asp:Label 
+    ID="lblError" 
+    runat="server" 
+    CssClass="text-danger mb-3 fw-bold" 
+    Visible="false" />
  
     <asp:Panel runat="server" CssClass="d-flex justify-content-end">
       <asp:Button  

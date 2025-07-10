@@ -73,7 +73,7 @@ namespace TPFinal_equipo_8a
             {
                 lblNombre.Text = producto.Nombre;
                 lblDescripcion.Text = producto.Descripcion;
-                lblPrecio.Text = producto.Precio.ToString("F2");
+                lblPrecio.Text = "$ " + producto.Precio.ToString("F2");
 
                 rptImagenes.DataSource = producto.ImagenUrl.Select(url => new { Url = url }).ToList();
                 rptImagenes.DataBind();

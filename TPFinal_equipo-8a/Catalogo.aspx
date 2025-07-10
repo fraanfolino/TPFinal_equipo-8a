@@ -85,14 +85,20 @@
         <div class="row">
           <asp:Repeater ID="rptProductos" runat="server" OnItemDataBound="rptProductos_ItemDataBound">
             <ItemTemplate>
-              <div class="col-md-4 mb-4">
-                <div class="card text-center">
+              <div class="col-md-3 mb-3">
+                <div class="card text-center shadow" style="height: 300px;">
 
-                  
+<div class="text-start px-2 pt-2 d-flex gap-2 mb-2">
+<span class="badge bg-secondary"><asp:Literal ID="litCategoria" runat="server" /></span>
+<span class="badge bg-secondary"><asp:Literal ID="litMarca" runat="server" /></span>
+</div>
+
+                  <a href='DetalleProducto.aspx?Id=<%# Eval("Id") %>' style="text-decoration: none;">
                   <div id="carousel_<%# Eval("Id") %>" class="carousel slide">
                     <div class="carousel-inner">
                       <asp:Repeater ID="rptImagenes" runat="server">
                         <ItemTemplate>
+
                           <div class="carousel-item <%# Container.ItemIndex == 0 ? "active" : "" %>">
                             <img src='<%# Container.DataItem %>'
                                  class="d-block w-100"
@@ -100,9 +106,13 @@
                                  onerror="handleImageError(this)"
                                  style="max-height:150px;object-fit:contain;" />
                           </div>
+  
                         </ItemTemplate>
                       </asp:Repeater>
                     </div>
+  </a>
+
+
                     <button class="carousel-control-prev" type="button" data-bs-target="#carousel_<%# Eval("Id") %>" data-bs-slide="prev">
                       <span class="carousel-control-prev-icon"></span>
                       <span class="visually-hidden">Anterior</span>
@@ -114,10 +124,11 @@
                   </div>
 
                 <div class="card-body">
-                  <h5 class="card-title"><%# Eval("Nombre") %></h5>
-                  <p class="card-text"><%# Eval("Descripcion") %></p>
-                  <p class="card-text fw-bold"><%# "$" + Convert.ToDecimal(Eval("Precio")).ToString("F2") %></p>
-                  <a href='DetalleProducto.aspx?Id=<%# Eval("Id") %>' class="btn btn-primary">Ver Detalle</a>
+                                      <p class="card-text fw-bold"><%# "$" + Convert.ToDecimal(Eval("Precio")).ToString("F2") %></p>
+                <h6 class="card-title fw-normal"><%# Eval("Nombre") %></h6>
+<%--                  <p class="card-text"><%# Eval("Descripcion") %></p>--%>
+
+<%--                  <a href='DetalleProducto.aspx?Id=<%# Eval("Id") %>' class="btn btn-primary">Ver Detalle</a>--%>
                 </div>
 
                 </div>

@@ -71,6 +71,18 @@ namespace TPFinal_equipo_8a
             rptProductos.DataBind();
         }
 
+        //protected void rptProductos_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        //{
+        //    if (e.Item.ItemType != ListItemType.Item && e.Item.ItemType != ListItemType.AlternatingItem)
+        //        return;
+
+        //    Producto producto = (Producto)e.Item.DataItem;
+        //    Repeater rptImagenes = (Repeater)e.Item.FindControl("rptImagenes");
+
+        //    rptImagenes.DataSource = producto.ImagenUrl;
+        //    rptImagenes.DataBind();
+        //}
+
         protected void rptProductos_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
             if (e.Item.ItemType != ListItemType.Item && e.Item.ItemType != ListItemType.AlternatingItem)
@@ -81,6 +93,16 @@ namespace TPFinal_equipo_8a
 
             rptImagenes.DataSource = producto.ImagenUrl;
             rptImagenes.DataBind();
+
+            // Setear los nombres de categoría y marca con control de nulos
+            var litCategoria = (Literal)e.Item.FindControl("litCategoria");
+            var litMarca = (Literal)e.Item.FindControl("litMarca");
+
+            if (litCategoria != null)
+                litCategoria.Text = producto.Categoria != null ? producto.Categoria.Nombre : "";
+
+            if (litMarca != null)
+                litMarca.Text = producto.Marca != null ? producto.Marca.Nombre : "";
         }
 
         protected void btnFiltrarPrecio_Click(object sender, EventArgs e)

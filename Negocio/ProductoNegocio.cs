@@ -116,6 +116,16 @@ namespace Negocio
                     aux.Descripcion = datos.Lectorbd["Descripcion"].ToString();
                     aux.Precio = Convert.ToDecimal(datos.Lectorbd["Precio"]);
 
+                    Categoria cate = new Categoria();
+                    cate.Id = Convert.ToInt32(datos.Lectorbd["IDCategoria"]);
+                    cate.Nombre = Convert.ToString(datos.Lectorbd["Categoria"]);
+                    aux.Categoria = cate;
+
+                    Marca mar = new Marca();
+                    mar.Id = Convert.ToInt32(datos.Lectorbd["IDMarca"]);
+                    mar.Nombre = Convert.ToString(datos.Lectorbd["Marca"]);
+                    aux.Marca = mar;
+
                     if (datos.Lectorbd["UrlImagen"] != DBNull.Value)
                     {
                         aux.ImagenUrl = new List<string> { Convert.ToString(datos.Lectorbd["UrlImagen"]) };
@@ -179,6 +189,16 @@ namespace Negocio
                     aux.Nombre = (string)datos.Lectorbd["Nombre"];
                     aux.Descripcion = (string)datos.Lectorbd["Descripcion"];
                     aux.Precio = (decimal)datos.Lectorbd["Precio"];
+
+                    Categoria cate = new Categoria();
+                    cate.Id = Convert.ToInt32(datos.Lectorbd["IDCategoria"]);
+                    cate.Nombre = Convert.ToString(datos.Lectorbd["Categoria"]);
+                    aux.Categoria = cate;
+
+                    Marca mar = new Marca();
+                    mar.Id = Convert.ToInt32(datos.Lectorbd["IDMarca"]);
+                    mar.Nombre = Convert.ToString(datos.Lectorbd["Marca"]);
+                    aux.Marca = mar;
 
                     if (datos.Lectorbd["UrlImagen"] != null)
                     {

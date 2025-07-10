@@ -180,7 +180,32 @@ namespace Negocio
             return lista;
         }
 
+        public List<Categoria> listarCategorias2()
+        {
+            AccesoBD datos = new AccesoBD();
+            List<Categoria> lista = new List<Categoria>();
 
+            try
+            {
+                datos.setearProcedimiento("sp_ListarCategorias");
+                datos.ejecutarLectura();
+
+                while (datos.Lectorbd.Read())
+                {
+                    if (!Convert.ToBoolean(datos.Lectorbd["activo"]))
+                    { continue; }
+
+                    Categoria categoria = new Categoria();
+                    categoria.Id = Convert.ToInt32(datos.Lectorbd["id"]);
+                    categoria.Nombre = datos.Lectorbd["nombre"].ToString();
+                    lista.Add(categoria);
+                }
+            }
+            catch (Exception ex) { throw ex; }
+            finally { datos.cerrarConexion(); }
+
+            return lista;
+        }
 
 
 

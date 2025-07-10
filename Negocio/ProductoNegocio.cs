@@ -151,6 +151,81 @@ namespace Negocio
             return listaProductos;
         }
 
+
+        public List<Producto> FiltrarProductosPorCategoria(int categoria)
+        {
+            AccesoBD datos = new AccesoBD();
+            List<Producto> listaProductos = new List<Producto>();
+            try
+            {
+                datos.setearProcedimiento("sp_FiltrarProductosPorCategoria");
+                datos.limpiarParametros();
+
+
+                if (categoria != 0)
+                    datos.setearParametro("@categoria", categoria);
+                else
+                    datos.setearParametro("@categoria", DBNull.Value);
+
+                datos.ejecutarLectura();
+
+                Producto ultCarga = null;
+                while (datos.Lectorbd.Read())
+                {
+                    int idArtBD = Convert.ToInt32(datos.Lectorbd["Id"]);
+
+                    if (ultCarga != null && ultCarga.Id == idArtBD)
+                    {
+                        if (datos.Lectorbd["UrlImagen"] != DBNull.Value)
+                        {
+                            string imagenUrl = Convert.ToString(datos.Lectorbd["UrlImagen"]);
+                            ultCarga.ImagenUrl.Add(imagenUrl);
+                        }
+                        continue;
+                    }
+
+                    Producto aux = new Producto();
+                    aux.Id = idArtBD;
+                    aux.Nombre = datos.Lectorbd["Nombre"].ToString();
+                    aux.Descripcion = datos.Lectorbd["Descripcion"].ToString();
+                    aux.Precio = Convert.ToDecimal(datos.Lectorbd["Precio"]);
+
+                    Categoria cate = new Categoria();
+                    cate.Id = Convert.ToInt32(datos.Lectorbd["IDCategoria"]);
+                    cate.Nombre = Convert.ToString(datos.Lectorbd["Categoria"]);
+                    aux.Categoria = cate;
+
+                    Marca mar = new Marca();
+                    mar.Id = Convert.ToInt32(datos.Lectorbd["IDMarca"]);
+                    mar.Nombre = Convert.ToString(datos.Lectorbd["Marca"]);
+                    aux.Marca = mar;
+
+                    if (datos.Lectorbd["UrlImagen"] != DBNull.Value)
+                    {
+                        aux.ImagenUrl = new List<string> { Convert.ToString(datos.Lectorbd["UrlImagen"]) };
+                    }
+                    else
+                    {
+                        aux.ImagenUrl = new List<string>();
+                    }
+
+                    listaProductos.Add(aux);
+                    ultCarga = aux;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+
+            return listaProductos;
+        }
+
+
         public List<Producto> ListarProductosEnStock()
         {
             AccesoBD datos = new AccesoBD();

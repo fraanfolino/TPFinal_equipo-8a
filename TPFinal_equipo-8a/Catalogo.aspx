@@ -37,6 +37,24 @@
                                         </div>
                                       </div>
 
+                                     <div class="card mb-4">
+                                        <div class="card-header">Filtrar por categoria</div>
+                                        <div class="card-body">
+
+                                          <asp:DropDownList 
+                                            ID="ddlCategoria" runat="server" CssClass="form-select" />
+
+                                          <div class="d-grid mt-3">
+                                            <asp:Button 
+                                              ID="btnFiltrarCategoria" runat="server" 
+                                              Text="Aplicar" CssClass="btn btn-primary" 
+                                              OnClick="btnFiltrarCategoria_Click" />
+                                          </div>
+
+                                        </div>
+                                      </div>
+
+
 
          
                                                        <div class="card mb-4">
@@ -126,9 +144,6 @@
                 <div class="card-body">
                                       <p class="card-text fw-bold"><%# "$" + Convert.ToDecimal(Eval("Precio")).ToString("F2") %></p>
                 <h6 class="card-title fw-normal"><%# Eval("Nombre") %></h6>
-<%--                  <p class="card-text"><%# Eval("Descripcion") %></p>--%>
-
-<%--                  <a href='DetalleProducto.aspx?Id=<%# Eval("Id") %>' class="btn btn-primary">Ver Detalle</a>--%>
                 </div>
 
                 </div>

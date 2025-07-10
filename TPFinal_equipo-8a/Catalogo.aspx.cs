@@ -15,6 +15,7 @@ namespace TPFinal_equipo_8a
             if (!IsPostBack)
             {
                 CargarMarcas();
+                CargarCategorias();
                 ListarTodos();
             }
         }
@@ -23,7 +24,7 @@ namespace TPFinal_equipo_8a
         {
             MarcaNegocio negocio = new MarcaNegocio();
             List<Dominio.Marca> marcas = negocio.listarMarcas2();
-
+ 
             ddlMarca.DataSource = marcas;
             ddlMarca.DataTextField = "Nombre";
             ddlMarca.DataValueField = "Id";
@@ -31,6 +32,22 @@ namespace TPFinal_equipo_8a
 
             ddlMarca.Items.Insert(0, new ListItem("Todas", "0"));
         }
+
+
+        private void CargarCategorias()
+        {
+            MarcaNegocio negocio = new MarcaNegocio();
+            List<Dominio.Categoria> categorias = negocio.listarCategorias2();
+
+            ddlCategoria.DataSource = categorias;
+            ddlCategoria.DataTextField = "Nombre";
+            ddlCategoria.DataValueField = "Id";
+            ddlCategoria.DataBind();
+
+            ddlCategoria.Items.Insert(0, new ListItem("Todas", "0"));
+        }
+
+
 
         private void ListarTodos()
         {
@@ -70,6 +87,23 @@ namespace TPFinal_equipo_8a
             rptProductos.DataSource = lista;
             rptProductos.DataBind();
         }
+
+
+        protected void btnFiltrarCategoria_Click(object sender, EventArgs e)
+        {
+            int idCategoria = Convert.ToInt32(ddlCategoria.SelectedValue);
+            ProductoNegocio negocio = new ProductoNegocio();
+            List<Producto> lista;
+
+            if (idCategoria == 0)
+                lista = negocio.ListarProductosEnStock();
+            else
+                lista = negocio.FiltrarProductosPorCategoria(idCategoria);
+
+            rptProductos.DataSource = lista;
+            rptProductos.DataBind();
+        }
+
 
         //protected void rptProductos_ItemDataBound(object sender, RepeaterItemEventArgs e)
         //{

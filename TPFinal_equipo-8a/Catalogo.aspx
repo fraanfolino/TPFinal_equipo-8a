@@ -113,12 +113,12 @@
                     </button>
                   </div>
 
-                  
-                  <div class="card-body">
-                    <h5 class="card-title"><%# Eval("Nombre") %></h5>
-                    <p class="card-text"><%# Eval("Descripcion") %></p>
-                    <a href="DetalleProducto.aspx?Id=<%# Eval("Id") %>" class="btn btn-primary">Ver Detalle</a>
-                  </div>
+                <div class="card-body">
+                  <h5 class="card-title"><%# Eval("Nombre") %></h5>
+                  <p class="card-text"><%# Eval("Descripcion") %></p>
+                  <p class="card-text fw-bold"><%# "$" + Convert.ToDecimal(Eval("Precio")).ToString("F2") %></p>
+                  <a href='DetalleProducto.aspx?Id=<%# Eval("Id") %>' class="btn btn-primary">Ver Detalle</a>
+                </div>
 
                 </div>
               </div>

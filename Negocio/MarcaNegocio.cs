@@ -165,6 +165,9 @@ namespace Negocio
 
                 while (datos.Lectorbd.Read())
                 {
+                    if (!Convert.ToBoolean(datos.Lectorbd["activo"]))
+                    { continue; }
+
                     Marca marca = new Marca();
                     marca.Id = Convert.ToInt32(datos.Lectorbd["id"]);
                     marca.Nombre = datos.Lectorbd["nombre"].ToString();

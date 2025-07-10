@@ -3,6 +3,7 @@ using Negocio;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -77,7 +78,7 @@ namespace TPFinal_equipo_8a
             txtNombre.Text = producto.Nombre;
             txtDescripcion.Text = producto.Descripcion;
 
-            txtPrecio.Text = producto.Precio.ToString();
+            txtPrecio.Text = producto.Precio.ToString("F2", CultureInfo.InvariantCulture);
             ddlCategoria.SelectedValue = producto.Categoria.Nombre;
             ddlMarca.SelectedValue = producto.Marca.Nombre;
 
@@ -207,7 +208,12 @@ namespace TPFinal_equipo_8a
 
             producto.Nombre = txtNombre.Text;
             producto.Descripcion = txtDescripcion.Text;
-            producto.Precio = decimal.Parse(txtPrecio.Text);
+            //producto.Precio = decimal.Parse(txtPrecio.Text);
+
+
+            producto.Precio = decimal.Parse(txtPrecio.Text, CultureInfo.InvariantCulture);
+
+
             producto.ImagenUrl = ImagenesProducto;
 
             try
@@ -230,7 +236,7 @@ namespace TPFinal_equipo_8a
             producto.Id = Convert.ToInt32(Request.QueryString["id"]);
             producto.Nombre = txtNombre.Text;
             producto.Descripcion = txtDescripcion.Text;
-            producto.Precio = decimal.Parse(txtPrecio.Text);
+            producto.Precio = decimal.Parse(txtPrecio.Text, CultureInfo.InvariantCulture);
             producto.ImagenUrl = ImagenesProducto;
 
             MarcaNegocio marcaNegocio = new MarcaNegocio();
@@ -293,8 +299,6 @@ namespace TPFinal_equipo_8a
             return comparar;
         }
 
-
-
         protected void btnActivar_Click(object sender, EventArgs e)
         {
             ProductoNegocio catNegocio = new ProductoNegocio();
@@ -328,7 +332,6 @@ namespace TPFinal_equipo_8a
                 alertDiv.InnerHtml = "Producto Desactivado correctamente";
                 btnActivar.Visible = true;
                 btnDesactivar.Visible = false;
-
             }
             catch (SqlException ex)
             {
@@ -336,10 +339,5 @@ namespace TPFinal_equipo_8a
                 alertDiv.InnerHtml = ex.Message.ToString();
             }
         }
-
-
-
-
-
     }
 }

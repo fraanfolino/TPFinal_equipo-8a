@@ -32,8 +32,6 @@ namespace TPFinal_equipo_8a
             }
         }
 
-
-
         protected void Cambiarclavebtn_Click(object sender, EventArgs e)
         {
             panelCambioClave.Visible = !panelCambioClave.Visible;

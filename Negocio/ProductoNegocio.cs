@@ -156,6 +156,10 @@ namespace Negocio
                 
                 while (datos.Lectorbd.Read())
                 {
+                    if (!Convert.ToBoolean(datos.Lectorbd["MActivo"]) || !Convert.ToBoolean(datos.Lectorbd["CActivo"]))
+                    {
+                        continue;
+                    }
 
                     int idArtBD = Convert.ToInt32(datos.Lectorbd["Id"]);
 

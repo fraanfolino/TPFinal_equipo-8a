@@ -60,7 +60,7 @@ namespace Negocio
                     pedido.Items.Add(item);
                 }
 
-                return pedidos;
+                return pedidos.OrderByDescending(p => p.FechaCreacion).ToList();
             }
             finally
             {
@@ -114,7 +114,7 @@ namespace Negocio
                     pedido.Items.Add(item);
                 }
 
-                return pedidos;
+                return pedidos.OrderByDescending(p => p.FechaCreacion).ToList();
             }
             finally
             {

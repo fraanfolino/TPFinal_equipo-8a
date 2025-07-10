@@ -179,7 +179,6 @@ namespace Negocio
                     aux.Nombre = (string)datos.Lectorbd["Nombre"];
                     aux.Descripcion = (string)datos.Lectorbd["Descripcion"];
                     aux.Precio = (decimal)datos.Lectorbd["Precio"];
-                    
 
                     if (datos.Lectorbd["UrlImagen"] != null)
                     {

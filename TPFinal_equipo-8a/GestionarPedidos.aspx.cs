@@ -63,9 +63,30 @@ namespace TPFinal_equipo_8a
                 ConfirmarEntrega(idPedido);
             }
 
+            if (e.CommandName == "ConfirmarRetiro") 
+            {
+                int idPedido = Convert.ToInt32(e.CommandArgument);
+                ConfirmarRetiro(idPedido);
+            }
+
             cargarPedidos();
 
         }
+
+
+        private void ConfirmarRetiro(int idPedido)
+        {
+            try
+            {
+                PedidosNegocio pedidosNegocio = new PedidosNegocio();
+                pedidosNegocio.ConfirmarRetiro(idPedido);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
 
 
         private void ConfirmarPedido(int idPedido)
@@ -110,7 +131,7 @@ namespace TPFinal_equipo_8a
             smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
             smtp.EnableSsl = true;
 
-            smtp.Send(mail);
+            //smtp.Send(mail);
         }
 
 

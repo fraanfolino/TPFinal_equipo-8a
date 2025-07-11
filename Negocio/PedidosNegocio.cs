@@ -247,6 +247,25 @@ namespace Negocio
             }
         }
 
+        public void ConfirmarRetiro(int idPedido)
+        {
+            AccesoBD datos = new AccesoBD();
+            try
+            {
+                datos.setearProcedimiento("SP_ConfirmarRetiro");
+                datos.setearParametro("@IdPedido", idPedido);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
 
         public void DevolverStock(int idPedido)
         {

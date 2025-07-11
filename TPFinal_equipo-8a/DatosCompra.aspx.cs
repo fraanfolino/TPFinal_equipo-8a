@@ -148,7 +148,7 @@ namespace TPFinal_equipo_8a
             smtp.Credentials = new NetworkCredential("api", "6866d9e9511f1f683a64c5e187e5030e");
             smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
             smtp.EnableSsl = true;
-            smtp.Send(mail);
+           // smtp.Send(mail);
         }
     }
 }

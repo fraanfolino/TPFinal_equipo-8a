@@ -122,14 +122,27 @@
                                                       CommandArgument='<%# Eval("IdPedido") %>'
                                                       CssClass="btn btn-secondary"
                                                       Text="Confirmar Envio"
-                                                      Visible='<%# Eval("Estado").ToString()=="Confirmado" %>' />
+                                                      Visible='<%# Eval("Estado").ToString()=="Confirmado" && Eval("ModalidadEntrega").ToString()=="Envio" %>' />
 
                                           <asp:Button runat="server"
                                                       CommandName="ConfirmarEntrega"
                                                       CommandArgument='<%# Eval("IdPedido") %>'
                                                       CssClass="btn btn-success"
                                                       Text="Confirmar Entrega"
-                                                      Visible='<%# Eval("Estado").ToString()=="Enviado" %>' />
+                                                      Visible='<%# Eval("Estado").ToString()=="Enviado" && Eval("ModalidadEntrega").ToString()=="Envio" %>' />
+                                          
+
+
+                                           <asp:Button runat="server"
+                                                      CommandName="ConfirmarRetiro"
+                                                      CommandArgument='<%# Eval("IdPedido") %>'
+                                                      CssClass="btn btn-info me-2"
+                                                      Text="Confirmar Retiro"
+                                                      Visible='<%# Eval("Estado").ToString()=="Confirmado" && Eval("ModalidadEntrega").ToString()=="Retiro" %>' />
+
+
+
+
 
                                           <asp:Button runat="server"
                                                       CommandName="Cancelar"

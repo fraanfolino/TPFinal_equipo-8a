@@ -21,7 +21,7 @@ namespace TPFinal_equipo_8a
             if (!IsPostBack)
             {
                 CargarLista();
-                Cantidadxpagina.Text = "20";
+                Cantidadxpagina.Text = "10";
             }
         }
 
